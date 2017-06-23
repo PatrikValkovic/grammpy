@@ -6,14 +6,12 @@ python:
 install:
 - pip install coverage python-coveralls
 
-# command to run tests
+# command to run tests with coverage
 script:
-- python -m unittest discover -p "*Test.py" -v
-# run coverage if tests success
 - coverage run --source=grammpy -m unittest discover -s tests -p "*Test.py" -q
 
-# run coverage if tests success
-after_success:
+# report coverage
+after_script:
 - coverage report -m
 - coveralls
 
