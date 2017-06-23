@@ -15,6 +15,7 @@ script:
 # run coverage if tests success
 after_sucess:
 - coveralls
+- coverage report -m
 
 # disable email notifications
 notifications:
