@@ -3,10 +3,18 @@ python:
   - "3.5"
 
 # command to install dependencies
-install: "pip install -r requirements.txt"
+install:
+- pip install coverage coverall
 
 # command to run tests
-script: python -m unittest discover -p "*Test.py" -v
+script:
+- python -m unittest discover -p "*Test.py" -v
+# run coverage if tests success
+- coverage run --source=grammpy -m unittest discover -s tests -p "*Test.py" -q
+
+# run coverage if tests success
+after_sucess:
+- coveralls
 
 # disable email notifications
 notifications:
