@@ -7,3 +7,7 @@ install: "pip install -r requirements.txt"
 
 # command to run tests
 script: python -m unittest discover -p "*Test.py" -v
+
+# disable email notifications
+notifications:
+  email: false
