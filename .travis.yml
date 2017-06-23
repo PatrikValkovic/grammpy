@@ -13,9 +13,9 @@ script:
 - coverage run --source=grammpy -m unittest discover -s tests -p "*Test.py" -q
 
 # run coverage if tests success
-after_sucess:
-- coveralls
+after_success:
 - coverage report -m
+- coveralls
 
 # disable email notifications
 notifications:
