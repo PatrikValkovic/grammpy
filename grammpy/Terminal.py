@@ -7,10 +7,9 @@ Part of grammpy
 
 """
 
-import copy
-
 
 class Terminal:
+
     def __init__(self, symbol, grammar):
         self.__symbol = symbol
         self.__grammar = grammar
@@ -22,4 +21,4 @@ class Terminal:
         return isinstance(other, Terminal) and hash(self) == hash(other)
 
     def symbol(self):
-        return copy.deepcopy(self.__symbol)
+        return self.__symbol
