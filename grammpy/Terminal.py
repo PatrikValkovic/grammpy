@@ -7,6 +7,8 @@ Part of grammpy
 
 """
 
+import copy
+
 
 class Terminal:
     def __init__(self, symbol, grammar):
@@ -15,6 +17,9 @@ class Terminal:
 
     def __hash__(self):
         return hash((self.__symbol, id(self.__grammar)))
-    
+
     def __eq__(self, other):
         return isinstance(other, Terminal) and hash(self) == hash(other)
+
+    def symbol(self):
+        return copy.deepcopy(self.__symbol)
