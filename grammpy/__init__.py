@@ -10,4 +10,3 @@ Part of grammpy
 from .Grammar import Grammar
 from .Rule import Rule
 from . import factory
-from .Terminal import Terminal

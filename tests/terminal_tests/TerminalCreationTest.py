@@ -7,7 +7,7 @@ Part of grammpy
 
 """
 from unittest import TestCase
-from grammpy import Terminal
+from grammpy.Terminal import Terminal
 
 
 class TempClass:
