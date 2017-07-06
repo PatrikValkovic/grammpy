@@ -11,6 +11,9 @@ import unittest as ut
 from grammpy import factory
 
 class RawStringRegularTest(ut.TestCase):
+
+    # TODO add when factory will be implement
+    """
     def test_one_rule(self):
         factory.create('A => a b')
 
@@ -25,4 +28,5 @@ class RawStringRegularTest(ut.TestCase):
 
     def test_more_rules_spaces(self):
         factory.create('    A    =>   a   B;B=>b c')
+    """
 

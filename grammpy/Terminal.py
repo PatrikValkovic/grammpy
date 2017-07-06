@@ -9,7 +9,7 @@ Part of grammpy
 
 
 class Terminal:
-    ''' 
+    '''
     Represent Terminal in former grammar
     '''
 
