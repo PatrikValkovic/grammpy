@@ -73,7 +73,6 @@ class Grammar:
     def terms(self):
         for _, item in self.__terminals.items():
             yield Terminal(item, self)
-        raise StopIteration()
 
     def terms_count(self):
         return len(self.__terminals)
