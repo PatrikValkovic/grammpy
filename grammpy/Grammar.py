@@ -42,12 +42,11 @@ class Grammar:
         if term is None:
             return self.__terminals.clear()
         term = self.__to_iterable(term)
-        # iterace throught items
+        # iterate throught items
         for t in term:
             del self.__terminals[hash(t)]
 
     def have_term(self, term):
-        # TODO add test for term as array
         term = self.__to_iterable(term)
         for t in term:
             if hash(t) not in self.__terminals:
@@ -55,7 +54,6 @@ class Grammar:
         return True
 
     def get_term(self, term):
-        # TODO add test for them as array
         transformed = self.__to_iterable(term)
         ret = []
         for t in transformed:
