@@ -54,9 +54,11 @@ class Grammar:
         return True
 
     def get_term(self, term=None):
+        # if no parameter is passed than return all terminals
         if term is None:
-            # TODO lazy evaluation
+            # Maybe lazy evaluation, but it cannot be combined with return
             return [Terminal(item, self) for _, item in self.__terminals.items()]
+        # else return relevant to parameter
         transformed = self.__to_iterable(term)
         ret = []
         for t in transformed:
@@ -69,7 +71,9 @@ class Grammar:
         return self.get_term(term)
 
     def terms(self):
-        return self.term()
+        for _, item in self.__terminals.items():
+            yield Terminal(item, self)
+        raise StopIteration()
 
     def terms_count(self):
         return len(self.__terminals)
