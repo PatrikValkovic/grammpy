@@ -28,7 +28,7 @@ class TerminalAddRemoveMixedTest(TestCase):
         self.assertIsNotNone(gr.term(0))
         self.assertTrue(isinstance(gr.term(0), Terminal))
         self.assertEqual(gr.term(0).symbol(), 0)
-        gr.add_term(0)
+        gr.remove_term(0)
         self.assertEqual(gr.terms_count(), 0)
         self.assertFalse(gr.have_term(0))
         self.assertIsNone(gr.get_term(0))

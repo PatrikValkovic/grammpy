@@ -9,6 +9,8 @@ Part of grammpy
 import types
 import collections
 
+from .Terminal import Terminal
+
 
 class Grammar:
     def __init__(self, terminals=None, nonterminals=None, rules=None):
@@ -43,21 +45,25 @@ class Grammar:
         term = self.__to_iterable(term)
         # iterace throught items
         for t in term:
-            self.__terminals[hash(t)] = t
+            del self.__terminals[hash(t)]
 
     def have_term(self, term):
         # TODO add test for term as array
         term = self.__to_iterable(term)
         for t in term:
-            if not self.__terminals.has_key(hash(t)):
+            if hash(t) not in self.__terminals:
                 return False
         return True
 
     def get_term(self, term):
         # TODO add test for them as array
         transformed = self.__to_iterable(term)
-        #TODO
-        raise NotImplementedError()
+        ret = []
+        for t in transformed:
+            ret.append(Terminal(t, self) if hash(t) in self.__terminals else None)
+        if isinstance(term, types.StringTypes) or not isinstance(term, collections.Iterable):
+            return ret[0]
+        return ret
 
     def term(self, term):
         return self.get_term(term)
