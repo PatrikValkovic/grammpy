@@ -107,3 +107,12 @@ class TerminalAddingTest(TestCase):
         self.assertIsNotNone(gr.term(TempClass))
         self.assertTrue(isinstance(gr.term(TempClass), Terminal))
         self.assertEqual(gr.term(TempClass).s, TempClass)
+
+    def test_equalGetTermAndTermMethods(self):
+        gr = Grammar()
+        ins = TempClass()
+        gr.add_term(ins)
+        self.assertEqual(gr.terms_count(),1)
+        self.assertEqual(gr.get_term(ins).s,ins)
+        self.assertEqual(gr.term(ins).s,ins)
+        self.assertEqual(gr.term(ins).s,gr.get_term(ins).s)
