@@ -10,6 +10,7 @@ Part of grammpy
 
 class Grammar:
     def __init__(self, terminals=[], nonterminals=[], rules=[]):
+        raise NotImplementedError()
         self.__terminals = set()
         self.__nonterminals = set()
 
