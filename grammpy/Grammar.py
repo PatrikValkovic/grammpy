@@ -9,17 +9,15 @@ Part of grammpy
 
 
 class Grammar:
-
-    def __init__(self):
+    def __init__(self, terminals=[], nonterminals=[], rules=[]):
         self.__terminals = set()
         self.__nonterminals = set()
 
-
-    #Term part
+    # Term part
     def add_term(self, term):
         raise NotImplementedError()
 
-    def remove_term(self, term = None):
+    def remove_term(self, term=None):
         raise NotImplementedError()
 
     def have_term(self, term):
@@ -28,7 +26,16 @@ class Grammar:
     def get_term(self, term):
         raise NotImplementedError()
 
-    #Non term part
+    def term(self, term):
+        raise NotImplementedError()
+
+    def terms(self):
+        raise NotImplementedError()
+
+    def terms_count(self):
+        raise NotImplementedError()
+
+    # Non term part
     def add_nonterm(self, nonterm):
         raise NotImplementedError()
 
@@ -40,5 +47,12 @@ class Grammar:
 
     def get_nonterm(self, nonterm):
         raise NotImplementedError()
+
+    def nonterms(self):
+        raise NotImplementedError()
+
+    def nonterms_count(self):
+        raise NotImplementedError()
+
 
     pass
