@@ -45,3 +45,11 @@ class Terminal:
         :return: Symbol that represent current terminal
         '''
         return self.__symbol
+
+    @property
+    def s(self):
+        """
+        Shortcut for symbol method
+        :return: Symbol that represent current terminal
+        """
+        return self.symbol()
