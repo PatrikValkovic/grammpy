@@ -55,8 +55,8 @@ class Grammar:
 
     def get_term(self, term=None):
         if term is None:
-            #TODO tests and lazy evaluation
-            return [item for item, _ in self.__terminals]
+            # TODO lazy evaluation
+            return [Terminal(item, self) for _, item in self.__terminals.items()]
         transformed = self.__to_iterable(term)
         ret = []
         for t in transformed:
@@ -69,7 +69,6 @@ class Grammar:
         return self.get_term(term)
 
     def terms(self):
-        #TODO tests
         return self.term()
 
     def terms_count(self):
