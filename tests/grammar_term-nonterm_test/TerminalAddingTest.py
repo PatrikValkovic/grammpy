@@ -16,6 +16,19 @@ class TempClass:
 
 
 class TerminalAddingTest(TestCase):
+
+    def test_haveTermEmpty(self):
+        gr = Grammar()
+        self.assertFalse(gr.have_term(TempClass))
+        self.assertFalse(gr.have_term(1))
+        self.assertFalse(gr.have_term('asdf'))
+
+    def test_getTermEmpty(self):
+        gr = Grammar()
+        self.assertIsNone(gr.get_term(TempClass))
+        self.assertIsNone(gr.get_term(1))
+        self.assertIsNone(gr.get_term('asdf'))
+
     def test_correctAddOne(self):
         gr = Grammar()
         self.assertEqual(gr.terms_count(), 0)
