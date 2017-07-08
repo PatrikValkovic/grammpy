@@ -8,7 +8,6 @@ Part of grammpy
 """
 from unittest import TestCase
 from grammpy import Grammar
-from grammpy.Terminal import Terminal
 
 
 class TempClass:
