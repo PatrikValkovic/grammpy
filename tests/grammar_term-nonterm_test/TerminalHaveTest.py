@@ -14,7 +14,7 @@ class TempClass:
     pass
 
 
-class TerminalAddingTest(TestCase):
+class TerminalHaveTest(TestCase):
     def test_haveTermEmpty(self):
         gr = Grammar()
         self.assertFalse(gr.have_term(TempClass))
