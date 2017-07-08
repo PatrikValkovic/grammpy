@@ -11,6 +11,10 @@ from grammpy import Grammar
 from grammpy.Terminal import Terminal
 
 
+class TempClass:
+    pass
+
+
 class TerminalAddingTest(TestCase):
     def test_correctAddOne(self):
         gr = Grammar()
@@ -50,3 +54,43 @@ class TerminalAddingTest(TestCase):
         self.assertIsNotNone(gr.term('asdf'))
         self.assertTrue(isinstance(gr.term('asdf'), Terminal))
         self.assertEqual(gr.term('asdf').s, 'asdf')
+
+    def test_addInArray(self):
+        gr = Grammar()
+        gr.add_term([0, 'asdf', TempClass])
+        self.assertEqual(gr.terms_count(), 3)
+        self.assertIsNotNone(gr.get_term(0))
+        self.assertIsNotNone(gr.term(0))
+        self.assertTrue(isinstance(gr.term(0), Terminal))
+        self.assertEqual(gr.term(0).s, 0)
+        self.assertIsNotNone(gr.get_term('asdf'))
+        self.assertIsNotNone(gr.term('asdf'))
+        self.assertTrue(isinstance(gr.term('asdf'), Terminal))
+        self.assertEqual(gr.term('asdf').s, 'asdf')
+        self.assertIsNotNone(gr.get_term(TempClass))
+        self.assertIsNotNone(gr.term(TempClass))
+        self.assertTrue(isinstance(gr.term(TempClass), Terminal))
+        self.assertEqual(gr.term(TempClass).s, TempClass)
+
+    def test_oneSeparateTwoTuple(self):
+        gr = Grammar()
+        gr.add_term(0)
+        self.assertEqual(gr.terms_count(), 1)
+        self.assertIsNotNone(gr.get_term(0))
+        self.assertIsNotNone(gr.term(0))
+        self.assertTrue(isinstance(gr.term(0), Terminal))
+        self.assertEqual(gr.term(0).s, 0)
+        gr.add_term(('asdf', TempClass))
+        self.assertEqual(gr.terms_count(), 3)
+        self.assertIsNotNone(gr.get_term(0))
+        self.assertIsNotNone(gr.term(0))
+        self.assertTrue(isinstance(gr.term(0), Terminal))
+        self.assertEqual(gr.term(0).s, 0)
+        self.assertIsNotNone(gr.get_term('asdf'))
+        self.assertIsNotNone(gr.term('asdf'))
+        self.assertTrue(isinstance(gr.term('asdf'), Terminal))
+        self.assertEqual(gr.term('asdf').s, 'asdf')
+        self.assertIsNotNone(gr.get_term(TempClass))
+        self.assertIsNotNone(gr.term(TempClass))
+        self.assertTrue(isinstance(gr.term(TempClass), Terminal))
+        self.assertEqual(gr.term(TempClass).s, TempClass)
