@@ -6,35 +6,67 @@
 Part of grammpy
 
 """
+import types
+import collections
 
 
 class Grammar:
-    def __init__(self, terminals=[], nonterminals=[], rules=[]):
-        raise NotImplementedError()
-        self.__terminals = set()
-        self.__nonterminals = set()
+    def __init__(self, terminals=None, nonterminals=None, rules=None):
+        # Ensure that parameters are immutable
+        if rules is None:
+            rules = []
+        if nonterminals is None:
+            nonterminals = []
+        if terminals is None:
+            terminals = []
+        # TODO fill and add tests
+        self.__terminals = {}
+        self.__nonterminals = {}
+
+    # Helpers
+    def __to_iterable(self, param):
+        # standardize it to iterable object
+        if isinstance(param, types.StringTypes) or not isinstance(param, collections.Iterable):
+            return (param,)
+        return param
 
     # Term part
     def add_term(self, term):
-        raise NotImplementedError()
+        term = self.__to_iterable(term)
+        # iterace throught items
+        for t in term:
+            self.__terminals[hash(t)] = t
 
     def remove_term(self, term=None):
-        raise NotImplementedError()
+        if term is None:
+            return self.__terminals.clear()
+        term = self.__to_iterable(term)
+        # iterace throught items
+        for t in term:
+            self.__terminals[hash(t)] = t
 
     def have_term(self, term):
-        raise NotImplementedError()
+        # TODO add test for term as array
+        term = self.__to_iterable(term)
+        for t in term:
+            if not self.__terminals.has_key(hash(t)):
+                return False
+        return True
 
     def get_term(self, term):
+        # TODO add test for them as array
+        transformed = self.__to_iterable(term)
+        #TODO
         raise NotImplementedError()
 
     def term(self, term):
-        raise NotImplementedError()
+        return self.get_term(term)
 
     def terms(self):
-        raise NotImplementedError()
+        return [item for item, _ in self.__terminals]
 
     def terms_count(self):
-        raise NotImplementedError()
+        return len(self.__terminals)
 
     # Non term part
     def add_nonterm(self, nonterm):
@@ -54,6 +86,5 @@ class Grammar:
 
     def nonterms_count(self):
         raise NotImplementedError()
-
 
     pass
