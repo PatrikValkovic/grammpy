@@ -6,7 +6,6 @@
 Part of grammpy
 
 """
-import types
 import collections
 
 from .Terminal import Terminal
@@ -28,7 +27,7 @@ class Grammar:
     # Helpers
     def __to_iterable(self, param):
         # standardize it to iterable object
-        if isinstance(param, types.StringTypes) or not isinstance(param, collections.Iterable):
+        if isinstance(param, str) or not isinstance(param, collections.Iterable):
             return (param,)
         return param
 
@@ -61,7 +60,7 @@ class Grammar:
         ret = []
         for t in transformed:
             ret.append(Terminal(t, self) if hash(t) in self.__terminals else None)
-        if isinstance(term, types.StringTypes) or not isinstance(term, collections.Iterable):
+        if isinstance(term, str) or not isinstance(term, collections.Iterable):
             return ret[0]
         return ret
 
