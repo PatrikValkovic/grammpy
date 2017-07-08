@@ -14,7 +14,7 @@ class TempClass:
     pass
 
 
-class TerminalCreationTest(TestCase):
+class CorrectSymbolBehaviourTest(TestCase):
     def test_createWithSymbol(self):
         ter = Terminal('a', None)
         self.assertEqual('a', ter.symbol(), 'Terminal should return same symbol')
