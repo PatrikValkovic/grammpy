@@ -37,7 +37,10 @@ class Grammar:
         if term is not None and not HashContainer.is_iterable(term):
             item = self.__terminals.get(term)
             return Terminal(item, self) if item is not None else None
-        return [Terminal(t, self) for t in self.__terminals.get(term)]
+        vals = []
+        for t in self.__terminals.get(term):
+            vals.append(Terminal(t,self) if t is not None else None)
+        return vals
 
     def term(self, term=None):
         return self.get_term(term)

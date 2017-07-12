@@ -40,6 +40,7 @@ class TerminalGetTest(TestCase):
         gr = Grammar()
         gr.add_term([TempClass, 0, 'asdf'])
         g = gr.get_term([TempClass, 'a'])
+        print("Val: ",g)
         self.assertEqual(g[0].s, TempClass)
         self.assertIsNone(g[1])
 
