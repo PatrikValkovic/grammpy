@@ -6,7 +6,7 @@
 Part of grammpy
 
 """
-from unittest import TestCase
+from unittest import TestCase, main
 from grammpy import Grammar
 from grammpy.Terminal import Terminal
 
@@ -116,3 +116,7 @@ class TerminalAddingTest(TestCase):
         self.assertEqual(gr.get_term(ins).s,ins)
         self.assertEqual(gr.term(ins).s,ins)
         self.assertEqual(gr.term(ins).s,gr.get_term(ins).s)
+
+
+if __name__ == '__main__':
+    main()

@@ -6,7 +6,7 @@
 Part of grammpy
 
 """
-from unittest import TestCase
+from unittest import TestCase, main
 from grammpy import Grammar
 from grammpy.Terminal import Terminal
 
@@ -85,3 +85,7 @@ class TerminalAddRemoveMixedTest(TestCase):
         self.assertTrue(gr.have_term(TempClass))
         self.assertTrue(gr.have_term(0))
         self.assertFalse(gr.have_term('asdf'))
+
+
+if __name__ == '__main__':
+    main()

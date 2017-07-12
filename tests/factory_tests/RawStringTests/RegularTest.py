@@ -30,3 +30,6 @@ class RawStringRegularTest(ut.TestCase):
         factory.create('    A    =>   a   B;B=>b c')
     """
 
+
+if __name__ == '__main__':
+    ut.main()

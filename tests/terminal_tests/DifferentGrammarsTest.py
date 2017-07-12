@@ -6,7 +6,7 @@
 Part of grammpy
 
 """
-from unittest import TestCase
+from unittest import TestCase, main
 from grammpy.Terminal import Terminal
 
 
@@ -69,3 +69,7 @@ class TerminalCreationTest(TestCase):
         ter1 = Terminal(0, TempClass())
         ter2 = Terminal(0, TempClass())
         self.assertNotEqual(ter1, ter2)
+
+
+if __name__ == '__main__':
+    main()

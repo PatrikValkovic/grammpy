@@ -6,7 +6,7 @@
 Part of grammpy
 
 """
-from unittest import TestCase
+from unittest import TestCase, main
 from grammpy.Terminal import Terminal
 
 
@@ -39,3 +39,7 @@ class CorrectSymbolBehaviourTest(TestCase):
         self.assertEqual(inst, ter.symbol(), 'Terminal should return same instance')
         self.assertEqual(inst, ter.s, 'Terminal should return same instance')
         self.assertEqual(ter.symbol(), ter.s, 'Symbol and s property should have same value')
+
+
+if __name__ == '__main__':
+    main()

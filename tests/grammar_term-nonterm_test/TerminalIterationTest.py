@@ -6,7 +6,7 @@
 Part of grammpy
 
 """
-from unittest import TestCase
+from unittest import TestCase, main
 from grammpy import Grammar
 
 
@@ -40,3 +40,7 @@ class TerminalIterationTest(TestCase):
         s = set(term.s for term in gr.get_term())
         for i in [0, 'a', TempClass]:
             self.assertTrue(i in s)
+
+
+if __name__ == '__main__':
+    main()

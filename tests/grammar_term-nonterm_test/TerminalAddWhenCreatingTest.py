@@ -6,9 +6,8 @@
 Part of grammpy
 
 """
-from unittest import TestCase
+from unittest import TestCase, main
 from grammpy import Grammar
-from grammpy.Terminal import Terminal
 
 
 class TerminalAddWhenCreatingTest(TestCase):
@@ -55,3 +54,7 @@ class TerminalAddWhenCreatingTest(TestCase):
         self.assertTrue(gr.have_term('C'))
         self.assertTrue(gr.have_term(['A', 'C']))
         self.assertFalse(gr.have_term('D'))
+
+
+if __name__ == '__main__':
+    main()

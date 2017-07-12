@@ -6,7 +6,7 @@
 Part of grammpy
 
 """
-from unittest import TestCase
+from unittest import TestCase, main
 from grammpy import Grammar
 
 
@@ -81,3 +81,7 @@ class TerminalRemoveTest(TestCase):
         self.assertEqual(gr.terms_count(), 0)
         gr.remove_term()
         self.assertEqual(gr.terms_count(), 0)
+
+
+if __name__ == '__main__':
+    main()
