@@ -34,15 +34,13 @@ class Grammar:
         return self.__terminals.have(term)
 
     def get_term(self, term=None):
-        # if no parameter is passed than return all terminals
-        if term is None:
-            # Maybe lazy evaluation, but it cannot be combined with return
-            return [Terminal(item, self) for item in self.__terminals.get()]
-        # else return relevant to parameter
-        return Terminal(self.__terminals.get(term),self)
+        if term is not None and not HashContainer.is_iterable(term):
+            item = self.__terminals.get(term)
+            return Terminal(item, self) if item is not None else None
+        return [Terminal(t, self) for t in self.__terminals.get(term)]
 
     def term(self, term=None):
-        return Terminal(self.get_term(term),self)
+        return self.get_term(term)
 
     def terms(self):
         for item in self.__terminals.all():

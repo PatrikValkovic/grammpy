@@ -17,6 +17,7 @@ class TempClass:
 class TerminalGetTest(TestCase):
     def test_getTermEmpty(self):
         gr = Grammar()
+        print("HERE")
         self.assertIsNone(gr.get_term(TempClass))
         self.assertIsNone(gr.get_term(1))
         self.assertIsNone(gr.get_term('asdf'))

@@ -17,9 +17,12 @@ class HashContainer:
         self.add(items)
 
     # Helpers
+    def is_iterable(param):
+        return not (isinstance(param, str) or not isinstance(param, Iterable))
+
     def to_iterable(param):
         # standardize it to iterable object
-        if isinstance(param, str) or not isinstance(param, Iterable):
+        if not HashContainer.is_iterable(param):
             return (param,)
         return param
 
@@ -54,7 +57,7 @@ class HashContainer:
         ret = []
         for t in transformed:
             ret.append(t if hash(t) in self.__items else None)
-        if isinstance(item, str) or not isinstance(item, Iterable):
+        if not HashContainer.is_iterable(item):
             return ret[0]
         return ret
 
