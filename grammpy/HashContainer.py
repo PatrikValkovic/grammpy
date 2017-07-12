@@ -17,13 +17,15 @@ class HashContainer:
         self.add(items)
 
     # Helpers
-    def is_iterable(param):
+    @staticmethod
+    def is_iterable(param: Iterable) -> bool:
         return not (isinstance(param, str) or not isinstance(param, Iterable))
 
-    def to_iterable(param):
+    @staticmethod
+    def to_iterable(param: Iterable):
         # standardize it to iterable object
         if not HashContainer.is_iterable(param):
-            return (param,)
+            return [param]
         return param
 
     def add(self, item):
