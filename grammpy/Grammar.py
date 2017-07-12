@@ -39,10 +39,10 @@ class Grammar:
             # Maybe lazy evaluation, but it cannot be combined with return
             return [Terminal(item, self) for item in self.__terminals.get()]
         # else return relevant to parameter
-        return self.__terminals.get(term)
+        return Terminal(self.__terminals.get(term),self)
 
     def term(self, term=None):
-        return self.get_term(term)
+        return Terminal(self.get_term(term),self)
 
     def terms(self):
         for item in self.__terminals.all():

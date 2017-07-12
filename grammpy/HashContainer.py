@@ -24,9 +24,9 @@ class HashContainer:
         return param
 
     def add(self, item):
-        term = HashContainer.to_iterable(item)
+        items = HashContainer.to_iterable(item)
         # iterace throught items
-        for t in term:
+        for t in items:
             self.__items[hash(t)] = t
 
     def remove(self, item=None):
