@@ -7,6 +7,6 @@ Part of grammpy
 
 """
 
-from .Grammar import Grammar
+from .PrettyApiGrammar import PrettyApiGrammar as Grammar
 from .Rule import Rule
 from . import factory
