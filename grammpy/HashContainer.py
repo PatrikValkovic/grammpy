@@ -57,12 +57,9 @@ class HashContainer:
             return ret[0]
         return ret
 
-    def term(self, term=None):
-        return self.get(term)
-
-    def terms(self):
+    def all(self):
         for _, item in self.__items.items():
             yield item
 
-    def terms_count(self):
+    def count(self):
         return len(self.__items)
