@@ -14,6 +14,7 @@ class HashContainer:
         if items is None:
             items = []
         self.__items = {}
+        self.add(items)
 
     # Helpers
     def to_iterable(param):
@@ -28,32 +29,32 @@ class HashContainer:
         for t in term:
             self.__items[hash(t)] = t
 
-    def remove(self, term=None):
-        if term is None:
+    def remove(self, item=None):
+        if item is None:
             return self.__items.clear()
-        term = HashContainer.to_iterable(term)
+        item = HashContainer.to_iterable(item)
         # iterate throught items
-        for t in term:
+        for t in item:
             del self.__items[hash(t)]
 
-    def have(self, term):
-        term = HashContainer.to_iterable(term)
-        for t in term:
+    def have(self, item):
+        item = HashContainer.to_iterable(item)
+        for t in item:
             if hash(t) not in self.__items:
                 return False
         return True
 
-    def get(self, term=None):
+    def get(self, item=None):
         # if no parameter is passed than return all terminals
-        if term is None:
+        if item is None:
             # Maybe lazy evaluation, but it cannot be combined with return
             return [item for _, item in self.__items.items()]
         # else return relevant to parameter
-        transformed = HashContainer.to_iterable(term)
+        transformed = HashContainer.to_iterable(item)
         ret = []
         for t in transformed:
             ret.append(t if hash(t) in self.__items else None)
-        if isinstance(term, str) or not isinstance(term, Iterable):
+        if isinstance(item, str) or not isinstance(item, Iterable):
             return ret[0]
         return ret
 
