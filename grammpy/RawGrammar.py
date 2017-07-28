@@ -12,7 +12,7 @@ from .Terminal import Terminal
 from .HashContainer import HashContainer
 
 
-class Grammar:
+class RawGrammar:
     def __init__(self, terminals=[], nonterminals=None, rules=None):
         # Ensure that parameters are immutable
         if rules is None:
