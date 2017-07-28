@@ -7,7 +7,7 @@ Part of grammpy
 
 """
 
-from .RawGrammar import RawGrammar
+from .RawGrammar import RawGrammar as Grammar
 
-class StringGrammar(RawGrammar):
+class StringGrammar(Grammar):
     pass
