@@ -62,7 +62,7 @@ class Grammar:
     def have_nonterm(self, nonterm):
         raise NotImplementedError()
 
-    def get_nonterm(self, nonterm):
+    def get_nonterm(self, nonterm = None):
         raise NotImplementedError()
 
     def nonterm(self, nonterm):

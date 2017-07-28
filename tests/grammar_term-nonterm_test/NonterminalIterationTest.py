@@ -24,31 +24,31 @@ class Third(Nonterminal):
 
 
 class NonterminalIterationTest(TestCase):
-    def test_oneTerminalTerms(self):
+    def test_oneNonterminalTerms(self):
         gr = Grammar()
-        gr.add_term('a')
-        for i in gr.terms():
-            self.assertEqual(i.s, 'a')
+        gr.add_nonterm(TempClass)
+        for i in gr.nonterms():
+            self.assertEqual(i, TempClass)
 
-    def test_oneTerminalGetTerm(self):
+    def test_oneNonterminalGetNonterm(self):
         gr = Grammar()
-        gr.add_term('a')
-        for i in gr.get_term():
-            self.assertEqual(i.s, 'a')
+        gr.add_term(TempClass)
+        for i in gr.get_nonterm():
+            self.assertEqual(i, TempClass)
 
-    def test_ThreeTerminalTerms(self):
+    def test_ThreeNonterminalNonterms(self):
+        gr = Grammar()
+        gr.add_term([TempClass, Second, Third])
+        s = gr.nonterms()
+        for i in [Third, Second, TempClass]:
+            self.assertIn(i, s)
+
+    def test_ThreeNonterminalGetNonterm(self):
         gr = Grammar()
         gr.add_term([0, 'a', TempClass])
-        s = set(term.s for term in gr.terms())
-        for i in [0, 'a', TempClass]:
-            self.assertTrue(i in s)
-
-    def test_ThreeTerminalGetTerm(self):
-        gr = Grammar()
-        gr.add_term([0, 'a', TempClass])
-        s = set(term.s for term in gr.get_term())
-        for i in [0, 'a', TempClass]:
-            self.assertTrue(i in s)
+        s = gr.get_nonterm()
+        for i in [Second, Third, TempClass]:
+            self.assertIn(i, s)
 
 
 if __name__ == '__main__':
