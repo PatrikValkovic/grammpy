@@ -8,6 +8,7 @@ Part of grammpy
 """
 
 from .Terminal import Terminal
+from . import Nonterminal
 from .HashContainer import HashContainer
 from .exceptions import NotNonterminalException
 
@@ -50,26 +51,42 @@ class RawGrammar:
         return self.__terminals.count()
 
     # Non term part
-    def add_nonterm(self, nonterm):
-        nonterm = HashContainer.to_iterable(nonterm)
-        self.__
+    @staticmethod
+    def __controll_nonterms(nonterms):
+        nonterms = HashContainer.to_iterable(nonterms)
+        for nonterm in nonterms:
+            if not issubclass(nonterm, Nonterminal):
+                raise NotNonterminalException(nonterm)
+        return nonterms
 
-    def remove_nonterm(self, nonterm=None):
-        raise NotImplementedError()
+    def add_nonterm(self, nonterms):
+        nonterms = RawGrammar.__controll_nonterms(nonterms)
+        return self.__nonterminals.add(nonterms)
 
-    def have_nonterm(self, nonterm):
-        raise NotImplementedError()
+    def remove_nonterm(self, nonterms=None):
+        if nonterms is None:
+            return self.__nonterminals.remove()
+        nonterms = RawGrammar.__controll_nonterms(nonterms)
+        return self.__nonterminals.remove(nonterms)
 
-    def get_nonterm(self, nonterm = None):
-        raise NotImplementedError()
+    def have_nonterm(self, nonterms):
+        nonterms = RawGrammar.__controll_nonterms(nonterms)
+        return self.__nonterminals.have(nonterms)
 
-    def nonterm(self, nonterm):
-        raise NotImplementedError()
+    def get_nonterm(self, nonterms = None):
+        if nonterms is None:
+            return self.__nonterminals.get()
+        nonterms = RawGrammar.__controll_nonterms(nonterms)
+        return self.__nonterminals.get(nonterms)
+
+    def nonterm(self, nonterms = None):
+        return self.get_nonterm(nonterms)
 
     def nonterms(self):
-        raise NotImplementedError()
+        for nonterm in self.__nonterminals.get():
+            yield nonterm
 
     def nonterms_count(self):
-        raise NotImplementedError()
+        return self.__nonterminals.count()
 
     pass

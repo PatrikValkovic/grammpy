@@ -6,3 +6,6 @@
 Part of grammpy
 
 """
+
+from .GrammpyException import GrammpyException
+from .NotNonterminalException import NotNonterminalException
