@@ -12,15 +12,13 @@ from .HashContainer import HashContainer
 from .exceptions import NotNonterminalException
 
 class RawGrammar:
-    def __init__(self, terminals=[], nonterminals=None, rules=None):
-        # Ensure that parameters are immutable
-        if rules is None:
-            rules = []
-        if nonterminals is None:
-            nonterminals = []
+    def __init__(self, terminals=None, nonterminals=None, rules=None):
+        terminals = [] if terminals is None else terminals
+        nonterminals = [] if nonterminals is None else nonterminals
+        rules = [] if rules is None else rules
         # TODO fill and add tests
         self.__terminals = HashContainer(terminals)
-        self.__nonterminals = {}
+        self.__nonterminals = HashContainer(nonterminals)
 
     # Term part
     def add_term(self, term):
@@ -53,7 +51,8 @@ class RawGrammar:
 
     # Non term part
     def add_nonterm(self, nonterm):
-        raise NotImplementedError()
+        nonterm = HashContainer.to_iterable(nonterm)
+        self.__
 
     def remove_nonterm(self, nonterm=None):
         raise NotImplementedError()
