@@ -6,11 +6,12 @@
 Part of grammpy
 
 """
-
+import inspect
 from .Terminal import Terminal
-from . import Nonterminal
+from .Nonterminal import Nonterminal
 from .HashContainer import HashContainer
 from .exceptions import NotNonterminalException
+
 
 class RawGrammar:
     def __init__(self, terminals=None, nonterminals=None, rules=None):
@@ -37,7 +38,7 @@ class RawGrammar:
             return Terminal(item, self) if item is not None else None
         vals = []
         for t in self.__terminals.get(term):
-            vals.append(Terminal(t,self) if t is not None else None)
+            vals.append(Terminal(t, self) if t is not None else None)
         return vals
 
     def term(self, term=None):
@@ -55,7 +56,7 @@ class RawGrammar:
     def __controll_nonterms(nonterms):
         nonterms = HashContainer.to_iterable(nonterms)
         for nonterm in nonterms:
-            if not issubclass(nonterm, Nonterminal):
+            if not inspect.isclass(nonterm) or not issubclass(nonterm, Nonterminal):
                 raise NotNonterminalException(nonterm)
         return nonterms
 
@@ -73,13 +74,13 @@ class RawGrammar:
         nonterms = RawGrammar.__controll_nonterms(nonterms)
         return self.__nonterminals.have(nonterms)
 
-    def get_nonterm(self, nonterms = None):
+    def get_nonterm(self, nonterms=None):
         if nonterms is None:
             return self.__nonterminals.get()
         nonterms = RawGrammar.__controll_nonterms(nonterms)
         return self.__nonterminals.get(nonterms)
 
-    def nonterm(self, nonterms = None):
+    def nonterm(self, nonterms=None):
         return self.get_nonterm(nonterms)
 
     def nonterms(self):
