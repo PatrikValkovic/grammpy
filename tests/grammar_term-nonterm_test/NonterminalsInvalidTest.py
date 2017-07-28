@@ -59,6 +59,49 @@ class NonterminalsInvalidTest(TestCase):
         with self.assertRaises(NotNonterminalException):
             gr.have_nonterm([TempClass, "asdf"])
 
+    def test_invalidRemoveNumber(self):
+        gr = Grammar()
+        with self.assertRaises(NotNonterminalException):
+            gr.remove_nonterm(0)
+
+    def test_invalidRemoveString(self):
+        gr = Grammar()
+        with self.assertRaises(NotNonterminalException):
+            gr.remove_nonterm("string")
+
+    def test_invalidRemoveAfterCorrectAdd(self):
+        gr = Grammar()
+        gr.add_nonterm(TempClass)
+        with self.assertRaises(NotNonterminalException):
+            gr.remove_nonterm("asdf")
+
+    def test_invalidRemoveInArray(self):
+        gr = Grammar()
+        with self.assertRaises(NotNonterminalException):
+            gr.remove_nonterm([TempClass, "asdf"])
+
+    def test_invalidGetNumber(self):
+        gr = Grammar()
+        with self.assertRaises(NotNonterminalException):
+            gr.get_nonterm(0)
+
+    def test_invalidGetString(self):
+        gr = Grammar()
+        with self.assertRaises(NotNonterminalException):
+            gr.get_nonterm("string")
+
+    def test_invalidGetAfterCorrectAdd(self):
+        gr = Grammar()
+        gr.add_nonterm(TempClass)
+        with self.assertRaises(NotNonterminalException):
+            gr.get_nonterm("asdf")
+
+    def test_invalidGetInArray(self):
+        gr = Grammar()
+        with self.assertRaises(NotNonterminalException):
+            gr.get_nonterm([TempClass, "asdf"])
+
+
 
 if __name__ == '__main__':
     main()
