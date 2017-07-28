@@ -45,8 +45,8 @@ class RawGrammar:
         return self.get_term(term)
 
     def terms(self):
-        for item in self.__terminals.all():
-            yield Terminal(item, self)
+        return self.__terminals.all()
+
 
     def terms_count(self):
         return self.__terminals.count()
@@ -84,8 +84,7 @@ class RawGrammar:
         return self.get_nonterm(nonterms)
 
     def nonterms(self):
-        for nonterm in self.__nonterminals.get():
-            yield nonterm
+        return self.__nonterminals.get()
 
     def nonterms_count(self):
         return self.__nonterminals.count()
