@@ -24,7 +24,7 @@ class Third(Nonterminal):
     pass
 
 
-class TerminalGetTest(TestCase):
+class NonterminalGetTest(TestCase):
     def test_getNontermEmpty(self):
         gr = Grammar()
         self.assertIsNone(gr.get_nonterm(TempClass))
