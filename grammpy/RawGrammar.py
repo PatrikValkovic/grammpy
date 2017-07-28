@@ -77,8 +77,10 @@ class RawGrammar:
     def get_nonterm(self, nonterms=None):
         if nonterms is None:
             return self.__nonterminals.get()
-        nonterms = RawGrammar.__controll_nonterms(nonterms)
-        return self.__nonterminals.get(nonterms)
+        converted = RawGrammar.__controll_nonterms(nonterms)
+        if not HashContainer.is_iterable(nonterms):
+            return self.__nonterminals.get(converted)[0]
+        return self.__nonterminals.get(converted)
 
     def nonterm(self, nonterms=None):
         return self.get_nonterm(nonterms)
