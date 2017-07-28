@@ -26,36 +26,35 @@ class Third(Nonterminal):
 
 
 class NonterminalHaveTest(TestCase):
-    def test_haveTermEmpty(self):
+    def test_haveNontermEmpty(self):
         gr = Grammar()
-        self.assertFalse(gr.have_term(TempClass))
-        self.assertFalse(gr.have_term(1))
-        self.assertFalse(gr.have_term('asdf'))
+        self.assertFalse(gr.have_nonterm(TempClass))
+        self.assertFalse(gr.have_nonterm(Second))
 
-    def test_haveTermClass(self):
+    def test_haveNontermClass(self):
         gr = Grammar()
-        gr.add_term(TempClass)
-        self.assertTrue(gr.have_term(TempClass))
+        gr.add_nonterm(TempClass)
+        self.assertTrue(gr.have_nonterm(TempClass))
 
-    def test_haveTermArray(self):
+    def test_haveNontermArray(self):
         gr = Grammar()
-        gr.add_term([TempClass, 0, 'asdf'])
-        self.assertTrue(gr.have_term([0, 'asdf']))
+        gr.add_term([TempClass, Second, Third])
+        self.assertTrue(gr.have_term([Second, TempClass]))
 
-    def test_dontHaveTermArray(self):
+    def test_dontHaveNontermArray(self):
         gr = Grammar()
-        gr.add_term([TempClass, 0, 'asdf'])
-        self.assertFalse(gr.have_term([TempClass, 'a']))
+        gr.add_term([TempClass, Second])
+        self.assertFalse(gr.have_term([TempClass, Third]))
 
-    def test_haveTermTuple(self):
+    def test_haveNontermTuple(self):
         gr = Grammar()
-        gr.add_term([TempClass, 0, 'asdf'])
-        self.assertTrue(gr.have_term((0, 'asdf')))
+        gr.add_term([TempClass, Second, Third])
+        self.assertTrue(gr.have_term((Third, TempClass)))
 
-    def test_dontHaveTermTuple(self):
+    def test_dontHaveNontermTuple(self):
         gr = Grammar()
-        gr.add_term([TempClass, 0, 'asdf'])
-        self.assertFalse(gr.have_term((TempClass, 'a')))
+        gr.add_term([TempClass, Second])
+        self.assertFalse(gr.have_term((TempClass, Third)))
 
 
 
