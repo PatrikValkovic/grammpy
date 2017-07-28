@@ -6,9 +6,12 @@
 Part of grammpy
 
 """
+from typing import Any
 
 from .GrammpyException import GrammpyException
 
 
 class NotNonterminalException(GrammpyException):
-    pass
+    def __init__(self, parameter, *args: Any) -> None:
+        super().__init__(*args)
+        self.object = parameter
