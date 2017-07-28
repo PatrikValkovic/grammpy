@@ -39,7 +39,7 @@ class NonterminalGetTest(TestCase):
     def test_getNontermArray(self):
         gr = Grammar()
         gr.add_nonterm([TempClass, Second, Third])
-        g = gr.get_term([Second, TempClass])
+        g = gr.get_nonterm([Second, TempClass])
         for i in g:
             self.assertTrue(i in [TempClass, Second, Third])
         self.assertEqual(g[0], Second)
@@ -48,23 +48,23 @@ class NonterminalGetTest(TestCase):
     def test_dontGetNontermArray(self):
         gr = Grammar()
         gr.add_term([TempClass, Second])
-        g = gr.get_term([TempClass, Third])
+        g = gr.get_nonterm([TempClass, Third])
         self.assertEqual(g[0], TempClass)
         self.assertIsNone(g[1])
 
     def test_getNontermTuple(self):
         gr = Grammar()
         gr.add_term([TempClass, Second, Third])
-        g = gr.get_term((Third, TempClass))
+        g = gr.get_nonterm((Third, TempClass))
         for i in g:
-            self.assertTrue(i in [TempClass, Second, Third])
+            self.assertIn(i, [TempClass, Second, Third])
         self.assertEqual(g[0], Third)
         self.assertEqual(g[1], TempClass)
 
     def test_dontGetNontermTuple(self):
         gr = Grammar()
-        gr.add_term([TempClass, Second])
-        g = gr.get_term((TempClass, Third))
+        gr.add_nonterm([TempClass, Second])
+        g = gr.get_nonterm((TempClass, Third))
         self.assertEqual(g[0], TempClass)
         self.assertIsNone(g[1])
 
