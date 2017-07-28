@@ -6,11 +6,10 @@
 Part of grammpy
 
 """
-import collections
 
 from .Terminal import Terminal
 from .HashContainer import HashContainer
-
+from .exceptions import NotNonterminalException
 
 class RawGrammar:
     def __init__(self, terminals=[], nonterminals=None, rules=None):
