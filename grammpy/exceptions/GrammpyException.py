@@ -6,7 +6,9 @@
 Part of grammpy
 
 """
+from typing import Any
 
 
 class GrammpyException(Exception):
-    pass
+    def __init__(self, *args: Any) -> None:
+        super().__init__(*args)

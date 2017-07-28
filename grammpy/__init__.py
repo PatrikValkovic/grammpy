@@ -9,4 +9,5 @@ Part of grammpy
 
 from .PrettyApiGrammar import PrettyApiGrammar as Grammar
 from .Rule import Rule
-from . import factory
+from .Nonterminal import Nonterminal
+

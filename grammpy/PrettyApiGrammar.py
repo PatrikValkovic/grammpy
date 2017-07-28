@@ -7,10 +7,10 @@ Part of grammpy
 
 """
 
-from .Grammar import Grammar
+from .RawGrammar import RawGrammar
 
 
-class PrettyApiGrammar(Grammar):
+class PrettyApiGrammar(RawGrammar):
     def __init__(self, terminals=[], nonterminals=None, rules=None):
         if isinstance(terminals, str):
             temp = []
