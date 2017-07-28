@@ -47,14 +47,14 @@ class NonterminalGetTest(TestCase):
 
     def test_dontGetNontermArray(self):
         gr = Grammar()
-        gr.add_term([TempClass, Second])
+        gr.add_nonterm([TempClass, Second])
         g = gr.get_nonterm([TempClass, Third])
         self.assertEqual(g[0], TempClass)
         self.assertIsNone(g[1])
 
     def test_getNontermTuple(self):
         gr = Grammar()
-        gr.add_term([TempClass, Second, Third])
+        gr.add_nonterm([TempClass, Second, Third])
         g = gr.get_nonterm((Third, TempClass))
         for i in g:
             self.assertIn(i, [TempClass, Second, Third])

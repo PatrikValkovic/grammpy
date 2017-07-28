@@ -45,7 +45,7 @@ class NonterminalIterationTest(TestCase):
 
     def test_ThreeNonterminalGetNonterm(self):
         gr = Grammar()
-        gr.add_nonterm([0, 'a', TempClass])
+        gr.add_nonterm([TempClass, Second, Third])
         s = gr.get_nonterm()
         for i in [Second, Third, TempClass]:
             self.assertIn(i, s)
