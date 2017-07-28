@@ -19,7 +19,7 @@ class HashContainer:
     # Helpers
     @staticmethod
     def is_iterable(param: Iterable) -> bool:
-        return not (isinstance(param, str) or not isinstance(param, Iterable))
+        return not isinstance(param, Iterable)
 
     @staticmethod
     def to_iterable(param: Iterable):
@@ -53,7 +53,7 @@ class HashContainer:
         # if no parameter is passed than return all terminals
         if item is None:
             # Maybe lazy evaluation, but it cannot be combined with return
-            return [item for _, item in self.__items.items()]
+            return [item in self.all()]
         # else return relevant to parameter
         transformed = HashContainer.to_iterable(item)
         ret = []
