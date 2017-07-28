@@ -82,7 +82,7 @@ class NonterminalRemoveTest(TestCase):
 
     def test_removeAllWithoutParam(self):
         gr = Grammar()
-        gr.add_term([TempClass, Second, Third])
+        gr.add_nonterm([TempClass, Second, Third])
         self.assertEqual(gr.nonterms_count(), 3)
         gr.remove_nonterm()
         self.assertEqual(gr.nonterms_count(), 0)
@@ -92,9 +92,9 @@ class NonterminalRemoveTest(TestCase):
 
     def test_removeEmptyGrammar(self):
         gr = Grammar()
-        self.assertEqual(gr.terms_count(), 0)
-        gr.remove_term()
-        self.assertEqual(gr.terms_count(), 0)
+        self.assertEqual(gr.nonterms_count(), 0)
+        gr.remove_nonterm()
+        self.assertEqual(gr.nonterms_count(), 0)
 
 
 if __name__ == '__main__':
