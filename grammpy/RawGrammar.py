@@ -45,7 +45,7 @@ class RawGrammar:
         return self.get_term(term)
 
     def terms(self):
-        return self.__terminals.all()
+        return [Terminal(term,self) for term in self.__terminals.all()]
 
 
     def terms_count(self):
