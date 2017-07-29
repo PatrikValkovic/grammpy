@@ -7,11 +7,11 @@ Part of grammpy
 
 """
 
-from .RawGrammar import RawGrammar
+from .StringGrammar import StringGrammar as Grammar
 
 
-class PrettyApiGrammar(RawGrammar):
-    def __init__(self, terminals=[], nonterminals=None, rules=None):
+class PrettyApiGrammar(Grammar):
+    def __init__(self, terminals=None, nonterminals=None, rules=None):
         if isinstance(terminals, str):
             temp = []
             for ch in terminals:

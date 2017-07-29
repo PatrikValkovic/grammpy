@@ -10,7 +10,7 @@ from unittest import TestCase, main
 from grammpy.RawGrammar import RawGrammar as Grammar
 from grammpy import Nonterminal
 from grammpy.exceptions import NotNonterminalException
-
+from grammpy.Terminal import Terminal
 
 class TempClass(Nonterminal):
     pass
@@ -100,6 +100,13 @@ class NonterminalsInvalidTest(TestCase):
         gr = Grammar()
         with self.assertRaises(NotNonterminalException):
             gr.get_nonterm([TempClass, "asdf"])
+
+    def test_rawTermMethod(self):
+        gr = Grammar()
+        gr.add_term([TempClass, 'a', 0])
+        self.assertEqual(gr.term(['a'])[0].s,'a')
+        self.assertIsInstance(gr.term([0])[0],Terminal)
+        self.assertIsNone(gr.term(['asdf'])[0])
 
 
 
