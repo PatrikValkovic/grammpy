@@ -27,7 +27,10 @@ class StringGrammar(Grammar):
         return super().term(StringGrammar.__to_string_arr(term))
 
     def get_term(self, term=None):
-        return super().get_term(StringGrammar.__to_string_arr(term))
+        res = super().get_term(StringGrammar.__to_string_arr(term))
+        if isinstance(term, str):
+            return res[0]
+        return res
 
     def have_term(self, term):
         return super().have_term(StringGrammar.__to_string_arr(term))
