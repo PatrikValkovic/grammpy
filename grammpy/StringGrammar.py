@@ -13,15 +13,15 @@ from .RawGrammar import RawGrammar as Grammar
 class StringGrammar(Grammar):
     @staticmethod
     def __to_string_arr(t):
-        if isinstance(t,str):
+        if isinstance(t, str):
             return [t]
         return t
 
     def remove_term(self, term=None):
-        super().remove_term(StringGrammar.__to_string_arr(term))
+        return super().remove_term(StringGrammar.__to_string_arr(term))
 
     def add_term(self, term):
-        super().add_term(StringGrammar.__to_string_arr(term))
+        return super().add_term(StringGrammar.__to_string_arr(term))
 
     def term(self, term=None):
         return super().term(StringGrammar.__to_string_arr(term))

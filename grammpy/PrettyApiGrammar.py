@@ -11,7 +11,7 @@ from .StringGrammar import StringGrammar as Grammar
 
 
 class PrettyApiGrammar(Grammar):
-    def __init__(self, terminals=[], nonterminals=None, rules=None):
+    def __init__(self, terminals=None, nonterminals=None, rules=None):
         if isinstance(terminals, str):
             temp = []
             for ch in terminals:

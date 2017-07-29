@@ -37,7 +37,8 @@ class RawGrammar:
             item = self.__terminals.get(term)
             return Terminal(item, self) if item is not None else None
         vals = []
-        for t in self.__terminals.get(term):
+        obtain = self.__terminals.get(term)
+        for t in obtain:
             vals.append(Terminal(t, self) if t is not None else None)
         return vals
 

@@ -39,7 +39,7 @@ class TerminalIterationTest(TestCase):
         gr.add_term([0, 'a', TempClass])
         s = set(term.s for term in gr.get_term())
         for i in [0, 'a', TempClass]:
-            self.assertTrue(i in s)
+            self.assertIn(i, s)
 
 
 if __name__ == '__main__':
