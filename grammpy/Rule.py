@@ -9,20 +9,25 @@ Part of grammpy
 
 from .Constants import EPSILON
 
+
 class Rule:
     right = [EPSILON]
     left = [EPSILON]
     rule = ([EPSILON], [EPSILON])
     rules = [([EPSILON], [EPSILON])]
 
-    def is_regular(self):
+    @staticmethod
+    def is_regular():
         return False
 
-    def is_contextfree(self):
+    @staticmethod
+    def is_contextfree():
         return False
 
-    def is_context(self):
+    @staticmethod
+    def is_context():
         return False
 
-    def is_unrestricted(self):
+    @staticmethod
+    def is_unrestricted():
         return False
