@@ -11,7 +11,9 @@ from .Constants import EPSILON
 
 
 class Rule:
-    #TODO rules -> rule -> left/right -> rules
+    #TODO rules -> rule -> left/right -> fromSymbol/toSymbol -> rules
+    fromSymbol = EPSILON
+    toSymbol = EPSILON
     right = [EPSILON]
     left = [EPSILON]
     rule = ([EPSILON], [EPSILON])
