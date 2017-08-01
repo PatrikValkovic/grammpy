@@ -76,7 +76,7 @@ class Rule:
     @CP
     def rule(cls):
         if cls.__traverse:
-            return ([cls.left], [cls.right])
+            return (cls.left, cls.right)
         if len(cls.rules) > 1:
             raise CantCreateSingleRuleException(cls)
         return cls.rules[0]
@@ -89,8 +89,6 @@ class Rule:
         return [r]
 
     __traverse = False
-
-
 
     __active = True
 

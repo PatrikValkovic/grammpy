@@ -51,11 +51,11 @@ class FromRuleComputeTest(TestCase):
 
     def test_multiple(self):
         self.assertEqual(Multiple.left, [0, 1, 2])
-        self.assertEqual(ThreeLeft.right, [3, 4])
+        self.assertEqual(Multiple.right, [3, 4])
         with self.assertRaises(NotASingleSymbolException):
-            x = ThreeLeft.fromSymbol
+            x = Multiple.fromSymbol
         with self.assertRaises(NotASingleSymbolException):
-            x = ThreeLeft.toSymbol
+            x = Multiple.toSymbol
 
 
 if __name__ == '__main__':
