@@ -6,6 +6,3 @@
 Part of grammpy
 
 """
-
-EPSILON = object()
-EPS = EPSILON
