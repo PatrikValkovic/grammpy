@@ -36,3 +36,7 @@ class Rule:
     @staticmethod
     def is_unrestricted():
         return False
+
+    @staticmethod
+    def rules_count():
+        return 1

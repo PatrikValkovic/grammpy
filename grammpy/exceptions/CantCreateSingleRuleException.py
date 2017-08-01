@@ -10,6 +10,6 @@ Part of grammpy
 from .CannotConvertException import CannotConvertException
 
 
-class NotASingleSymbolException(CannotConvertException):
-    def __init__(self, symbols):
-        self.symbols = symbols
+class CantCreateSingleRuleException(CannotConvertException):
+    def __init__(self, rules):
+        self.rules = rules
