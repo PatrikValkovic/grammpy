@@ -39,4 +39,4 @@ class Rule:
 
     @staticmethod
     def rules_count():
-        return 1
+        raise NotImplementedError()
