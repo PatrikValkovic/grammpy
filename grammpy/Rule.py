@@ -7,8 +7,7 @@ Part of grammpy
 
 """
 
-from grammpy import EPSILON
-
+from .Constants import EPSILON
 
 class Rule:
     right = [EPSILON]

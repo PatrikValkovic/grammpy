@@ -10,6 +10,4 @@ Part of grammpy
 from .Grammars.PrettyApiGrammar import PrettyApiGrammar as Grammar
 from .Nonterminal import Nonterminal
 from .Rule import Rule
-
-EPSILON = object()
-EPS = EPSILON
+from .Constants import EPSILON, EPS
