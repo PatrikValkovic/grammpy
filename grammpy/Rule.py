@@ -85,22 +85,6 @@ class Rule:
 
     __active = True
 
-    @staticmethod
-    def is_regular():
-        return False
-
-    @staticmethod
-    def is_contextfree():
-        return False
-
-    @staticmethod
-    def is_context():
-        return False
-
-    @staticmethod
-    def is_unrestricted():
-        return False
-
     @classmethod
     def rules_count(cls):
         return len(cls.rules)
