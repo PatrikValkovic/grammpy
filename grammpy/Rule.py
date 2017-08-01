@@ -11,18 +11,11 @@ from .exceptions import CantCreateSingleRuleException, RuleNotDefinedException, 
 
 
 class CP(object):
-    def __init__(self, getter, setter=None):
+    def __init__(self, getter):
         self._getter = getter
-        self._setter = setter
-
-    def setter(self, setter):
-        self._setter = setter
 
     def __get__(self, obj, cls=None):
         return self._getter(cls)  # for static remove cls from the call
-
-    def __set__(self, *args):
-        print(args)
 
 
 class Rule:
