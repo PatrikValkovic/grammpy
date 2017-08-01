@@ -28,8 +28,8 @@ class FromSymbolComputeTest(TestCase):
     def test_rule_simple(self):
         r = Simple.rule
         self.assertIsInstance(r, tuple)
-        self.assertEqual(r[0][0], [0])
-        self.assertEqual(r[0][1], [1])
+        self.assertEqual(r[0], [0])
+        self.assertEqual(r[1], [1])
 
     def test_leftRight_simple(self):
         self.assertEqual(Simple.left, [0])

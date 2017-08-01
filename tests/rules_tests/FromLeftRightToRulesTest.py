@@ -44,8 +44,8 @@ class FromLeftRIghtToRulesTest(TestCase):
     def test_rule_simple(self):
         r = Simple.rule
         self.assertIsInstance(r, tuple)
-        self.assertEqual(r[0][0], [0])
-        self.assertEqual(r[0][1], [1])
+        self.assertEqual(r[0], [0])
+        self.assertEqual(r[1], [1])
 
     def test_symbol_simple(self):
         self.assertEqual(Simple.fromSymbol, 0)
@@ -62,8 +62,8 @@ class FromLeftRIghtToRulesTest(TestCase):
     def test_rule_twoRight(self):
         r = TwoRight.rule
         self.assertIsInstance(r, tuple)
-        self.assertEqual(r[0][0], [0])
-        self.assertEqual(r[0][1], [1, 2])
+        self.assertEqual(r[0], [0])
+        self.assertEqual(r[1], [1, 2])
 
     def test_symbol_twoRight(self):
         self.assertEqual(TwoRight.fromSymbol, 0)
@@ -81,8 +81,8 @@ class FromLeftRIghtToRulesTest(TestCase):
     def test_rule_threeLeft(self):
         r = ThreeLeft.rule
         self.assertIsInstance(r, tuple)
-        self.assertEqual(r[0][0], [0, 1, 2])
-        self.assertEqual(r[0][1], [3])
+        self.assertEqual(r[0], [0, 1, 2])
+        self.assertEqual(r[1], [3])
 
     def test_symbol_threeLeft(self):
         with self.assertRaises(NotASingleSymbolException):
@@ -100,8 +100,8 @@ class FromLeftRIghtToRulesTest(TestCase):
     def test_rule_multiple(self):
         r = Multiple.rule
         self.assertIsInstance(r, tuple)
-        self.assertEqual(r[0][0], [0, 1, 2])
-        self.assertEqual(r[0][1], [3, 4])
+        self.assertEqual(r[0], [0, 1, 2])
+        self.assertEqual(r[1], [3, 4])
 
     def test_symbol_multiple(self):
         with self.assertRaises(NotASingleSymbolException):
