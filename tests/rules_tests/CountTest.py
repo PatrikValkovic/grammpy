@@ -68,5 +68,16 @@ class CountTest(TestCase):
             toSymbol = 1
         self.assertEqual(tmp.rules_count(), 1)
 
+    def test_oneSymbols_count(self):
+        class tmp(Rule):
+            fromSymbol = 0
+            toSymbol = 1
+        self.assertEqual(tmp.count(), 1)
+
+    def test_threeRules_count(self):
+        class tmp(Rule):
+            rules = [([0, 1], [2]), ([3], [4, 5]), ([6], [7])]
+        self.assertEqual(tmp.count(), 3)
+
 if __name__ == '__main__':
     main()
