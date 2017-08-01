@@ -11,13 +11,22 @@ from .Constants import EPSILON
 
 
 class Rule:
-    #TODO rules -> rule -> left/right -> fromSymbol/toSymbol -> rules
+    # TODO rules -> rule -> left/right -> fromSymbol/toSymbol -> rules
+    """
     fromSymbol = EPSILON
     toSymbol = EPSILON
     right = [EPSILON]
     left = [EPSILON]
     rule = ([EPSILON], [EPSILON])
     rules = [([EPSILON], [EPSILON])]
+    """
+
+    fromSymbol = None
+    toSymbol = None
+    right = None
+    left = None
+    rule = None
+    rules = None
 
     __active = True
 
@@ -37,6 +46,6 @@ class Rule:
     def is_unrestricted():
         return False
 
-    @staticmethod
-    def rules_count():
-        raise NotImplementedError()
+    @classmethod
+    def rules_count(cls):
+        return len(cls.rules)
