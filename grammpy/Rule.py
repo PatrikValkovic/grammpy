@@ -7,11 +7,26 @@ Part of grammpy
 
 """
 
-from .Constants import EPSILON
+from .exceptions import CantCreateSingleRuleException, RuleNotDefinedException, NotASingleSymbolException
+
+
+class CP(object):
+    def __init__(self, getter, setter=None):
+        self._getter = getter
+        self._setter = setter
+
+    def setter(self, setter):
+        self._setter = setter
+
+    def __get__(self, obj, cls=None):
+        print('__get__', obj, cls)
+        return self._getter(cls)  # for static remove cls from the call
+
+    def __set__(self, *args):
+        print(args)
 
 
 class Rule:
-    # TODO rules -> rule -> left/right -> fromSymbol/toSymbol -> rules
     """
     fromSymbol = EPSILON
     toSymbol = EPSILON
@@ -21,12 +36,62 @@ class Rule:
     rules = [([EPSILON], [EPSILON])]
     """
 
-    fromSymbol = None
-    toSymbol = None
-    right = None
-    left = None
-    rule = None
-    rules = None
+    @CP
+    def toSymbol(cls):
+        if cls.__traverse:
+            raise RuleNotDefinedException(cls)
+        if len(cls.rules) > 1:
+            raise CantCreateSingleRuleException(cls)
+        right = cls.rules[0][1]
+        if len(right) > 1:
+            raise NotASingleSymbolException(right)
+        return right[0]
+
+    @CP
+    def fromSymbol(cls):
+        if cls.__traverse:
+            raise RuleNotDefinedException(cls)
+        if len(cls.rules) > 1:
+            raise CantCreateSingleRuleException(cls)
+        left = cls.rules[0][0]
+        if len(left) > 1:
+            raise NotASingleSymbolException(left)
+        return left[0]
+
+    @CP
+    def right(cls):
+        if cls.__traverse:
+            return [cls.toSymbol]
+        if len(cls.rules) > 1:
+            raise CantCreateSingleRuleException(cls)
+        return cls.rules[0][1]
+
+    @CP
+    def left(cls):
+        if cls.__traverse:
+            return [cls.fromSymbol]
+        if len(cls.rules) > 1:
+            raise CantCreateSingleRuleException(cls)
+        return cls.rules[0][0]
+
+    @CP
+    def rule(cls):
+        if cls.__traverse:
+            return ([cls.left], [cls.right])
+        if len(cls.rules) > 1:
+            raise CantCreateSingleRuleException(cls)
+        return cls.rules[0]
+
+    @CP
+    def rules(cls):
+        cls.__traverse = True
+        r = cls.rule
+        cls.__traverse = False
+        return [r]
+
+    __traverse = False
+
+
 
     __active = True
 
