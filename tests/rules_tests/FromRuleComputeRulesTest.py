@@ -27,7 +27,7 @@ class Multiple(Rule):
     rule = ([0, 1, 2], [3, 4])
 
 
-class FromRuleComputeTest(TestCase):
+class FromRuleComputeRulesTest(TestCase):
     def test_rules_single(self):
         r = Single.rules
         self.assertIsInstance(r, list)
