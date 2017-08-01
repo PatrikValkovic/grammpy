@@ -11,10 +11,13 @@ from .Constants import EPSILON
 
 
 class Rule:
+    #TODO rules -> rule -> left/right -> rules
     right = [EPSILON]
     left = [EPSILON]
     rule = ([EPSILON], [EPSILON])
     rules = [([EPSILON], [EPSILON])]
+
+    __active = True
 
     @staticmethod
     def is_regular():
