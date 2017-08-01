@@ -7,6 +7,23 @@ Part of grammpy
 
 """
 
+from grammpy import EPSILON
+
 
 class Rule:
-    pass
+    right = [EPSILON]
+    left = [EPSILON]
+    rule = ([EPSILON], [EPSILON])
+    rules = [([EPSILON], [EPSILON])]
+
+    def is_regular(self):
+        return False
+
+    def is_contextfree(self):
+        return False
+
+    def is_context(self):
+        return False
+
+    def is_unrestricted(self):
+        return False
