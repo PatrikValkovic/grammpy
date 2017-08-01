@@ -7,10 +7,12 @@ Part of grammpy
 
 """
 from unittest import TestCase, main
-from grammpy.RawGrammar import RawGrammar as Grammar
+
 from grammpy import Nonterminal
-from grammpy.exceptions import NotNonterminalException
+from grammpy.Grammars.RawGrammar import RawGrammar as Grammar
 from grammpy.Terminal import Terminal
+from grammpy.exceptions import NotNonterminalException
+
 
 class TempClass(Nonterminal):
     pass

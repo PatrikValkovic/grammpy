@@ -7,7 +7,7 @@ Part of grammpy
 
 """
 
-from .StringGrammar import StringGrammar as Grammar
+from grammpy.Grammars.StringGrammar import StringGrammar as Grammar
 
 
 class PrettyApiGrammar(Grammar):

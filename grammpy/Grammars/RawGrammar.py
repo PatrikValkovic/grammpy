@@ -7,10 +7,10 @@ Part of grammpy
 
 """
 import inspect
-from .Terminal import Terminal
-from .Nonterminal import Nonterminal
-from .HashContainer import HashContainer
-from .exceptions import NotNonterminalException
+from grammpy.Terminal import Terminal
+from grammpy.Nonterminal import Nonterminal
+from grammpy.HashContainer import HashContainer
+from grammpy.exceptions import NotNonterminalException
 
 
 class RawGrammar:
