@@ -19,7 +19,6 @@ class CP(object):
         self._setter = setter
 
     def __get__(self, obj, cls=None):
-        print('__get__', obj, cls)
         return self._getter(cls)  # for static remove cls from the call
 
     def __set__(self, *args):
