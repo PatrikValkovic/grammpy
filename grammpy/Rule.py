@@ -49,3 +49,7 @@ class Rule:
     @classmethod
     def rules_count(cls):
         return len(cls.rules)
+
+    @classmethod
+    def count(cls):
+        return cls.rules_count()
