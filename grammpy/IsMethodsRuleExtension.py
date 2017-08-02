@@ -13,20 +13,20 @@ from .Rule import Rule
 class IsMethodsRuleExtension(Rule):
     @classmethod
     def is_regular(cls):
-        return False
+        raise NotImplementedError()
 
     @classmethod
     def is_contextfree(cls):
-        return False
+        raise NotImplementedError()
 
     @classmethod
     def is_context(cls):
-        return False
+        raise NotImplementedError()
 
     @classmethod
     def is_unrestricted(cls):
-        return False
+        raise NotImplementedError()
 
     @classmethod
     def is_valid(cls):
-        return False
+        raise NotImplementedError()
