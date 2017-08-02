@@ -36,6 +36,8 @@ class IsMethodsRuleExtension(Rule):
     def _controlSide(cls, side, grammar: Grammar):
         if not isinstance(side, list):
             raise RuleSyntaxException(cls, 'One side of rule is not enclose by list', side)
+        if len(side) == 0:
+            raise RuleSyntaxException(cls, 'One side of rule is not define', side)
         if EPS in side and len(side) > 1:
             raise UselessEpsilonException(cls)
         for symb in side:
