@@ -15,3 +15,4 @@ from .CantCreateSingleRuleException import CantCreateSingleRuleException
 from .CannotConvertException import CannotConvertException
 from .CannotConvertException import CannotConvertException
 from .RuleException import RuleException
+from .RuleSyntaxException import RuleSyntaxException
