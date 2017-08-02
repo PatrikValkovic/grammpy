@@ -11,6 +11,8 @@ from .Rule import Rule
 from .exceptions import RuleException, UselessEpsilonException, RuleSyntaxException, TerminalDoesNotExistsException, \
     NonterminalDoesNotExistsException
 from .Constants import EPS
+from .Nonterminal import Nonterminal
+from . import Grammar
 
 
 class IsMethodsRuleExtension(Rule):
@@ -31,12 +33,18 @@ class IsMethodsRuleExtension(Rule):
         raise NotImplementedError()
 
     @staticmethod
-    def _controlSide(cls, side, grammar):
+    def _controlSide(cls, side, grammar: Grammar):
         if not isinstance(side, list):
             raise RuleSyntaxException(cls, 'One side of rule is not enclose by list', side)
         if EPS in side and len(side) > 1:
             raise UselessEpsilonException(cls)
-        
+        for symb in side:
+            if issubclass(symb, Nonterminal) and not grammar.have_nonterm(symb):
+                raise NonterminalDoesNotExistsException(cls, symb, grammar)
+            if symb is EPS:
+                continue
+            if not grammar.have_term(symb):
+                raise TerminalDoesNotExistsException(cls, symb, grammar)
 
     @classmethod
     def validate(cls, grammar):
