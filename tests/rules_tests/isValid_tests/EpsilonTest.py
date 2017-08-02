@@ -19,12 +19,14 @@ class EpsilonTest(TestCase):
             rules = [([EPS], [EPS])]
         with self.assertRaises(UselessEpsilonException):
             tmp.validate(grammar)
+        self.assertFalse(tmp.is_valid(grammar))
 
     def test_epsilonInRule(self):
         class tmp(Rule):
             rules = [([NThird], [0, EPS])]
         with self.assertRaises(UselessEpsilonException):
             tmp.validate(grammar)
+        self.assertFalse(tmp.is_valid(grammar))
 
     def test_rewriteToEpsilon(self):
         class tmp(Rule):
@@ -36,12 +38,14 @@ class EpsilonTest(TestCase):
             rules = [([NThird], [EPS, 1, TSecond])]
         with self.assertRaises(UselessEpsilonException):
             tmp.validate(grammar)
+        self.assertFalse(tmp.is_valid(grammar))
 
     def test_epsilonOnLeft(self):
         class tmp(Rule):
             rules = [([NThird, EPS], [0, 1])]
         with self.assertRaises(UselessEpsilonException):
             tmp.validate(grammar)
+        self.assertFalse(tmp.is_valid(grammar))
 
     def test_epsilonRewriteFromLeft(self):
         class tmp(Rule):
@@ -54,6 +58,7 @@ class EpsilonTest(TestCase):
                      ([NThird], [EPS, 1, TSecond])]
         with self.assertRaises(UselessEpsilonException):
             tmp.validate(grammar)
+        self.assertFalse(tmp.is_valid(grammar))
 
     def test_epsilonOnRightInMoreRules(self):
         class tmp(Rule):
@@ -61,6 +66,7 @@ class EpsilonTest(TestCase):
                      ([NThird, EPS], [0, 1])]
         with self.assertRaises(UselessEpsilonException):
             tmp.validate(grammar)
+        self.assertFalse(tmp.is_valid(grammar))
 
 
 if __name__ == '__main__':

@@ -19,60 +19,70 @@ class InvalidSyntaxTest(TestCase):
             rules = ([0], [1])
         with self.assertRaises(RuleSyntaxException):
             tmp.validate(grammar)
+        self.assertFalse(tmp.is_valid(grammar))
 
     def test_rulesMissingTuple(self):
         class tmp(Rule):
             rules = [[0], [1]]
         with self.assertRaises(RuleSyntaxException):
             tmp.validate(grammar)
+        self.assertFalse(tmp.is_valid(grammar))
 
     def test_rulesMissingInnerLeftList(self):
         class tmp(Rule):
             rules = [(0, [1])]
         with self.assertRaises(RuleSyntaxException):
             tmp.validate(grammar)
+        self.assertFalse(tmp.is_valid(grammar))
 
     def test_rulesMissingInnerRightList(self):
         class tmp(Rule):
             rules = [([0], 1)]
         with self.assertRaises(RuleSyntaxException):
             tmp.validate(grammar)
+        self.assertFalse(tmp.is_valid(grammar))
 
     def test_multipleRulesMissingInnerLeftList(self):
         class tmp(Rule):
             rules = [(NFirst, TSecond), (0, [1])]
         with self.assertRaises(RuleSyntaxException):
             tmp.validate(grammar)
+        self.assertFalse(tmp.is_valid(grammar))
 
     def test_multipleRulesMissingInnerRightList(self):
         class tmp(Rule):
             rules = [(NFifth, TFirst), ([0], 1)]
         with self.assertRaises(RuleSyntaxException):
             tmp.validate(grammar)
+        self.assertFalse(tmp.is_valid(grammar))
 
     def test_emptyRule(self):
         class tmp(Rule):
             rules = [([], [])]
         with self.assertRaises(RuleSyntaxException):
             tmp.validate(grammar)
+        self.assertFalse(tmp.is_valid(grammar))
 
     def test_emptyOneOfRules(self):
         class tmp(Rule):
             rules = [(NFifth, TFirst), ([], [])]
         with self.assertRaises(RuleSyntaxException):
             tmp.validate(grammar)
+        self.assertFalse(tmp.is_valid(grammar))
 
     def test_onlyOuterArray(self):
         class tmp(Rule):
             rules = [NFifth, TFirst]
         with self.assertRaises(RuleSyntaxException):
             tmp.validate(grammar)
+        self.assertFalse(tmp.is_valid(grammar))
 
     def test_outerIsTuple(self):
         class tmp(Rule):
             rules = (([NFirst], [TSecond]), ([0], [1]))
         with self.assertRaises(RuleSyntaxException):
             tmp.validate(grammar)
+        self.assertFalse(tmp.is_valid(grammar))
 
 
 if __name__ == '__main__':
