@@ -30,7 +30,7 @@ class Rule:
 
     @CP
     def toSymbol(cls):
-        if cls.__traverse:
+        if cls._traverse:
             raise RuleNotDefinedException(cls)
         if len(cls.rules) > 1:
             raise CantCreateSingleRuleException(cls)
@@ -41,7 +41,7 @@ class Rule:
 
     @CP
     def fromSymbol(cls):
-        if cls.__traverse:
+        if cls._traverse:
             raise RuleNotDefinedException(cls)
         if len(cls.rules) > 1:
             raise CantCreateSingleRuleException(cls)
@@ -52,7 +52,7 @@ class Rule:
 
     @CP
     def right(cls):
-        if cls.__traverse:
+        if cls._traverse:
             return [cls.toSymbol]
         if len(cls.rules) > 1:
             raise CantCreateSingleRuleException(cls)
@@ -60,7 +60,7 @@ class Rule:
 
     @CP
     def left(cls):
-        if cls.__traverse:
+        if cls._traverse:
             return [cls.fromSymbol]
         if len(cls.rules) > 1:
             raise CantCreateSingleRuleException(cls)
@@ -68,7 +68,7 @@ class Rule:
 
     @CP
     def rule(cls):
-        if cls.__traverse:
+        if cls._traverse:
             return (cls.left, cls.right)
         if len(cls.rules) > 1:
             raise CantCreateSingleRuleException(cls)
@@ -76,14 +76,14 @@ class Rule:
 
     @CP
     def rules(cls):
-        cls.__traverse = True
+        cls._traverse = True
         r = cls.rule
-        cls.__traverse = False
+        cls._traverse = False
         return [r]
 
-    __traverse = False
+    _traverse = False
 
-    __active = True
+    _active = True
 
     @classmethod
     def rules_count(cls):

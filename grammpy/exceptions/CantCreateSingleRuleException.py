@@ -7,9 +7,9 @@ Part of grammpy
 
 """
 
-from .CannotConvertException import CannotConvertException
+from .RuleException import RuleException
 
 
-class CantCreateSingleRuleException(CannotConvertException):
+class CantCreateSingleRuleException(RuleException):
     def __init__(self, rules):
         self.rules = rules

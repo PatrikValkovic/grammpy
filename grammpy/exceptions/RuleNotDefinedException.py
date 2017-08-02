@@ -7,9 +7,9 @@ Part of grammpy
 
 """
 
-from .GrammpyException import GrammpyException
+from .RuleException import RuleException
 
 
-class RuleNotDefinedException(GrammpyException):
+class RuleNotDefinedException(RuleException):
     def __init__(self, rule):
         self.rule = rule
