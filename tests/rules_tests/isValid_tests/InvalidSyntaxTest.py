@@ -84,6 +84,20 @@ class InvalidSyntaxTest(TestCase):
             tmp.validate(grammar)
         self.assertFalse(tmp.is_valid(grammar))
 
+    def test_threeParts(self):
+        class tmp(Rule):
+            rules = [([NFirst], [TSecond], [NFifth])]
+        with self.assertRaises(RuleSyntaxException):
+            tmp.validate(grammar)
+        self.assertFalse(tmp.is_valid(grammar))
+
+    def test_threePartsInMultiple(self):
+        class tmp(Rule):
+            rules = [([0], [1]), ([NFirst], [TSecond], [NFifth])]
+        with self.assertRaises(RuleSyntaxException):
+            tmp.validate(grammar)
+        self.assertFalse(tmp.is_valid(grammar))
+
 
 if __name__ == '__main__':
     main()
