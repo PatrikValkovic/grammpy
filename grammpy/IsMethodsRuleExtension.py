@@ -41,12 +41,15 @@ class IsMethodsRuleExtension(Rule):
         if EPS in side and len(side) > 1:
             raise UselessEpsilonException(cls)
         for symb in side:
-            if issubclass(symb, Nonterminal) and not grammar.have_nonterm(symb):
-                raise NonterminalDoesNotExistsException(cls, symb, grammar)
-            if symb is EPS:
+            if issubclass(symb, Nonterminal):
+                if not grammar.have_nonterm(symb):
+                    raise NonterminalDoesNotExistsException(cls, symb, grammar)
+            elif symb is EPS:
                 continue
-            if not grammar.have_term(symb):
+            elif not grammar.have_term(symb):
                 raise TerminalDoesNotExistsException(cls, symb, grammar)
+            else:
+                raise RuleSyntaxException(cls, 'Could not specify symbol type', symb)
 
     @classmethod
     def validate(cls, grammar):
