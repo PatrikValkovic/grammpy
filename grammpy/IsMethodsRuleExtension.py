@@ -64,6 +64,8 @@ class IsMethodsRuleExtension(Rule):
             r = rule[1]
             IsMethodsRuleExtension._controlSide(cls, l, grammar)
             IsMethodsRuleExtension._controlSide(cls, r, grammar)
+            if l == [EPS] and r == [EPS]:
+                raise UselessEpsilonException(cls)
 
     @classmethod
     def is_valid(cls, grammar):
