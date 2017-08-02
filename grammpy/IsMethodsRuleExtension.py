@@ -54,7 +54,7 @@ class IsMethodsRuleExtension(Rule):
         if not isinstance(r, list):
             raise RuleSyntaxException(cls, 'Rules property is not enclose in list')
         for rule in r:
-            if not isinstance(rule, list):
+            if not isinstance(rule, tuple):
                 raise RuleSyntaxException(cls, 'One of the rules is not enclose in tuple', rule)
             if len(rule) != 2:
                 raise RuleSyntaxException(cls, 'One of the rules does not have define left and right part', rule)
