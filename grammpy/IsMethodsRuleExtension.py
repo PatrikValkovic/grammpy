@@ -28,5 +28,9 @@ class IsMethodsRuleExtension(Rule):
         raise NotImplementedError()
 
     @classmethod
+    def validate(cls, grammar):
+        raise NotImplementedError()
+
+    @classmethod
     def is_valid(cls, grammar):
         raise NotImplementedError()
