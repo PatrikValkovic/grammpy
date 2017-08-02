@@ -10,7 +10,8 @@ Part of grammpy
 from .RuleException import RuleException
 
 class RuleSyntaxException(RuleException):
-    def __init__(self, rule, message):
+    def __init__(self, rule, message, additional = None):
         super().__init__(rule)
         self.message = message
+        self.additional = additional
 
