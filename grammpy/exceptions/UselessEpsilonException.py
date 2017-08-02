@@ -12,4 +12,4 @@ from .RuleSyntaxException import RuleSyntaxException
 
 class UselessEpsilonException(RuleSyntaxException):
     def __init__(self, rule):
-        super().__init__(rule)
+        super().__init__(rule, 'Usage of epsilon in this context if useless')
