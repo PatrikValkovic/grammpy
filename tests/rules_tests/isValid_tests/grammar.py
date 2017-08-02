@@ -51,4 +51,4 @@ grammar = _G(terminals=[0, 1, 2,
                         'a', 'b', 'c',
                         TFirst, TSecond, TThird,
                         TInstFirst, TInstSecond, TInstThird],
-             nonterminals=[NFifth, NSecond, NThird, NFourth, NFifth])
+             nonterminals=[NFirst, NSecond, NThird, NFourth, NFifth])
