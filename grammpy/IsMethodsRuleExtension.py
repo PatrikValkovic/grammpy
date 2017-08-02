@@ -9,8 +9,8 @@ Part of grammpy
 
 from .Rule import Rule
 
-class IsMethodsRuleExtension(Rule):
 
+class IsMethodsRuleExtension(Rule):
     @classmethod
     def is_regular(cls):
         return False
@@ -25,4 +25,8 @@ class IsMethodsRuleExtension(Rule):
 
     @classmethod
     def is_unrestricted(cls):
+        return False
+
+    @classmethod
+    def is_valid(cls):
         return False
