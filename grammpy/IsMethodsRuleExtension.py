@@ -17,22 +17,6 @@ from . import Grammar
 
 
 class IsMethodsRuleExtension(Rule):
-    @classmethod
-    def is_regular(cls):
-        raise NotImplementedError()
-
-    @classmethod
-    def is_contextfree(cls):
-        raise NotImplementedError()
-
-    @classmethod
-    def is_context(cls):
-        raise NotImplementedError()
-
-    @classmethod
-    def is_unrestricted(cls):
-        raise NotImplementedError()
-
     @staticmethod
     def _controlSide(cls, side, grammar: Grammar):
         if not isinstance(side, list):
