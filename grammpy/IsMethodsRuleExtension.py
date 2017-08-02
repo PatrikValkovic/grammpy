@@ -10,6 +10,7 @@ Part of grammpy
 from .Rule import Rule
 from .exceptions import RuleException, UselessEpsilonException, RuleSyntaxException, TerminalDoesNotExistsException, \
     NonterminalDoesNotExistsException
+from .Constants import EPS
 
 
 class IsMethodsRuleExtension(Rule):
@@ -31,18 +32,22 @@ class IsMethodsRuleExtension(Rule):
 
     @staticmethod
     def _controlSide(cls, side, grammar):
-        raise NotImplementedError()
+        if not isinstance(side, list):
+            raise RuleSyntaxException(cls, 'One side of rule is not enclose by list', side)
+        if EPS in side and len(side) > 1:
+            raise UselessEpsilonException(cls)
+        
 
     @classmethod
     def validate(cls, grammar):
         r = cls.rules
         if not isinstance(r, list):
-            raise RuleSyntaxException(cls, 'Rules property is not enclosed in list')
+            raise RuleSyntaxException(cls, 'Rules property is not enclose in list')
         for rule in r:
             if not isinstance(rule, list):
-                raise RuleSyntaxException(cls, 'One of the rules is not enclosed in tuple', rule)
+                raise RuleSyntaxException(cls, 'One of the rules is not enclose in tuple', rule)
             if len(rule) != 2:
-                raise RuleSyntaxException(cls, 'One of the rules does not have defined left and right part', rule)
+                raise RuleSyntaxException(cls, 'One of the rules does not have define left and right part', rule)
             l = rule[0]
             r = rule[1]
             IsMethodsRuleExtension._controlSide(cls, l, grammar)
