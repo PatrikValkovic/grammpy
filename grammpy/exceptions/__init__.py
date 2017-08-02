@@ -16,3 +16,5 @@ from .CannotConvertException import CannotConvertException
 from .RuleException import RuleException
 from .RuleSyntaxException import RuleSyntaxException
 from .UselessEpsilonException import UselessEpsilonException
+from .TerminalDoesNotExistsException import TerminalDoesNotExistsException
+from .NonterminalDoesNotExistsException import NonterminalDoesNotExistsException
