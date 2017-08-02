@@ -8,6 +8,7 @@ Part of grammpy
 """
 
 from .Rule import Rule
+from .exceptions.RuleException import RuleException
 
 
 class IsMethodsRuleExtension(Rule):
@@ -33,4 +34,8 @@ class IsMethodsRuleExtension(Rule):
 
     @classmethod
     def is_valid(cls, grammar):
-        raise NotImplementedError()
+        try:
+            cls.validate(grammar)
+            return True
+        except RuleException:
+            return False
