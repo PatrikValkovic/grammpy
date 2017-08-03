@@ -11,7 +11,7 @@ from ..Terminal import Terminal
 from ..Nonterminal import Nonterminal
 from ..HashContainer import HashContainer
 from ..exceptions import NotNonterminalException, NotRuleException
-from ..IsMethodsRuleExtension import IsMethodsRuleExtension
+from ..Rule import Rule
 
 
 class RawGrammar:
@@ -98,7 +98,7 @@ class RawGrammar:
     def _control_rules(self, rules):
         rules = HashContainer.to_iterable(rules)
         for rule in rules:
-            if not inspect.isclass(rule) or not issubclass(rule, IsMethodsRuleExtension):
+            if not inspect.isclass(rule) or not issubclass(rule, Rule):
                 raise NotRuleException(rule)
             rule.validate(self)
         return rules
