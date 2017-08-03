@@ -10,6 +10,7 @@ Part of grammpy
 from unittest import TestCase, main
 from grammpy import Rule as _R, Grammar, Nonterminal as _N
 from ..grammar import *
+from grammpy.exceptions import RuleSyntaxException
 
 
 class InvalidAddTest(TestCase):
@@ -22,6 +23,79 @@ class InvalidAddTest(TestCase):
         g.add_term([0, 1, 2, 'a', 'b', 'c'])
         g.add_nonterm([NFirst, NSecond, NThird, NFourth])
         self.g = g
+
+    def test_invalidSelf(self):
+        class Tmp(_R):
+            def validate(*args):
+                raise RuleSyntaxException(None, None)
+        self.assertEqual(self.g.rules_count(), 0)
+        with self.assertRaises(RuleSyntaxException):
+            self.g.have_rule(Tmp)
+        with self.assertRaises(RuleSyntaxException):
+            self.g.get_rule(Tmp)
+        with self.assertRaises(RuleSyntaxException):
+            self.g.rule(Tmp)
+        with self.assertRaises(RuleSyntaxException):
+            self.g.add_rule(Tmp)
+        self.assertEqual(self.g.rules_count(), 0)
+        with self.assertRaises(RuleSyntaxException):
+            self.g.have_rule(Tmp)
+        with self.assertRaises(RuleSyntaxException):
+            self.g.get_rule(Tmp)
+        with self.assertRaises(RuleSyntaxException):
+            self.g.rule(Tmp)
+
+    def test_invalidFirstInArray(self):
+        class Tmp(_R):
+            def validate(*args):
+                raise RuleSyntaxException(None, None)
+        class Valid(_R):
+            rule = ([NFirst], ['a', 0])
+        self.assertEqual(self.g.rules_count(), 0)
+        with self.assertRaises(RuleSyntaxException):
+            self.g.have_rule(Tmp)
+        with self.assertRaises(RuleSyntaxException):
+            self.g.get_rule(Tmp)
+        with self.assertRaises(RuleSyntaxException):
+            self.g.rule(Tmp)
+        with self.assertRaises(RuleSyntaxException):
+            self.g.add_rule([Tmp, Valid])
+        self.assertEqual(self.g.rules_count(), 0)
+        with self.assertRaises(RuleSyntaxException):
+            self.g.have_rule(Tmp)
+        with self.assertRaises(RuleSyntaxException):
+            self.g.get_rule(Tmp)
+        with self.assertRaises(RuleSyntaxException):
+            self.g.rule(Tmp)
+        self.assertFalse(self.g.have_rule(Valid))
+        self.assertIsNone(self.g.get_rule(Valid))
+        self.assertIsNone(self.g.rule(Valid))
+
+    def test_invalidSecondInArray(self):
+        class Tmp(_R):
+            def validate(*args):
+                raise RuleSyntaxException(None, None)
+        class Valid(_R):
+            rule = ([NFirst], ['a', 0])
+        self.assertEqual(self.g.rules_count(), 0)
+        with self.assertRaises(RuleSyntaxException):
+            self.g.have_rule(Tmp)
+        with self.assertRaises(RuleSyntaxException):
+            self.g.get_rule(Tmp)
+        with self.assertRaises(RuleSyntaxException):
+            self.g.rule(Tmp)
+        with self.assertRaises(RuleSyntaxException):
+            self.g.add_rule([Valid, Tmp])
+        self.assertEqual(self.g.rules_count(), 1)
+        with self.assertRaises(RuleSyntaxException):
+            self.g.have_rule(Tmp)
+        with self.assertRaises(RuleSyntaxException):
+            self.g.get_rule(Tmp)
+        with self.assertRaises(RuleSyntaxException):
+            self.g.rule(Tmp)
+        self.assertTrue(self.g.have_rule(Valid))
+        self.assertEqual(self.g.get_rule(Valid), Valid)
+        self.assertEqual(self.g.rule(Valid), Valid)
 
 
 if __name__ == '__main__':
