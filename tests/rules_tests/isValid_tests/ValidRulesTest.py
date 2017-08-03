@@ -8,8 +8,9 @@ Part of grammpy
 """
 
 from unittest import main, TestCase
+
 from grammpy import Rule, EPS
-from .grammar import *
+from rules_tests.grammar import *
 
 
 class ValidRulesTest(TestCase):

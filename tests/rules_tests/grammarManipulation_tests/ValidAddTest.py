@@ -8,23 +8,9 @@ Part of grammpy
 """
 
 from unittest import main, TestCase
-from grammpy import Rule as _R, Grammar, Nonterminal as _N
 
-
-class NFirst(_N):
-    pass
-
-
-class NSecond(_N):
-    pass
-
-
-class NThird(_N):
-    pass
-
-
-class NFourth(_N):
-    pass
+from grammpy import Rule as _R, Grammar
+from rules_tests.grammar import *
 
 
 class ValidAddTest(TestCase):

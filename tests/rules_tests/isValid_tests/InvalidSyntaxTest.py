@@ -8,9 +8,10 @@ Part of grammpy
 """
 
 from unittest import main, TestCase
+
 from grammpy import Rule
 from grammpy.exceptions import RuleSyntaxException
-from .grammar import *
+from rules_tests.grammar import *
 
 
 class InvalidSyntaxTest(TestCase):

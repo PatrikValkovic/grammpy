@@ -8,9 +8,10 @@ Part of grammpy
 """
 
 from unittest import main, TestCase
+
 from grammpy import Rule, EPS
 from grammpy.exceptions import UselessEpsilonException
-from .grammar import *
+from rules_tests.grammar import *
 
 
 class EpsilonTest(TestCase):
