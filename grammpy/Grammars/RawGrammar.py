@@ -7,10 +7,11 @@ Part of grammpy
 
 """
 import inspect
-from grammpy.Terminal import Terminal
-from grammpy.Nonterminal import Nonterminal
-from grammpy.HashContainer import HashContainer
-from grammpy.exceptions import NotNonterminalException
+from ..Terminal import Terminal
+from ..Nonterminal import Nonterminal
+from ..HashContainer import HashContainer
+from ..exceptions import NotNonterminalException, NotRuleException
+from ..IsMethodsRuleExtension import IsMethodsRuleExtension
 
 
 class RawGrammar:
@@ -48,8 +49,7 @@ class RawGrammar:
         return self.get_term(term)
 
     def terms(self):
-        return [Terminal(term,self) for term in self.__terminals.all()]
-
+        return [Terminal(term, self) for term in self.__terminals.all()]
 
     def terms_count(self):
         return self.__terminals.count()
@@ -95,23 +95,41 @@ class RawGrammar:
         return self.__nonterminals.count()
 
     # Rules part
+    def __control_rules(self, rules):
+        rules = HashContainer.to_iterable(rules)
+        for rule in rules:
+            if not inspect.isclass(rule) or not issubclass(rule, IsMethodsRuleExtension):
+                raise NotRuleException(rule)
+            rule.validate(self)
+        return rules
+
     def add_rule(self, rules):
-        raise NotImplementedError()
+        rules = self.__control_rules(rules)
+        return self.__rules.add(rules)
 
-    def remove_rule(self, nonterms=None):
-        raise NotImplementedError()
+    def remove_rule(self, rules=None):
+        if rules is None:
+            return self.__rules.remove()
+        rules = self.__control_rules(rules)
+        return self.__rules.remove(rules)
 
-    def have_rule(self, nonterms):
-        raise NotImplementedError()
+    def have_rule(self, rules):
+        rules = self.__control_rules(rules)
+        return self.__rules.have(rules)
 
-    def get_rule(self, nonterms=None):
-        raise NotImplementedError()
+    def get_rule(self, rules=None):
+        if rules is None:
+            return self.__rules.get()
+        converted = self.__control_rules(rules)
+        if not HashContainer.is_iterable(rules):
+            return self.__rules.get(converted)[0]
+        return self.__rules.get(converted)
 
-    def rule(self, nonterms=None):
-        raise NotImplementedError()
+    def rule(self, rules=None):
+        return self.get_rule(rules)
 
     def rules(self):
-        raise NotImplementedError()
+        return [rule for rule in self.__rules.get() if rule._active]
 
     def rules_count(self):
-        raise NotImplementedError()
+        return len(self.rules())
