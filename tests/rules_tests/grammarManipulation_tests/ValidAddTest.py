@@ -27,7 +27,7 @@ class NFourth(_N):
     pass
 
 
-class RuleAddingTest(TestCase):
+class ValidAddTest(TestCase):
     def __init__(self, *args):
         super().__init__(*args)
         self.g = Grammar()
