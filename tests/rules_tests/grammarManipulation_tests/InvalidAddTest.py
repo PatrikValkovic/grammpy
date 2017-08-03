@@ -86,16 +86,16 @@ class InvalidAddTest(TestCase):
             self.g.rule(Tmp)
         with self.assertRaises(RuleSyntaxException):
             self.g.add_rule([Valid, Tmp])
-        self.assertEqual(self.g.rules_count(), 1)
+        self.assertEqual(self.g.rules_count(), 0)
         with self.assertRaises(RuleSyntaxException):
             self.g.have_rule(Tmp)
         with self.assertRaises(RuleSyntaxException):
             self.g.get_rule(Tmp)
         with self.assertRaises(RuleSyntaxException):
             self.g.rule(Tmp)
-        self.assertTrue(self.g.have_rule(Valid))
-        self.assertEqual(self.g.get_rule(Valid), Valid)
-        self.assertEqual(self.g.rule(Valid), Valid)
+        self.assertFalse(self.g.have_rule(Valid))
+        self.assertIsNone(self.g.get_rule(Valid))
+        self.assertIsNone(self.g.rule(Valid))
 
 
 if __name__ == '__main__':
