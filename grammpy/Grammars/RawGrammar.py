@@ -56,7 +56,7 @@ class RawGrammar:
 
     # Non term part
     @staticmethod
-    def __controll_nonterms(nonterms):
+    def _controll_nonterms(nonterms):
         nonterms = HashContainer.to_iterable(nonterms)
         for nonterm in nonterms:
             if not inspect.isclass(nonterm) or not issubclass(nonterm, Nonterminal):
@@ -64,23 +64,23 @@ class RawGrammar:
         return nonterms
 
     def add_nonterm(self, nonterms):
-        nonterms = RawGrammar.__controll_nonterms(nonterms)
+        nonterms = RawGrammar._controll_nonterms(nonterms)
         return self.__nonterminals.add(nonterms)
 
     def remove_nonterm(self, nonterms=None):
         if nonterms is None:
             return self.__nonterminals.remove()
-        nonterms = RawGrammar.__controll_nonterms(nonterms)
+        nonterms = RawGrammar._controll_nonterms(nonterms)
         return self.__nonterminals.remove(nonterms)
 
     def have_nonterm(self, nonterms):
-        nonterms = RawGrammar.__controll_nonterms(nonterms)
+        nonterms = RawGrammar._controll_nonterms(nonterms)
         return self.__nonterminals.have(nonterms)
 
     def get_nonterm(self, nonterms=None):
         if nonterms is None:
             return self.__nonterminals.get()
-        converted = RawGrammar.__controll_nonterms(nonterms)
+        converted = RawGrammar._controll_nonterms(nonterms)
         if not HashContainer.is_iterable(nonterms):
             return self.__nonterminals.get(converted)[0]
         return self.__nonterminals.get(converted)
@@ -95,7 +95,7 @@ class RawGrammar:
         return self.__nonterminals.count()
 
     # Rules part
-    def __control_rules(self, rules):
+    def _control_rules(self, rules):
         rules = HashContainer.to_iterable(rules)
         for rule in rules:
             if not inspect.isclass(rule) or not issubclass(rule, IsMethodsRuleExtension):
@@ -104,23 +104,23 @@ class RawGrammar:
         return rules
 
     def add_rule(self, rules):
-        rules = self.__control_rules(rules)
+        rules = self._control_rules(rules)
         return self.__rules.add(rules)
 
     def remove_rule(self, rules=None):
         if rules is None:
             return self.__rules.remove()
-        rules = self.__control_rules(rules)
+        rules = self._control_rules(rules)
         return self.__rules.remove(rules)
 
     def have_rule(self, rules):
-        rules = self.__control_rules(rules)
+        rules = self._control_rules(rules)
         return self.__rules.have(rules)
 
     def get_rule(self, rules=None):
         if rules is None:
             return self.__rules.get()
-        converted = self.__control_rules(rules)
+        converted = self._control_rules(rules)
         if not HashContainer.is_iterable(rules):
             return self.__rules.get(converted)[0]
         return self.__rules.get(converted)
