@@ -92,4 +92,24 @@ class RawGrammar:
     def nonterms_count(self):
         return self.__nonterminals.count()
 
-    pass
+    # Rules part
+    def add_rule(self, rules):
+        raise NotImplementedError()
+
+    def remove_rule(self, nonterms=None):
+        raise NotImplementedError()
+
+    def have_rule(self, nonterms):
+        raise NotImplementedError()
+
+    def get_rule(self, nonterms=None):
+        raise NotImplementedError()
+
+    def rule(self, nonterms=None):
+        raise NotImplementedError()
+
+    def rules(self):
+        raise NotImplementedError()
+
+    def rules_count(self):
+        raise NotImplementedError()
