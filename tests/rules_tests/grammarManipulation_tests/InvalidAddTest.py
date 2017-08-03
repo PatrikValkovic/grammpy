@@ -8,9 +8,9 @@ Part of grammpy
 """
 
 from unittest import TestCase, main
-from grammpy import Rule as _R, Grammar, Nonterminal as _N
+from grammpy import Rule as _R, Grammar, Nonterminal as _N, Nonterminal
 from ..grammar import *
-from grammpy.exceptions import RuleSyntaxException
+from grammpy.exceptions import RuleSyntaxException, NotRuleException
 
 
 class InvalidAddTest(TestCase):
@@ -96,6 +96,20 @@ class InvalidAddTest(TestCase):
         self.assertFalse(self.g.have_rule(Valid))
         self.assertIsNone(self.g.get_rule(Valid))
         self.assertIsNone(self.g.rule(Valid))
+
+    def test_addNonRule(self):
+        with self.assertRaises(NotRuleException):
+            self.g.add_rule('asdf')
+        with self.assertRaises(NotRuleException):
+            self.g.add_rule(0)
+        class Tmp:
+            pass
+        with self.assertRaises(NotRuleException):
+            self.g.add_rule(Tmp)
+        class PseudoNon(Nonterminal):
+            pass
+        with self.assertRaises(NotRuleException):
+            self.g.add_rule(PseudoNon)
 
 
 if __name__ == '__main__':
