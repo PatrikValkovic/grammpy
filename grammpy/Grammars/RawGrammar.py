@@ -119,7 +119,7 @@ class RawGrammar:
 
     def get_rule(self, rules=None):
         if rules is None:
-            return self.__rules.get()
+            return [rule for rule in self.__rules.get() if rule._active]
         converted = self._control_rules(rules)
         if not HashContainer.is_iterable(rules):
             return self.__rules.get(converted)[0]
@@ -129,7 +129,7 @@ class RawGrammar:
         return self.get_rule(rules)
 
     def rules(self):
-        return [rule for rule in self.__rules.get() if rule._active]
+        return self.rule()
 
     def rules_count(self):
         return len(self.rules())
