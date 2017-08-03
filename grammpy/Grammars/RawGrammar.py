@@ -21,8 +21,10 @@ class RawGrammar:
         # TODO fill and add tests
         self.__terminals = HashContainer(terminals)
         self.__nonterminals = HashContainer(nonterminals)
+        self.__rules = HashContainer(rules)
 
     # Term part
+    # TODO add validation of terminals that no rule or nonterminal is passed
     def add_term(self, term):
         return self.__terminals.add(term)
 
