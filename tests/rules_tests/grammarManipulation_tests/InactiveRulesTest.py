@@ -23,6 +23,22 @@ class InactiveRulesTest(TestCase):
         g.add_nonterm([NFirst, NSecond, NThird, NFourth])
         self.g = g
 
+    def test_countWithInactive(self):
+        class Tmp1(_R):
+            rule = ([NFirst], ['a', 0])
+            _active = False
+        self.g.add_rule(Tmp1)
+        self.assertEqual(self.g.rules_count(), 0)
+        self.assertTrue(self.g.have_rule(Tmp1))
+        self.assertNotIn(Tmp1, self.g.rules())
+        class Tmp2(_R):
+            rule = ([NSecond], ['a', 0, NFourth])
+        self.g.add_rule(Tmp2)
+        self.assertEqual(self.g.rules_count(), 1)
+        self.assertTrue(self.g.have_rule(Tmp1))
+        self.assertNotIn(Tmp1, self.g.rules())
+        self.assertIn(Tmp2, self.g.rules())
+
 
 if __name__ == '__main__':
     main()
