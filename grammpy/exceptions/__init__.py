@@ -18,3 +18,4 @@ from .RuleSyntaxException import RuleSyntaxException
 from .UselessEpsilonException import UselessEpsilonException
 from .TerminalDoesNotExistsException import TerminalDoesNotExistsException
 from .NonterminalDoesNotExistsException import NonterminalDoesNotExistsException
+from .NotRuleException import NotRuleException
