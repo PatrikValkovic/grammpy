@@ -1,6 +1,6 @@
 # grammpy
 
-Current version: 0.1.0
+Current version: 1.0.0
 
 [![Build Status](https://travis-ci.org/PatrikValkovic/grammpy.svg?branch=dev)](https://travis-ci.org/PatrikValkovic/grammpy)
 [![Coverage Status](https://coveralls.io/repos/github/PatrikValkovic/grammpy/badge.svg?branch=dev)](https://coveralls.io/github/PatrikValkovic/grammpy?branch=dev)
