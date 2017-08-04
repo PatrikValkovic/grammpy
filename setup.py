@@ -4,7 +4,7 @@ from distutils.core import setup
 setup(
     name='grammpy',
     version='0.1.0',
-    packages=['grammpy'],
+    packages=['grammpy', 'grammpy.Grammars', 'grammpy.exceptions'],
     url='https://github.com/PatrikValkovic/grammpy',
     license='GNU General Public License v3.0',
     author='Patrik Valkovic',
