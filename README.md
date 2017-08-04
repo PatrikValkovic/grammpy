@@ -147,4 +147,4 @@ There are also additional libraries in development, that will integrate with thi
 
 Author: Patrik Valkovič
 
-Licence: MIT
+Licence: GNU General Public License v3.0
