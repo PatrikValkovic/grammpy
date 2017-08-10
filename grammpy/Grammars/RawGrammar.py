@@ -149,7 +149,7 @@ class RawGrammar:
     def start_get(self):
         raise NotImplementedError()
 
-    def start_set(self):
+    def start_set(self, nonterminal):
         raise NotImplementedError()
 
     def start_isSet(self):
