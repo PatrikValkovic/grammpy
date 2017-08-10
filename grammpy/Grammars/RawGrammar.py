@@ -10,7 +10,7 @@ import inspect
 from ..Terminal import Terminal
 from ..Nonterminal import Nonterminal
 from ..HashContainer import HashContainer
-from ..exceptions import NotNonterminalException, NotRuleException
+from ..exceptions import NotNonterminalException, NotRuleException, TerminalDoesNotExistsException, NonterminalDoesNotExistsException
 from ..IsMethodsRuleExtension import IsMethodsRuleExtension
 
 
@@ -117,8 +117,11 @@ class RawGrammar:
         return self.__rules.remove(rules)
 
     def have_rule(self, rules):
-        rules = self._control_rules(rules)
-        return self.__rules.have(rules)
+        try:
+            rules = self._control_rules(rules)
+            return self.__rules.have(rules)
+        except (TerminalDoesNotExistsException, NonterminalDoesNotExistsException):
+            return False
 
     def get_rule(self, rules=None):
         if rules is None:
