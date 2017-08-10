@@ -164,4 +164,4 @@ class RawGrammar:
         return self.__start_symbol is not None
 
     def start_is(self, nonterminal):
-        raise self.__start_symbol is nonterminal
+        return self.__start_symbol is nonterminal

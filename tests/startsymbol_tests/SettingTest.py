@@ -32,7 +32,6 @@ class SettingTest(TestCase):
         g = Grammar(nonterminals=[A], start_symbol=A)
         self.assertTrue(g.start_isSet())
         self.assertEqual(g.start_get(), A)
-        self.assertFalse(g.start_isSet(B))
         self.assertTrue(g.start_is(A))
 
 
