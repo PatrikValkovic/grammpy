@@ -13,12 +13,11 @@ from .exceptions import RuleException, UselessEpsilonException, RuleSyntaxExcept
     NonterminalDoesNotExistsException
 from .Constants import EPS
 from .Nonterminal import Nonterminal
-from . import Grammar
 
 
 class IsMethodsRuleExtension(Rule):
     @staticmethod
-    def _controlSide(cls, side, grammar: Grammar):
+    def _controlSide(cls, side, grammar):
         if not isinstance(side, list):
             raise RuleSyntaxException(cls, 'One side of rule is not enclose by list', side)
         if len(side) == 0:

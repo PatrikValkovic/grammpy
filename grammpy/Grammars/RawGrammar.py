@@ -10,8 +10,8 @@ import inspect
 from ..Terminal import Terminal
 from ..Nonterminal import Nonterminal
 from ..HashContainer import HashContainer
-from ..exceptions import NotNonterminalException, NotRuleException
-from ..Rule import Rule
+from ..exceptions import NotNonterminalException, NotRuleException, TerminalDoesNotExistsException, NonterminalDoesNotExistsException
+from ..IsMethodsRuleExtension import IsMethodsRuleExtension
 
 
 class RawGrammar:
@@ -19,10 +19,13 @@ class RawGrammar:
         terminals = [] if terminals is None else terminals
         nonterminals = [] if nonterminals is None else nonterminals
         rules = [] if rules is None else rules
-        # TODO fill and add tests
-        self.__terminals = HashContainer(terminals)
-        self.__nonterminals = HashContainer(nonterminals)
-        self.__rules = HashContainer(rules)
+        # TODO add tests
+        self.__terminals = HashContainer()
+        self.__nonterminals = HashContainer()
+        self.__rules = HashContainer()
+        self.add_term(terminals)
+        self.add_nonterm(nonterminals)
+        self.add_rule(rules)
 
     # Term part
     # TODO add validation of terminals that no rule or nonterminal is passed
@@ -98,7 +101,7 @@ class RawGrammar:
     def _control_rules(self, rules):
         rules = HashContainer.to_iterable(rules)
         for rule in rules:
-            if not inspect.isclass(rule) or not issubclass(rule, Rule):
+            if not inspect.isclass(rule) or not issubclass(rule, IsMethodsRuleExtension):
                 raise NotRuleException(rule)
             rule.validate(self)
         return rules
@@ -114,8 +117,11 @@ class RawGrammar:
         return self.__rules.remove(rules)
 
     def have_rule(self, rules):
-        rules = self._control_rules(rules)
-        return self.__rules.have(rules)
+        try:
+            rules = self._control_rules(rules)
+            return self.__rules.have(rules)
+        except (TerminalDoesNotExistsException, NonterminalDoesNotExistsException):
+            return False
 
     def get_rule(self, rules=None):
         if rules is None:
