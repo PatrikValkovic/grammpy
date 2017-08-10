@@ -9,7 +9,7 @@ Part of grammpy
 
 from unittest import TestCase, main
 from grammpy import *
-from grammpy.exceptions import NotNonterminalException
+from grammpy.exceptions import NotRuleException, RuleException
 
 
 class A(Nonterminal):
@@ -28,27 +28,68 @@ class D(Nonterminal):
     pass
 
 
-class NonterminalAddingTest(TestCase):
-    def test_shouldAddOneNonterminal(self):
-        g = Grammar(nonterminals=[A])
-        self.assertTrue(g.have_nonterm(A))
-        self.assertFalse(g.have_nonterm(B))
-        self.assertFalse(g.have_nonterm([A, B]))
+class RuleAtoB(Rule):
+    fromSymbol = A
+    toSymbol = B
 
-    def test_shouldAddMoreNonterminals(self):
-        g = Grammar(nonterminals=[A, B, C])
-        self.assertTrue(g.have_nonterm(A))
-        self.assertTrue(g.have_nonterm([A, B, C]))
-        self.assertFalse(g.have_nonterm(D))
 
-    def test_shouldNotAddInvalidNonterminal(self):
-        with self.assertRaises(NotNonterminalException):
-            Grammar(nonterminals=[0])
+class RuleBtoC(Rule):
+    fromSymbol = B
+    right = [C]
 
-    def test_shouldNotAddOneInvalidNonterminal(self):
-        with self.assertRaises(NotNonterminalException):
-            Grammar(nonterminals=[A, B, 1])
 
+class RuleCto0D(Rule):
+    fromSymbol = B
+    right = [0, D]
+
+
+class RuleDtoA(Rule):
+    fromSymbol = D
+    toSymbol = A
+
+
+class RuleWithoutLeftSide(Rule):
+    toSymbol = B
+
+class EmptyRule(Rule):
+    pass
+
+
+class RulesAddingTest(TestCase):
+    def test_shouldAddOneRule(self):
+        g = Grammar(nonterminals=[A, B, C, D],
+                    rules=[RuleAtoB])
+        self.assertTrue(g.have_rule(RuleAtoB))
+        self.assertFalse(g.have_rule(RuleBtoC))
+        self.assertFalse(g.have_rule([RuleAtoB, RuleCto0D]))
+
+    def test_shouldAddMoreRules(self):
+        g = Grammar(terminals=[0],
+                    nonterminals=[A, B, C, D],
+                    rules=[RuleAtoB, RuleBtoC, RuleCto0D])
+        self.assertTrue(g.have_rule(RuleAtoB))
+        self.assertTrue(g.have_rule([RuleAtoB, RuleBtoC, RuleCto0D]))
+        self.assertFalse(g.have_rule([RuleAtoB, RuleCto0D, RuleDtoA]))
+
+    def test_shouldNotAddOneNotRule(self):
+        with self.assertRaises(NotRuleException):
+            Grammar(rules=[0])
+
+    def test_shouldNotAddOneNotRuleInMore(self):
+        with self.assertRaises(NotRuleException):
+            g = Grammar(terminals=[0],
+                        nonterminals=[A, B, C, D],
+                        rules=[RuleAtoB, RuleBtoC, RuleCto0D, 'asdf'])
+
+    def test_shouldNotAddInvalidRule(self):
+        with self.assertRaises(RuleException):
+            Grammar(terminals=[0],
+                    nonterminals=[A, B, C, D],
+                    rules=[RuleAtoB, RuleBtoC, RuleCto0D, RuleWithoutLeftSide])
+
+    def test_shouldNotAddRuleWithoutRuleSpecified(self):
+        with self.assertRaises(RuleException):
+            Grammar(rules=[EmptyRule])
 
 if __name__ == '__main__':
     main()
