@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 """
 :Author Patrik Valkovic
-:Created 23.06.2017 16:39
+:Created 03.08.2017 12:28
 :Licence GNUv3
 Part of grammpy
 
@@ -10,7 +10,7 @@ Part of grammpy
 from unittest import main, TestCase
 
 from grammpy import Rule as _R, Grammar
-from rules_tests.grammar import *
+from ..grammar import *
 
 
 class ValidAddTest(TestCase):

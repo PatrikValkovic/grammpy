@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 """
 :Author Patrik Valkovic
-:Created 23.06.2017 16:39
+:Created 28.07.2017 09:12
 :Licence GNUv3
 Part of grammpy
 
