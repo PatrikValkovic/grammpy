@@ -11,7 +11,7 @@ from unittest import main, TestCase
 
 from grammpy import Rule
 from grammpy.exceptions import RuleSyntaxException
-from rules_tests.grammar import *
+from ..grammar import *
 
 
 class InvalidSyntaxTest(TestCase):

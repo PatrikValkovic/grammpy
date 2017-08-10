@@ -10,7 +10,7 @@ Part of grammpy
 from unittest import main, TestCase
 
 from grammpy import Rule, EPS
-from rules_tests.grammar import *
+from ..grammar import *
 
 
 class ValidRulesTest(TestCase):

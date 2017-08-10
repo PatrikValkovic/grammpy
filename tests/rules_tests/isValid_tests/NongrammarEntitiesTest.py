@@ -11,7 +11,7 @@ from unittest import main, TestCase
 
 from grammpy import Rule, Nonterminal as _N
 from grammpy.exceptions import TerminalDoesNotExistsException, NonterminalDoesNotExistsException
-from rules_tests.grammar import *
+from ..grammar import *
 
 
 class Invalid(_N):
