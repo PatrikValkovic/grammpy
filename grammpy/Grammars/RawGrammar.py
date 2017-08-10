@@ -19,10 +19,13 @@ class RawGrammar:
         terminals = [] if terminals is None else terminals
         nonterminals = [] if nonterminals is None else nonterminals
         rules = [] if rules is None else rules
-        # TODO fill and add tests
-        self.__terminals = HashContainer(terminals)
-        self.__nonterminals = HashContainer(nonterminals)
-        self.__rules = HashContainer(rules)
+        # TODO add tests
+        self.__terminals = HashContainer()
+        self.__nonterminals = HashContainer()
+        self.__rules = HashContainer()
+        self.add_term(terminals)
+        self.add_nonterm(nonterminals)
+        self.add_rule(rules)
 
     # Term part
     # TODO add validation of terminals that no rule or nonterminal is passed
