@@ -15,17 +15,21 @@ from ..IsMethodsRuleExtension import IsMethodsRuleExtension
 
 
 class RawGrammar:
-    def __init__(self, terminals=None, nonterminals=None, rules=None):
+    def __init__(self,
+                 terminals=None,
+                 nonterminals=None,
+                 rules=None,
+                 start_symbol = None):
         terminals = [] if terminals is None else terminals
         nonterminals = [] if nonterminals is None else nonterminals
         rules = [] if rules is None else rules
-        # TODO add tests
         self.__terminals = HashContainer()
         self.__nonterminals = HashContainer()
         self.__rules = HashContainer()
         self.add_term(terminals)
         self.add_nonterm(nonterminals)
         self.add_rule(rules)
+        #TODO start symbol
 
     # Term part
     # TODO add validation of terminals that no rule or nonterminal is passed
@@ -139,3 +143,17 @@ class RawGrammar:
 
     def rules_count(self):
         return len(self.rules())
+
+
+    #StartSymbol
+    def start_get(self):
+        raise NotImplementedError()
+
+    def start_set(self):
+        raise NotImplementedError()
+
+    def start_isSet(self):
+        raise NotImplementedError()
+
+    def start_is(self, nonterminal):
+        raise NotImplementedError()
