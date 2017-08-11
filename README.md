@@ -9,7 +9,7 @@ Package for representing formal grammars.
 
 ## Usage
 
-First at all, you need to create grammar
+First of all, you need to create grammar
 
 ```python
 from grammpy import Grammar
@@ -36,35 +36,35 @@ class MyNonterminal(Nonterminal):
 g.add_nonterm(MyNonterminal)
 ```
 
-Terminal could be build-in type, class or object. Objects with same hash code are consider as same.
+Terminal could be build-in type, class or object. Objects with same hash code are considered as same.
 
 Nonterminals **must** be classes and **must** inherit from Nonterminal class. 
 API for nonterminals is the same as for terminals.
 
 #### Additional methods
 
-Of course you can check, if is terminal already in grammar or remove terminals
+Of course you can check, if the terminal is already in grammar or you can remove terminals.
 (the same for nonterminals).
 
 ```python
-g.have_term(0) # check if is terminal in grammar
-g.have_term([0, 'a', 'asdf']) # check is all terminals in array are in grammar
+g.have_term(0) # check if the terminal is in the grammar
+g.have_term([0, 'a', 'asdf']) # check if all terminals in array are in grammar
 g.remove_term(['a',0]) # remove terminals from grammar
-g.remove_term() # withour parameter remove all terminals
+g.remove_term() # remove all terminals without parameter
 ```
 
-The `get_term` method return Terminal object, that have actual terminal under Symbol property.
+The `get_term` method returns Terminal object, that has actual terminal under Symbol property.
 
 ```python
-a = g.get_term('a') # return terminal object
+a = g.get_term('a') # returns terminal object
 a.symbol() == a.s == 'a'
 a = g.term('a') # equal
 
-all = g.get_term() # return array with all terminals
-some = g.term(['a', 0, 'b']) # when is array passed, returns array
+all = g.get_term() # returns array with all terminals
+some = g.term(['a', 0, 'b']) # when array is passed, returns array
 some[0].s == 'a'
 some[1].s == 0
-some[2] == None # when terminal is not find, returns None
+some[2] == None # when terminal is not found, returns None
 ```
 
 The same API is for nonterminals and also for rules.
@@ -81,7 +81,7 @@ class MyRule(Rule):
 ```
 
 Each rule class could represent one or more rules. 
-Rules are specified by properties on class.
+Rules are specified by properties of class.
 
 
 
@@ -104,7 +104,7 @@ class FourthRule(Rule):
     toSymbol = MyNonterminal
 ```
 
-Its enough to use only situation, rest are automatically computed.
+Its enough to use only situation, rest is automatically computed.
 You can also combine approaches (side and symbol approach).
 
 ```python
@@ -117,7 +117,7 @@ FourthRule.rules == [([MyNonterminal],['a',MyNonterminal])]
 
 ### Epsilon
 
-Grammar have special symbol for epsilon, because also None could be use as terminal.
+Grammpy has special symbol for epsilon, because None could be also used as terminal.
 You can use shorter or longer forms, they are equal.
 
 ```python
@@ -142,7 +142,7 @@ Symbol for start symbol must be in grammar's nonterminals first.
 
 ### Grammar creation
 
-It is possible to fill grammar by constructor, which accept list of terminals, nonterminals, rules and start symbol.
+It is possible to fill grammar with constructor, which accepts list of terminals, nonterminals, rules and start symbol.
 
 ```python
 g = Grammar(terminals = [0, 1, 'a', 'b'],
@@ -153,9 +153,9 @@ g = Grammar(terminals = [0, 1, 'a', 'b'],
 
 ## Correctness
 
-This library handle invalid rules 
+This library handles invalid rules
 (in situations when terminal/nonterminal is not defined in grammar or rule is syntactically invalid),
-but not handle obedience into grammar's sets (like contextfree or regular grammar).
+but does not handle division to grammar sets (like contextfree or regular grammar).
 
 Library that will deal with obedience or transformations into another type of grammar is in development.
 
@@ -163,7 +163,7 @@ Library that will deal with obedience or transformations into another type of gr
 
 - Improve API, so library will be more usable and also more understandable.
 - Add layer so terminals, nonterminals and rules could be add in simple string.
-- Add additional API into Rule class, so you simply check type of rule.
+- Add additional API into Rule class, so you can simply check type of rule.
 
 There are also additional libraries in development, that will integrate with this library.
 
