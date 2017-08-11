@@ -127,6 +127,30 @@ class MyRule(Rule):
     rule = ([MyNonterminal],[EPS])
 ```
 
+### Start symbol
+
+You can manipulate with start symbol with following API:
+
+```python
+g.start_set(NONTERM)
+g.start_isSet() == true
+g.start_is(NONTERM) == true
+g.start_get == NONTERM
+```
+
+Symbol for start symbol must be in grammar's nonterminals first.
+
+### Grammar creation
+
+It is possible to fill grammar by constructor, which accept list of terminals, nonterminals, rules and start symbol.
+
+```python
+g = Grammar(terminals = [0, 1, 'a', 'b'],
+            nonterminals=[A, B],
+            rules=[RuleATo0B, RuleBtoab],
+            start_symbol=A)
+```
+
 ## Correctness
 
 This library handle invalid rules 
