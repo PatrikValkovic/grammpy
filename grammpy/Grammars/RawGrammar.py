@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 """
 :Author Patrik Valkovic
-:Created 23.06.2017 16:39
+:Created 01.08.2017 07:33
 :Licence GNUv3
 Part of grammpy
 
@@ -10,22 +10,28 @@ import inspect
 from ..Terminal import Terminal
 from ..Nonterminal import Nonterminal
 from ..HashContainer import HashContainer
-from ..exceptions import NotNonterminalException, NotRuleException, TerminalDoesNotExistsException, NonterminalDoesNotExistsException
+from ..exceptions import NotNonterminalException, NotRuleException, TerminalDoesNotExistsException, \
+    NonterminalDoesNotExistsException
 from ..IsMethodsRuleExtension import IsMethodsRuleExtension
 
 
 class RawGrammar:
-    def __init__(self, terminals=None, nonterminals=None, rules=None):
+    def __init__(self,
+                 terminals=None,
+                 nonterminals=None,
+                 rules=None,
+                 start_symbol=None):
         terminals = [] if terminals is None else terminals
         nonterminals = [] if nonterminals is None else nonterminals
         rules = [] if rules is None else rules
-        # TODO add tests
         self.__terminals = HashContainer()
         self.__nonterminals = HashContainer()
         self.__rules = HashContainer()
+        self.__start_symbol = None
         self.add_term(terminals)
         self.add_nonterm(nonterminals)
         self.add_rule(rules)
+        self.start_set(start_symbol)
 
     # Term part
     # TODO add validation of terminals that no rule or nonterminal is passed
@@ -139,3 +145,23 @@ class RawGrammar:
 
     def rules_count(self):
         return len(self.rules())
+
+    # StartSymbol
+    def start_get(self):
+        return self.__start_symbol
+
+    def start_set(self, nonterminal):
+        if nonterminal is None:
+            self.__start_symbol = None
+            return
+        if not inspect.isclass(nonterminal) or not issubclass(nonterminal, Nonterminal):
+            raise NotNonterminalException(nonterminal)
+        if not self.have_nonterm(nonterminal):
+            raise NonterminalDoesNotExistsException(None, nonterminal, self)
+        self.__start_symbol = nonterminal
+
+    def start_isSet(self):
+        return self.__start_symbol is not None
+
+    def start_is(self, nonterminal):
+        return self.__start_symbol is nonterminal

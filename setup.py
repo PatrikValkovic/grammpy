@@ -1,3 +1,12 @@
+#!/usr/bin/env python
+"""
+:Author Patrik Valkovic
+:Created 04.08.2017 19:00
+:Licence GNUv3
+Part of grammpy
+
+"""
+
 from distutils.core import setup
 
 

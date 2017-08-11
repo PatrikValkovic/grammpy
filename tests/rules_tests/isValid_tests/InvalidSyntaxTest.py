@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 """
 :Author Patrik Valkovic
-:Created 23.06.2017 16:39
+:Created 02.08.2017 17:20
 :Licence GNUv3
 Part of grammpy
 
@@ -11,7 +11,7 @@ from unittest import main, TestCase
 
 from grammpy import Rule
 from grammpy.exceptions import RuleSyntaxException
-from rules_tests.grammar import *
+from ..grammar import *
 
 
 class InvalidSyntaxTest(TestCase):

@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 """
 :Author Patrik Valkovic
-:Created 23.06.2017 16:39
+:Created 02.08.2017 17:48
 :Licence GNUv3
 Part of grammpy
 
@@ -11,7 +11,7 @@ from unittest import main, TestCase
 
 from grammpy import Rule, EPS
 from grammpy.exceptions import UselessEpsilonException
-from rules_tests.grammar import *
+from ..grammar import *
 
 
 class EpsilonTest(TestCase):
