@@ -49,6 +49,7 @@ class RulesTest(TestCase):
                      ([NSecond], [NSecond, 'a'])]
         hash1 = hash(Tmp1)
         hash2 = hash(Tmp2)
+        self.assertEqual(Tmp1, Tmp2)
         self.assertEqual(hash1, hash2)
 
 if __name__ == '__main__':
