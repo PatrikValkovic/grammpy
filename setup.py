@@ -12,7 +12,7 @@ from distutils.core import setup
 
 setup(
     name='grammpy',
-    version='1.1.0',
+    version='1.1.1',
     packages=['grammpy', 'grammpy.Grammars', 'grammpy.exceptions'],
     url='https://github.com/PatrikValkovic/grammpy',
     license='GNU General Public License v3.0',
