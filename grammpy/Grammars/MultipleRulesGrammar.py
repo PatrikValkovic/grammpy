@@ -6,10 +6,12 @@
 Part of grammpy
 
 """
+import inspect
 
+from grammpy.exceptions import NotRuleException
 from .StringGrammar import StringGrammar
 from ..HashContainer import HashContainer
-from ..IsMethodsRuleExtension import IsMethodsRuleExtension as Rule
+from ..IsMethodsRuleExtension import IsMethodsRuleExtension as Rule, IsMethodsRuleExtension
 
 
 class MultipleRulesGrammar(StringGrammar):
@@ -32,12 +34,14 @@ class MultipleRulesGrammar(StringGrammar):
         rules = HashContainer.to_iterable(rules)
         r = []
         for i in rules:
+            if not inspect.isclass(i) or not issubclass(i, IsMethodsRuleExtension):
+                raise NotRuleException(i)
             if i.is_valid(self) and i.count() > 1:
                 for rule in i.rules:
                     r.append(self._create_class(rule))
             else:
                 r.append(i)
-        return rules
+        return r
 
     def get_rule(self, rules=None):
         if rules is None:
