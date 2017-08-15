@@ -9,6 +9,10 @@ Part of grammpy
 
 from .StringGrammar import StringGrammar
 from ..HashContainer import HashContainer
+from ..IsMethodsRuleExtension import IsMethodsRuleExtension as Rule
+
+count = 0
+
 
 class MultipleRulesGrammar(StringGrammar):
     def __init__(self,
@@ -19,7 +23,9 @@ class MultipleRulesGrammar(StringGrammar):
         super().__init__(terminals, nonterminals, rules, start_symbol)
 
     def _create_class(self, rule):
-        raise NotImplementedError()
+        return type('SplitRules' + str(count),
+                    (Rule,),
+                    {"rule": rule})
 
     def _transform_rules(self, rules):
         rules = HashContainer.to_iterable(rules)
