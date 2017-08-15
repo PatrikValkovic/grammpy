@@ -11,8 +11,6 @@ from .StringGrammar import StringGrammar
 from ..HashContainer import HashContainer
 from ..IsMethodsRuleExtension import IsMethodsRuleExtension as Rule
 
-count = 0
-
 
 class MultipleRulesGrammar(StringGrammar):
     def __init__(self,
@@ -21,9 +19,12 @@ class MultipleRulesGrammar(StringGrammar):
                  rules=None,
                  start_symbol=None):
         super().__init__(terminals, nonterminals, rules, start_symbol)
+        self._count = 0
 
     def _create_class(self, rule):
-        return type('SplitRules' + str(count),
+        name = 'SplitRules' + str(self._count)
+        self._count += 1
+        return type(name,
                     (Rule,),
                     {"rule": rule})
 
@@ -31,7 +32,7 @@ class MultipleRulesGrammar(StringGrammar):
         rules = HashContainer.to_iterable(rules)
         r = []
         for i in rules:
-            if i.is_valid() and i.count() > 1:
+            if i.is_valid(self) and i.count() > 1:
                 for rule in i.rules:
                     r.append(self._create_class(rule))
             else:
