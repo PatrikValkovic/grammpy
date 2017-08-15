@@ -6,6 +6,7 @@
 Part of grammpy
 
 """
+import inspect
 
 from .exceptions import CantCreateSingleRuleException, RuleNotDefinedException, NotASingleSymbolException
 
@@ -28,6 +29,11 @@ class MetaWithHash(type):
     def __hash__(cls):
         transformed = MetaWithHash._lists_to_tuples(cls.rules)
         return hash(transformed)
+
+    def __eq__(cls, other):
+        return inspect.isclass(other) and \
+               issubclass(other, Rule) and \
+               hash(cls) == hash(other)
 
 
 class Rule(metaclass=MetaWithHash):
