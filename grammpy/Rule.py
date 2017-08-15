@@ -18,7 +18,19 @@ class CP(object):
         return self._getter(cls)  # for static remove cls from the call
 
 
-class Rule:
+class MetaWithHash(type):
+    @staticmethod
+    def _lists_to_tuples(lst):
+        if not isinstance(lst, list) and not isinstance(lst, tuple):
+            return lst
+        return tuple(MetaWithHash._lists_to_tuples(item) for item in tuple(lst))
+
+    def __hash__(cls):
+        transformed = MetaWithHash._lists_to_tuples(cls.rules)
+        return hash(transformed)
+
+
+class Rule(metaclass=MetaWithHash):
     """
     fromSymbol = EPSILON
     toSymbol = EPSILON
@@ -92,6 +104,3 @@ class Rule:
     @classmethod
     def count(cls):
         return cls.rules_count()
-
-    def __hash__(self) -> int:
-        return hash(self.rules)
