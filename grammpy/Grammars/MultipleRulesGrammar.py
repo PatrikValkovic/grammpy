@@ -19,10 +19,17 @@ class MultipleRulesGrammar(StringGrammar):
         super().__init__(terminals, nonterminals, rules, start_symbol)
 
     def _create_class(self, rule):
-        pass
+        raise NotImplementedError()
 
     def _transform_rules(self, rules):
         rules = HashContainer.to_iterable(rules)
+        r = []
+        for i in rules:
+            if i.is_valid() and i.count() > 1:
+                for rule in i.rules:
+                    r.append(self._create_class(rule))
+            else:
+                r.append(i)
         return rules
 
     def get_rule(self, rules=None):
