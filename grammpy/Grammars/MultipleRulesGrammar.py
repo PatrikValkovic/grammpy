@@ -35,8 +35,8 @@ class MultipleRulesGrammar(StringGrammar):
         r = []
         for i in rules:
             if not inspect.isclass(i) or not issubclass(i, IsMethodsRuleExtension):
-                raise NotRuleException(i)
-            if i.is_valid(self) and i.count() > 1:
+                r.append(i)
+            elif i.is_valid(self) and i.count() > 1:
                 for rule in i.rules:
                     r.append(self._create_class(rule))
             else:
