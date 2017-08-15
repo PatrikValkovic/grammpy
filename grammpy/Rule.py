@@ -92,3 +92,6 @@ class Rule:
     @classmethod
     def count(cls):
         return cls.rules_count()
+
+    def __hash__(self) -> int:
+        return hash(self.rules)
