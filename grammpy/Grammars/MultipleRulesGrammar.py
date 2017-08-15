@@ -47,7 +47,7 @@ class MultipleRulesGrammar(StringGrammar):
         if rules is None:
             return super().get_rule()
         results = super().get_rule(self._transform_rules(rules))
-        if not HashContainer.is_iterable(rules):
+        if not HashContainer.is_iterable(rules) and rules.count() == 1:
             return results[0]
         return results
 

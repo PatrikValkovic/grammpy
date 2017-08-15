@@ -52,5 +52,39 @@ class RulesTest(TestCase):
         self.assertEqual(Tmp1, Tmp2)
         self.assertEqual(hash1, hash2)
 
+    def test_haveMultiple(self):
+        class Tmp1(Rule):
+            rules = [([NFirst], [NSecond, 0]),
+                     ([NThird], [0, 1]),
+                     ([NSecond], [NSecond, 'a'])]
+
+        class Tmp2(Rule):
+            rules = [([NFirst], [NSecond, 0]),
+                     ([NThird], [0, 1]),
+                     ([NSecond], [NSecond, 'a'])]
+        class Tmp3(Rule):
+            rules = [([NFirst], [NSecond, 0])]
+        class Tmp4(Rule):
+            rules = [([NThird], [0, 1])]
+        class Tmp5(Rule):
+            rule = ([NFifth],[EPS])
+        self.g.add_rule(Tmp1)
+        self.assertTrue(self.g.have_rule(Tmp2))
+        self.assertTrue(self.g.have_rule(Tmp3))
+        self.assertTrue(self.g.have_rule([Tmp3, Tmp4]))
+        self.assertFalse(self.g.have_rule([Tmp3, Tmp5]))
+
+    def test_shouldReturnArray(self):
+        class Tmp1(Rule):
+            rules = [([NFirst], [NSecond, 0]),
+                     ([NThird], [0, 1]),
+                     ([NSecond], [NSecond, 'a'])]
+        self.g.add_rule(Tmp1)
+        r = self.g.get_rule(Tmp1)
+        self.assertIsInstance(r, list)
+        self.assertEqual(len(r), 3)
+        for rule in r:
+            self.assertIn(rule.rule, Tmp1.rules)
+
 if __name__ == '__main__':
     main()
