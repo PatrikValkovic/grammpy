@@ -11,6 +11,7 @@ from unittest import main, TestCase
 
 from grammpy import Rule as _R, Grammar
 from ..grammar import *
+from grammpy.Grammars.RawGrammar import RawGrammar
 
 
 class ValidAddTest(TestCase):
@@ -153,6 +154,17 @@ class ValidAddTest(TestCase):
         self.assertTrue(self.g.have_rule(Tmp3))
         self.assertEqual(self.g.get_rule(Tmp3), Tmp3)
         self.assertEqual(self.g.rule(Tmp3), Tmp3)
+
+    def test_shouldAddIntoRawGrammar(self):
+        class Tmp1(_R):
+            rule = ([NFirst], ['a', 0])
+        g = RawGrammar(terminals=['a', 0],
+                       nonterminals=[NFirst],
+                       rules=[Tmp1])
+        g.add_rule(Tmp1)
+        self.assertEqual(g.get_rule(Tmp1), Tmp1)
+
+
 
 
 if __name__ == '__main__':

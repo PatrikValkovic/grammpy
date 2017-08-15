@@ -8,7 +8,7 @@ Part of grammpy
 """
 
 from .StringGrammar import StringGrammar
-
+from ..HashContainer import HashContainer
 
 class MultipleRulesGrammar(StringGrammar):
     def __init__(self,
@@ -18,14 +18,28 @@ class MultipleRulesGrammar(StringGrammar):
                  start_symbol=None):
         super().__init__(terminals, nonterminals, rules, start_symbol)
 
+    def _create_class(self, rule):
+        pass
+
+    def _transform_rules(self, rules):
+        rules = HashContainer.to_iterable(rules)
+        return rules
+
     def get_rule(self, rules=None):
-        return super().get_rule(rules)
+        if rules is None:
+            return super().get_rule()
+        results = super().get_rule(self._transform_rules(rules))
+        if not HashContainer.is_iterable(rules):
+            return results[0]
+        return results
 
     def have_rule(self, rules):
-        return super().have_rule(rules)
+        return super().have_rule(self._transform_rules(rules))
 
     def remove_rule(self, rules=None):
-        super().remove_rule(rules)
+        if rules is None:
+            return super().remove_rule()
+        super().remove_rule(self._transform_rules(rules))
 
     def add_rule(self, rules):
-        super().add_rule(rules)
+        super().add_rule(self._transform_rules(rules))
