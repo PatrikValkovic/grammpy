@@ -8,7 +8,7 @@ Part of grammpy
 """
 import inspect
 
-from grammpy.Rules.IsMethodsRuleExtension import IsMethodsRuleExtension
+from ..Rules import Rule
 from ..HashContainer import HashContainer
 from ..Nonterminal import Nonterminal
 from ..Terminal import Terminal
@@ -108,7 +108,7 @@ class RawGrammar:
     def _control_rules(self, rules):
         rules = HashContainer.to_iterable(rules)
         for rule in rules:
-            if not inspect.isclass(rule) or not issubclass(rule, IsMethodsRuleExtension):
+            if not inspect.isclass(rule) or not issubclass(rule, Rule):
                 raise NotRuleException(rule)
             rule.validate(self)
         return rules
