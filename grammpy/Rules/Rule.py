@@ -7,7 +7,8 @@ Part of grammpy
 
 """
 
-from .IsMethodsRuleExtension import IsMethodsRuleExtension as _R
+from .ActivtableRule import ActivtableRule as _R
+
 
 class Rule(_R):
     pass
