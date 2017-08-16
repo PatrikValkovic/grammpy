@@ -9,15 +9,16 @@ Part of grammpy
 
 from distutils.core import setup
 
+v = '1.1.4'
 
 setup(
     name='grammpy',
-    version='1.1.3',
+    version=v,
     packages=['grammpy', 'grammpy.Grammars', 'grammpy.exceptions', 'grammpy.Rules'],
     url='https://github.com/PatrikValkovic/grammpy',
     license='GNU General Public License v3.0',
     author='Patrik Valkovic',
-    download_url='https://github.com/PatrikValkovic/grammpy/archive/v1.0.1.tar.gz',
+    download_url='https://github.com/PatrikValkovic/grammpy/archive/v' + v + '.tar.gz',
     author_email='patrik.valkovic@hotmail.cz',
     description='Package for representing formal grammars.'
 )
