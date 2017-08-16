@@ -32,7 +32,7 @@ class MetaWithHash(type):
 
     def __eq__(cls, other):
         return inspect.isclass(other) and \
-               issubclass(other, Rule) and \
+               issubclass(other, BaseRule) and \
                hash(cls) == hash(other)
 
 
