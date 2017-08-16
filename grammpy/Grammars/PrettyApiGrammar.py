@@ -25,8 +25,3 @@ class PrettyApiGrammar(Grammar):
                          nonterminals=nonterminals,
                          rules=rules,
                          start_symbol=start_symbol)
-    def __copy__(self):
-        return PrettyApiGrammar(terminals=(t.s for t in self.terms()),
-                                nonterminals=self.nonterms(),
-                                rules=self.rules(),
-                                start_symbol=self.start_get())
