@@ -8,10 +8,9 @@ Part of grammpy
 """
 import inspect
 
-from grammpy.exceptions import NotRuleException
+from ..Rules import Rule
 from .StringGrammar import StringGrammar
 from ..HashContainer import HashContainer
-from ..IsMethodsRuleExtension import IsMethodsRuleExtension as Rule, IsMethodsRuleExtension
 
 
 class MultipleRulesGrammar(StringGrammar):
@@ -34,7 +33,7 @@ class MultipleRulesGrammar(StringGrammar):
         rules = HashContainer.to_iterable(rules)
         r = []
         for i in rules:
-            if not inspect.isclass(i) or not issubclass(i, IsMethodsRuleExtension):
+            if not inspect.isclass(i) or not issubclass(i, Rule):
                 r.append(i)
             elif i.is_valid(self) and i.count() > 1:
                 for rule in i.rules:

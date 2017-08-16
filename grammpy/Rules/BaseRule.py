@@ -8,7 +8,7 @@ Part of grammpy
 """
 import inspect
 
-from .exceptions import CantCreateSingleRuleException, RuleNotDefinedException, NotASingleSymbolException
+from grammpy.exceptions import CantCreateSingleRuleException, RuleNotDefinedException, NotASingleSymbolException
 
 
 class CP(object):
@@ -32,11 +32,11 @@ class MetaWithHash(type):
 
     def __eq__(cls, other):
         return inspect.isclass(other) and \
-               issubclass(other, Rule) and \
+               issubclass(other, BaseRule) and \
                hash(cls) == hash(other)
 
 
-class Rule(metaclass=MetaWithHash):
+class BaseRule(metaclass=MetaWithHash):
     """
     fromSymbol = EPSILON
     toSymbol = EPSILON
@@ -100,8 +100,6 @@ class Rule(metaclass=MetaWithHash):
         return [r]
 
     _traverse = False
-
-    _active = True
 
     @classmethod
     def rules_count(cls):
