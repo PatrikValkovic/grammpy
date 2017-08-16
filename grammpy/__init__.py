@@ -7,7 +7,7 @@ Part of grammpy
 
 """
 
+from grammpy.Rules.IsMethodsRuleExtension import IsMethodsRuleExtension as Rule
+from .Constants import EPSILON, EPS
 from .Grammars import Grammar
 from .Nonterminal import Nonterminal
-from .IsMethodsRuleExtension import IsMethodsRuleExtension as Rule
-from .Constants import EPSILON, EPS

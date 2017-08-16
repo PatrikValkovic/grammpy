@@ -8,10 +8,9 @@ Part of grammpy
 """
 import inspect
 
-from grammpy.exceptions import NotRuleException
+from grammpy.Rules.IsMethodsRuleExtension import IsMethodsRuleExtension as Rule, IsMethodsRuleExtension
 from .StringGrammar import StringGrammar
 from ..HashContainer import HashContainer
-from ..IsMethodsRuleExtension import IsMethodsRuleExtension as Rule, IsMethodsRuleExtension
 
 
 class MultipleRulesGrammar(StringGrammar):

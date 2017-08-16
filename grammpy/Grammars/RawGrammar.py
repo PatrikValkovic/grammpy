@@ -7,12 +7,13 @@ Part of grammpy
 
 """
 import inspect
-from ..Terminal import Terminal
-from ..Nonterminal import Nonterminal
+
+from grammpy.Rules.IsMethodsRuleExtension import IsMethodsRuleExtension
 from ..HashContainer import HashContainer
+from ..Nonterminal import Nonterminal
+from ..Terminal import Terminal
 from ..exceptions import NotNonterminalException, NotRuleException, TerminalDoesNotExistsException, \
     NonterminalDoesNotExistsException
-from ..IsMethodsRuleExtension import IsMethodsRuleExtension
 
 
 class RawGrammar:

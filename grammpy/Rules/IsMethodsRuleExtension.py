@@ -8,14 +8,15 @@ Part of grammpy
 """
 
 from inspect import isclass
-from .Rule import Rule
-from .exceptions import RuleException, UselessEpsilonException, RuleSyntaxException, TerminalDoesNotExistsException, \
+
+from .BaseRule import BaseRule
+from ..Constants import EPS
+from ..Nonterminal import Nonterminal
+from ..exceptions import RuleException, UselessEpsilonException, RuleSyntaxException, TerminalDoesNotExistsException, \
     NonterminalDoesNotExistsException
-from .Constants import EPS
-from .Nonterminal import Nonterminal
 
 
-class IsMethodsRuleExtension(Rule):
+class IsMethodsRuleExtension(BaseRule):
     @staticmethod
     def _controlSide(cls, side, grammar):
         if not isinstance(side, list):
