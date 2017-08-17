@@ -54,12 +54,15 @@ class RulesRemovingGrammar(PrettyApiGrammar):
                     self._symbs_of_rules[symb].add(inst)
         return add
 
+    def _remove_if_exists(self, key, val):
+        if val in self._symbs_of_rules[key]:
+            self._symbs_of_rules[key].remove(val)
+
     def remove_rule(self, rules=None, *, _validate=True):
         rem = super().remove_rule(rules, _validate=_validate)
         for inst in rem:
             for rule in inst.rules:
-                for symb in rule[0]:
-                    self._symbs_of_rules[symb].remove(inst)
-                for symb in rule[1]:
-                    self._symbs_of_rules[symb].remove(inst)
+                for side in rule:
+                    for symb in side:
+                        self._remove_if_exists(symb, inst)
         return rem

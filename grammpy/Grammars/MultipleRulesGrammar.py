@@ -29,13 +29,13 @@ class MultipleRulesGrammar(StringGrammar):
                     (Rule,),
                     {"rule": rule})
 
-    def _transform_rules(self, rules):
+    def _transform_rules(self, rules, *, _validate=True):
         rules = HashContainer.to_iterable(rules)
         r = []
         for i in rules:
             if not inspect.isclass(i) or not issubclass(i, Rule):
                 r.append(i)
-            elif i.is_valid(self) and i.count() > 1:
+            elif (i.is_valid(self) and i.count() > 1) or (not _validate and i.count() > 1):
                 for rule in i.rules:
                     r.append(self._create_class(rule))
             else:
@@ -56,7 +56,7 @@ class MultipleRulesGrammar(StringGrammar):
     def remove_rule(self, rules=None, *, _validate=True):
         if rules is None:
             return super().remove_rule(_validate=_validate)
-        return super().remove_rule(self._transform_rules(rules), _validate=_validate)
+        return super().remove_rule(self._transform_rules(rules, _validate=_validate), _validate=_validate)
 
     def add_rule(self, rules):
         return super().add_rule(self._transform_rules(rules))
