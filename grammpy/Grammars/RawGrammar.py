@@ -117,10 +117,11 @@ class RawGrammar:
         rules = self._control_rules(rules)
         return self.__rules.add(rules)
 
-    def remove_rule(self, rules=None):
+    def remove_rule(self, rules=None, *, _validate=True):
         if rules is None:
             return self.__rules.remove()
-        rules = self._control_rules(rules)
+        if _validate:
+            rules = self._control_rules(rules)
         return self.__rules.remove(rules)
 
     def have_rule(self, rules):

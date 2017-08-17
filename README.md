@@ -117,6 +117,7 @@ class FourthRule(Rule):
 
 Its enough to use only situation, rest is automatically computed.
 You can also combine approaches (side and symbol approach).
+Rule class with more rules (first example) is automatically split into more single rules.
 
 ```python
 class FourthRule(Rule):
@@ -124,6 +125,17 @@ class FourthRule(Rule):
     right = ['a',MyNonterminal]
 
 FourthRule.rules == [([MyNonterminal],['a',MyNonterminal])]
+``` 
+
+Note that when terminal or nonterminal is removed from the grammar, all rules that use that symbol will be removed from the grammar as well!
+
+```python
+class SecondRule(Rule):
+    rule = ([MyNonterminal],['a',MyNonterminal])
+g.add_rule(SecondRule)
+g.rules_count() == 1
+g.remove_term('a')  # SecondRule removed here, because it use 'a' terminal
+g.rules_count() == 0
 ``` 
 
 ### Epsilon
@@ -149,7 +161,8 @@ g.start_is(NONTERM) == true
 g.start_get == NONTERM
 ```
 
-Symbol for start symbol must be in grammar's nonterminals first.
+Symbol for start symbol must be in grammar's nonterminals first.  
+When is nonterminal that is used as start symbol removed, start symbol will be set to None.
 
 ### Grammar creation
 
