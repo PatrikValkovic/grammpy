@@ -28,7 +28,7 @@ class HashContainerSimpleTest(TestCase):
 
     def test_addOne(self):
         h = HashContainer()
-        h.add(1)
+        self.assertEqual(h.add(1), [1])
         self.assertEqual(h.count(), 1)
         self.assertFalse(h.have(0))
         self.assertTrue(h.have(1))
@@ -36,6 +36,18 @@ class HashContainerSimpleTest(TestCase):
         self.assertIsNone(h.get(0))
         self.assertEqual(h.get(1), 1)
         self.assertIsNone(h.get(2))
+
+    def test_addMultipleSame(self):
+        h = HashContainer()
+        self.assertEqual(h.add(1), [1])
+        self.assertEqual(h.add(1), [])
+        self.assertEqual(h.add([1, 2, 3]), [2, 3])
+
+    def test_removeMultipleSame(self):
+        h = HashContainer([0, 1, 2, 3, 4])
+        self.assertEqual(h.remove(0), [0])
+        self.assertEqual(h.remove([1, 2]), [1, 2])
+        self.assertEqual(h.remove([3, 2, 3, 4]), [3, 4])
 
 
 if __name__ == '__main__':

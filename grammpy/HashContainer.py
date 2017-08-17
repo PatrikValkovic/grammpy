@@ -31,9 +31,13 @@ class HashContainer:
     def add(self, item):
         items = HashContainer.to_iterable(item)
         # iterace throught items
+        add = []
         for t in items:
-            self.__items[hash(t)] = t
-        return items
+            h = hash(t)
+            if h not in self.__items:
+                self.__items[h] = t
+                add.append(t)
+        return add
 
     def remove(self, item=None):
         if item is None:
