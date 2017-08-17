@@ -37,7 +37,7 @@ class HashContainer:
 
     def remove(self, item=None):
         if item is None:
-            all = self.__items.values()
+            all = list(self.__items.values())
             self.__items.clear()
             return all
         item = HashContainer.to_iterable(item)
