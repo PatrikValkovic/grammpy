@@ -33,14 +33,22 @@ class HashContainer:
         # iterace throught items
         for t in items:
             self.__items[hash(t)] = t
+        return items
 
     def remove(self, item=None):
         if item is None:
-            return self.__items.clear()
+            all = self.__items.values()
+            self.__items.clear()
+            return all
         item = HashContainer.to_iterable(item)
-        # iterate throught items
+        deleted = []
+        # iterate through items
         for t in item:
-            del self.__items[hash(t)]
+            h = hash(t)
+            if h in self.__items:
+                deleted.append(self.__items[h])
+                del self.__items[h]
+        return deleted
 
     def have(self, item):
         item = HashContainer.to_iterable(item)
