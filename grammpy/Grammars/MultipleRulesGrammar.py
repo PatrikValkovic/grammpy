@@ -56,7 +56,7 @@ class MultipleRulesGrammar(StringGrammar):
     def remove_rule(self, rules=None):
         if rules is None:
             return super().remove_rule()
-        super().remove_rule(self._transform_rules(rules))
+        return super().remove_rule(self._transform_rules(rules))
 
     def add_rule(self, rules):
-        super().add_rule(self._transform_rules(rules))
+        return super().add_rule(self._transform_rules(rules))

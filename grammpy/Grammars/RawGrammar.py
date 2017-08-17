@@ -37,10 +37,10 @@ class RawGrammar:
     # Term part
     # TODO add validation of terminals that no rule or nonterminal is passed
     def add_term(self, term):
-        return self.__terminals.add(term)
+        return [Terminal(t, self) for t in self.__terminals.add(term)]
 
     def remove_term(self, term=None):
-        return self.__terminals.remove(term)
+        return [Terminal(t, self) for t in self.__terminals.remove(term)]
 
     def have_term(self, term):
         return self.__terminals.have(term)

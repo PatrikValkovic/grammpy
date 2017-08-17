@@ -67,6 +67,16 @@ some[1].s == 0
 some[2] == None # when terminal is not found, returns None
 ```
 
+Methods for adding (`add_term`) and removing (`remove_term`) returns list of added/deleted entities.
+
+```python
+g = Grammar()
+add = g.add_term([1, 2])
+add[0].s == 1 and add[1].s == 2
+rem = g.remove_term(['a',1]) # 'a' is not in grammar
+rem[0].s == 1
+```
+
 The same API is for nonterminals and also for rules.
 
 ### Rules

@@ -25,7 +25,7 @@ class RulesTest(TestCase):
             rules = [([NFirst], [NSecond, 0]),
                      ([NThird], [0, 1]),
                      ([NSecond], [NSecond, 'a'])]
-        self.g.add_rule(Tmp1)
+        self.assertEqual([x.rule for x in self.g.add_rule(Tmp1)], Tmp1.rules)
         self.assertEqual(self.g.rules_count(), 3)
         self.assertTrue(self.g.have_rule(Tmp1))
 
@@ -34,7 +34,7 @@ class RulesTest(TestCase):
             rules = [([NFirst], [NSecond, 0]),
                      ([NThird], [0, 1]),
                      ([NSecond], [NSecond, 'a'])]
-        self.g.add_rule(Tmp1)
+        self.assertEqual([x.rule for x in self.g.add_rule(Tmp1)], Tmp1.rules)
         for rule in self.g.rule():
             self.assertIn(rule.rule, Tmp1.rules)
 
@@ -68,7 +68,7 @@ class RulesTest(TestCase):
             rules = [([NThird], [0, 1])]
         class Tmp5(Rule):
             rule = ([NFifth],[EPS])
-        self.g.add_rule(Tmp1)
+        self.assertEqual([x.rule for x in self.g.add_rule(Tmp1)], Tmp1.rules)
         self.assertTrue(self.g.have_rule(Tmp2))
         self.assertTrue(self.g.have_rule(Tmp3))
         self.assertTrue(self.g.have_rule([Tmp3, Tmp4]))
@@ -79,7 +79,7 @@ class RulesTest(TestCase):
             rules = [([NFirst], [NSecond, 0]),
                      ([NThird], [0, 1]),
                      ([NSecond], [NSecond, 'a'])]
-        self.g.add_rule(Tmp1)
+        self.assertEqual([x.rule for x in self.g.add_rule(Tmp1)], Tmp1.rules)
         r = self.g.get_rule(Tmp1)
         self.assertIsInstance(r, list)
         self.assertEqual(len(r), 3)
