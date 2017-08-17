@@ -9,7 +9,7 @@ Part of grammpy
 
 from distutils.core import setup
 
-v = '1.1.6'
+v = '1.1.7'
 
 setup(
     name='grammpy',
