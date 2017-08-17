@@ -68,6 +68,7 @@ some[2] == None # when terminal is not found, returns None
 ```
 
 Methods for adding (`add_term`) and removing (`remove_term`) returns list of added/deleted entities.
+Only entities that are really add/remove are return (duplicate entities are ignored).
 
 ```python
 g = Grammar()
