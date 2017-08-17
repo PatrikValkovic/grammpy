@@ -41,6 +41,7 @@ class RulesRemovingGrammar(PrettyApiGrammar):
         for nonterm in rem:
             self.remove_rule(list(self._symbs_of_rules[nonterm]), _validate=False)
             del self._symbs_of_rules[nonterm]
+        if self.start_get() in rem: self.start_set(None)
         return rem
 
     def add_rule(self, rules):
