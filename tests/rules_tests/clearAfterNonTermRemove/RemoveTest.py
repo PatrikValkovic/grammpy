@@ -95,6 +95,13 @@ class RemoveTest(TestCase):
         self.assertTrue(self.g.have_rule(Tmp3))
         self.assertEqual(self.g.rules_count(), 1)
 
+    def test_useMultipleSameSymbol(self):
+        class Tmp(Rule):
+            rule = ([NFirst], [NSecond, NFirst])
+        self.g.add_rule(Tmp)
+        self.g.remove_nonterm(NFirst)
+        self.assertFalse(self.g.have_rule(Tmp))
+        self.assertEqual(self.g.rules_count(), 0) 
 
 if __name__ == '__main__':
     main()
