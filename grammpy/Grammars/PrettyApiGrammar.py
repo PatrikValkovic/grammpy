@@ -7,10 +7,10 @@ Part of grammpy
 
 """
 
-from .MultipleRulesGrammar import MultipleRulesGrammar as Grammar
+from .MultipleRulesGrammar import MultipleRulesGrammar
 
 
-class PrettyApiGrammar(Grammar):
+class PrettyApiGrammar(MultipleRulesGrammar):
     def __init__(self,
                  terminals=None,
                  nonterminals=None,

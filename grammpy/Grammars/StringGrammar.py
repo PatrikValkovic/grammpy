@@ -7,10 +7,9 @@ Part of grammpy
 
 """
 
-from grammpy.Grammars.RawGrammar import RawGrammar as Grammar
+from .RawGrammar import RawGrammar
 
-
-class StringGrammar(Grammar):
+class StringGrammar(RawGrammar):
     @staticmethod
     def __to_string_arr(t):
         if isinstance(t, str):
