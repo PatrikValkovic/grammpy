@@ -51,6 +51,7 @@ class RulesRemovingGrammar(PrettyApiGrammar):
                     self._symbs_of_rules[symb].add(inst)
                 for symb in rule[1]:
                     self._symbs_of_rules[symb].add(inst)
+        return add
 
     def remove_rule(self, rules=None, *, _validate=True):
         rem = super().remove_rule(rules, _validate=_validate)
@@ -60,3 +61,4 @@ class RulesRemovingGrammar(PrettyApiGrammar):
                     self._symbs_of_rules[symb].remove(inst)
                 for symb in rule[1]:
                     self._symbs_of_rules[symb].remove(inst)
+        return rem
