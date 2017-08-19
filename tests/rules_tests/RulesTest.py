@@ -86,5 +86,22 @@ class RulesTest(TestCase):
         for rule in r:
             self.assertIn(rule.rule, Tmp1.rules)
 
+    def test_shouldProcessInConstructor(self):
+        class Tmp1(Rule):
+            rules = [([NFirst], [NSecond, 0]),
+                     ([NThird], [0, 1]),
+                     ([NSecond], [NSecond, 'a'])]
+        self.g = Grammar(terminals=[0, 1, 2,
+                                    'a', 'b', 'c',
+                                    TFirst, TSecond, TThird,
+                                    TInstFirst, TInstSecond, TInstThird],
+                         nonterminals=[NFirst, NSecond, NThird, NFourth, NFifth],
+                         rules=[Tmp1])
+        r = self.g.get_rule(Tmp1)
+        self.assertIsInstance(r, list)
+        self.assertEqual(len(r), 3)
+        for rule in r:
+            self.assertIn(rule.rule, Tmp1.rules)
+
 if __name__ == '__main__':
     main()
