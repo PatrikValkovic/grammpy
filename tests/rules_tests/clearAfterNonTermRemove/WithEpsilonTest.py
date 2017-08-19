@@ -31,7 +31,7 @@ class WithEpsilonTest(TestCase):
 
     def test_removeB(self):
         self.assertEqual(self.g.rules_count(), 3)
-        self.g.remove_nonterm(B)
+        self.g.remove_rule(B)
         self.assertEqual(self.g.rules_count(), 1)
 
 

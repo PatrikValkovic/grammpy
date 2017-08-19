@@ -8,7 +8,7 @@ Part of grammpy
 """
 
 from .PrettyApiGrammar import PrettyApiGrammar
-from ..Constants import EPSILON
+
 
 class RulesRemovingGrammar(PrettyApiGrammar):
     def __init__(self,
@@ -16,7 +16,7 @@ class RulesRemovingGrammar(PrettyApiGrammar):
                  nonterminals=None,
                  rules=None,
                  start_symbol=None):
-        self._symbs_of_rules = dict({EPSILON: set()})
+        self._symbs_of_rules = dict()
         super().__init__(terminals, nonterminals, rules, start_symbol)
 
     def add_term(self, term):
