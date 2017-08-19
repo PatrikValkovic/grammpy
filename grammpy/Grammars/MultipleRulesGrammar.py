@@ -19,8 +19,8 @@ class MultipleRulesGrammar(StringGrammar):
                  nonterminals=None,
                  rules=None,
                  start_symbol=None):
-        super().__init__(terminals, nonterminals, rules, start_symbol)
         self._count = 0
+        super().__init__(terminals, nonterminals, rules, start_symbol)
 
     def _create_class(self, rule):
         name = 'SplitRules' + str(self._count)
