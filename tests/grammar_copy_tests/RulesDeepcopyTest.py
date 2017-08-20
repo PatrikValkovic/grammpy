@@ -117,6 +117,24 @@ class RulesAddingTest(TestCase):
         self.assertEqual(fC.prop, 'x')
         self.assertEqual(sC.prop, 'asdf')
 
+    def test_differentStartSymbol(self):
+        class A(Nonterminal): pass
+        first = Grammar(nonterminals=[A], start_symbol=A)
+        second = deepcopy(first)
+        self.assertTrue(first.start_is(A))
+        self.assertFalse(second.start_is(A))
+        self.assertNotEqual(first.start_get(), second.start_get())
+
+    def test_differentStartSymbolInMoreRules(self):
+        class A(Nonterminal): pass
+        class B(Nonterminal): pass
+        class C(Nonterminal): pass
+        first = Grammar(nonterminals=[A, B, C], start_symbol=B)
+        second = deepcopy(first)
+        self.assertTrue(first.start_is(B))
+        self.assertFalse(second.start_is(B))
+        self.assertNotEqual(first.start_get(), second.start_get())
+
 
 
 if __name__ == '__main__':
