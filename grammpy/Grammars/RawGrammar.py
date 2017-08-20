@@ -131,22 +131,23 @@ class RawGrammar:
         except (TerminalDoesNotExistsException, NonterminalDoesNotExistsException):
             return False
 
-    def get_rule(self, rules=None):
+    def get_rule(self, rules=None, *, include_inactive=False):
         if rules is None:
-            return [rule for rule in self.__rules.get() if rule._active]
+            return [rule for rule in self.__rules.get() if include_inactive or rule._active]
         converted = self._control_rules(rules)
+        obtain = self.__rules.get(converted)
         if not HashContainer.is_iterable(rules):
-            return self.__rules.get(converted)[0]
-        return self.__rules.get(converted)
+            return obtain[0]
+        return obtain
 
-    def rule(self, rules=None):
-        return self.get_rule(rules)
+    def rule(self, rules=None, *, include_inactive=False):
+        return self.get_rule(rules, include_inactive=include_inactive)
 
-    def rules(self):
-        return self.rule()
+    def rules(self, *, include_inactive=False):
+        return self.rule(include_inactive=include_inactive)
 
-    def rules_count(self):
-        return len(self.rules())
+    def rules_count(self, *, include_inactive=False):
+        return len(self.rules(include_inactive=include_inactive))
 
     # StartSymbol
     def start_get(self):
