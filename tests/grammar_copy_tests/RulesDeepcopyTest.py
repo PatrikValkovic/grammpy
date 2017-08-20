@@ -54,7 +54,7 @@ class RulesAddingTest(TestCase):
         self.assertFalse(fR2.attr)
         self.assertTrue(sR2.attr)
 
-    def test_globalChange(self):
+    def test_globalChangeOnRule(self):
         class A(Nonterminal): pass
         class B(Nonterminal): pass
         class R(Rule):
@@ -70,6 +70,53 @@ class RulesAddingTest(TestCase):
         R.attr = False
         self.assertFalse(fR.attr)
         self.assertTrue(sR.attr)
+
+    def test_globalChangeOnNonterminal(self):
+        class A(Nonterminal): prop = True
+        first = Grammar(nonterminals=[A])
+        second = deepcopy(first)
+        fA = first.nonterms()[0]
+        sA = second.nonterms()[0]
+        self.assertTrue(fA.prop)
+        self.assertTrue(sA.prop)
+        A.prop = False
+        self.assertFalse(fA.prop)
+        self.assertTrue(sA.prop)
+
+    def test_globalChangeOnMoreNonterminal(self):
+        class A(Nonterminal):
+            i=0
+            prop = True
+        class B(Nonterminal):
+            i = 1
+            prop = 0
+        class C(Nonterminal):
+            i = 2
+            prop = 'asdf'
+        first = Grammar(nonterminals=[A, B, C])
+        second = deepcopy(first)
+        fA = list(filter(lambda x: x.i == 0, first.nonterms()))[0]
+        sA = list(filter(lambda x: x.i == 0, second.nonterms()))[0]
+        fB = list(filter(lambda x: x.i == 1, first.nonterms()))[0]
+        sB = list(filter(lambda x: x.i == 1, second.nonterms()))[0]
+        fC = list(filter(lambda x: x.i == 2, first.nonterms()))[0]
+        sC = list(filter(lambda x: x.i == 2, second.nonterms()))[0]
+        self.assertTrue(fA.prop)
+        self.assertTrue(sA.prop)
+        self.assertEqual(fB.prop, 0)
+        self.assertEqual(sB.prop, 0)
+        self.assertEqual(fC.prop, 'asdf')
+        self.assertEqual(sC.prop, 'asdf')
+        A.prop = False
+        B.prop = 1
+        C.prop = 'x'
+        self.assertFalse(fA.prop)
+        self.assertTrue(sA.prop)
+        self.assertEqual(fB.prop, 1)
+        self.assertEqual(sB.prop, 0)
+        self.assertEqual(fC.prop, 'x')
+        self.assertEqual(sC.prop, 'asdf')
+
 
 
 if __name__ == '__main__':
