@@ -17,38 +17,37 @@ class RulesAddingTest(TestCase):
         class A(Nonterminal): pass
         class B(Nonterminal): pass
         class R(Rule):
-            rule=([A], [0, B])
+            rule = ([A], [0, B])
             attr = True
+
         first = Grammar(terminals=[0], nonterminals=[A, B], rules=[R])
         second = deepcopy(first)
         fR = first.get_rule(R)
-        sR = second.get_rule(R)
-        self.assertTrue(fR.attr)
-        self.assertTrue(sR.attr)
         fR.attr = False
         self.assertFalse(fR.attr)
-        self.assertTrue(sR.attr)
+        self.assertTrue(second.rules()[0].attr)
 
     def test_copyOfMoreRules(self):
         class A(Nonterminal): pass
         class B(Nonterminal): pass
         class R1(Rule):
-            rule=([A], [0, B])
+            rule = ([A], [0, B])
             attr = True
         class R2(Rule):
-            rule=([A], [0, B])
+            rule = ([A], [1, B])
             attr = 0
-        first = Grammar(terminals=[0], nonterminals=[A, B], rules=[R1, R2])
+
+        first = Grammar(terminals=[0, 1], nonterminals=[A, B], rules=[R1, R2])
         second = deepcopy(first)
         fR1 = first.get_rule(R1)
-        sR1 = second.get_rule(R1)
+        sR1 = list(filter(lambda x: x.right[0] == 0, second.get_rule()))[0]
         self.assertTrue(fR1.attr)
         self.assertTrue(sR1.attr)
         fR1.attr = False
         self.assertFalse(fR1.attr)
         self.assertTrue(sR1.attr)
         fR2 = first.get_rule(R2)
-        sR2 = second.get_rule(R2)
+        sR2 = list(filter(lambda x: x.right[0] == 1, second.get_rule()))[0]
         self.assertFalse(fR2.attr)
         self.assertFalse(sR2.attr)
         sR2.attr = True
@@ -59,18 +58,18 @@ class RulesAddingTest(TestCase):
         class A(Nonterminal): pass
         class B(Nonterminal): pass
         class R(Rule):
-            rule=([A], [0, B])
+            rule = ([A], [0, B])
             attr = True
+
         first = Grammar(terminals=[0], nonterminals=[A, B], rules=[R])
         second = deepcopy(first)
         fR = first.get_rule(R)
-        sR = second.get_rule(R)
+        sR = second.rules()[0]
         self.assertTrue(fR.attr)
         self.assertTrue(sR.attr)
         R.attr = False
         self.assertFalse(fR.attr)
         self.assertTrue(sR.attr)
-
 
 
 if __name__ == '__main__':
