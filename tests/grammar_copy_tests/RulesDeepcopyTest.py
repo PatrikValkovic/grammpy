@@ -54,6 +54,60 @@ class RulesAddingTest(TestCase):
         self.assertFalse(fR2.attr)
         self.assertTrue(sR2.attr)
 
+    def test_copyOfMoreRulesWithEpsilon(self):
+        class A(Nonterminal): pass
+        class B(Nonterminal): pass
+        class R1(Rule):
+            rule = ([A], [0, B])
+            attr = True
+        class R2(Rule):
+            rule = ([B], [EPSILON])
+            attr = 0
+
+        first = Grammar(terminals=[0, 1], nonterminals=[A, B], rules=[R1, R2])
+        second = deepcopy(first)
+        fR1 = first.get_rule(R1)
+        sR1 = list(filter(lambda x: x.right[0] == 0, second.get_rule()))[0]
+        self.assertTrue(fR1.attr)
+        self.assertTrue(sR1.attr)
+        fR1.attr = False
+        self.assertFalse(fR1.attr)
+        self.assertTrue(sR1.attr)
+        fR2 = first.get_rule(R2)
+        sR2 = list(filter(lambda x: x.right[0] == EPS, second.get_rule()))[0]
+        self.assertFalse(fR2.attr)
+        self.assertFalse(sR2.attr)
+        sR2.attr = True
+        self.assertFalse(fR2.attr)
+        self.assertTrue(sR2.attr)
+
+    def test_copyOfMoreRulesWithEpsilonLeft(self):
+        class A(Nonterminal): pass
+        class B(Nonterminal): pass
+        class R1(Rule):
+            rule = ([A], [0, B])
+            attr = True
+        class R2(Rule):
+            rule = ([EPSILON], [1, B])
+            attr = 0
+
+        first = Grammar(terminals=[0, 1], nonterminals=[A, B], rules=[R1, R2])
+        second = deepcopy(first)
+        fR1 = first.get_rule(R1)
+        sR1 = list(filter(lambda x: x.right[0] == 0, second.get_rule()))[0]
+        self.assertTrue(fR1.attr)
+        self.assertTrue(sR1.attr)
+        fR1.attr = False
+        self.assertFalse(fR1.attr)
+        self.assertTrue(sR1.attr)
+        fR2 = first.get_rule(R2)
+        sR2 = list(filter(lambda x: x.right[0] == 1, second.get_rule()))[0]
+        self.assertFalse(fR2.attr)
+        self.assertFalse(sR2.attr)
+        sR2.attr = True
+        self.assertFalse(fR2.attr)
+        self.assertTrue(sR2.attr)
+
     def test_globalChangeOnRule(self):
         class A(Nonterminal): pass
         class B(Nonterminal): pass
@@ -70,6 +124,27 @@ class RulesAddingTest(TestCase):
         R.attr = False
         self.assertFalse(fR.attr)
         self.assertTrue(sR.attr)
+
+    def test_copyOfObject(self):
+        x = object()
+        class A(Nonterminal): pass
+        class B(Nonterminal): pass
+        class R(Rule):
+            rule = ([x, A], [B])
+            attr = True
+
+        first = Grammar(terminals=[x], nonterminals=[A, B], rules=[R])
+        second = deepcopy(first)
+        fR = first.get_rule(R)
+        sR = second.rules()[0]
+        self.assertTrue(fR.attr)
+        self.assertTrue(sR.attr)
+        R.attr = False
+        self.assertFalse(fR.attr)
+        self.assertTrue(sR.attr)
+        self.assertEqual(fR.left[0], x)
+        self.assertNotEqual(sR.left[0], x)
+        self.assertIsInstance(sR.left[0], object)
 
     def test_globalChangeOnNonterminal(self):
         class A(Nonterminal): prop = True
