@@ -6,12 +6,9 @@
 Part of grammpy
 
 """
-from copy import deepcopy
-from inspect import isclass
-from .RulesRemovingGrammar import RulesRemovingGrammar as _G
-from ..Nonterminal import Nonterminal
-from ..Rules import Rule
-from ..Constants import EPSILON
+
+from .CopyableGrammar import CopyableGrammar as _G
+
 
 
 class Grammar(_G):
