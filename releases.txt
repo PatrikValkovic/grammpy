@@ -5,8 +5,8 @@ This is a list of major changes in SDL's version history.
 dev
 ---------------------------------------------------------------------------
 
-* ADD: add parameter into Grammar.rules, Grammar.rule and Grammar.get_rule that allow to obtain also inactive rules
-
+* ADD: Add parameter into Grammar.rules, Grammar.rule and Grammar.get_rule that allow to obtain also inactive rules
+* ADD: Implement copying of Grammar (shallow, deep and also custom)
 
 ---------------------------------------------------------------------------
 1.1.9

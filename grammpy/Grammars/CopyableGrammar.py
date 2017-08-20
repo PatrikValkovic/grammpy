@@ -14,6 +14,7 @@ from ..Nonterminal import Nonterminal
 from ..Rules import Rule
 from ..Constants import EPSILON
 
+# TODO Optimize
 
 class CopyableGrammar(Grammar):
     class _CopyContainer:
