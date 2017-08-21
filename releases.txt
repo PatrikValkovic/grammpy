@@ -8,6 +8,8 @@ dev
 * ADD: Implement copying of Grammar (shallow, deep and also custom)
 * REM: Removed logic about inactive rules
 * FIX: HashContainer.get method returns inner items instead of parameters
+* ADD: Split rules remember their parent (in from_rule property) with their index (in rule_index property)
+* ADD: Class SplitRule in grammpy.Rules package
 
 ---------------------------------------------------------------------------
 1.1.9
