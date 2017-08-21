@@ -42,10 +42,10 @@ class MultipleRulesGrammar(StringGrammar):
                 r.append(i)
         return r
 
-    def get_rule(self, rules=None, *, include_inactive=False):
+    def get_rule(self, rules=None):
         if rules is None:
-            return super().get_rule(include_inactive=include_inactive)
-        results = super().get_rule(self._transform_rules(rules), include_inactive=include_inactive)
+            return super().get_rule()
+        results = super().get_rule(self._transform_rules(rules))
         if not HashContainer.is_iterable(rules) and rules.count() == 1:
             return results[0]
         return results

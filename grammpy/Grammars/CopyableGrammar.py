@@ -63,10 +63,10 @@ class CopyableGrammar(Grammar):
         new_rules_dict = dict()
         # if not copy just fill into set and dict to self
         if not _copy:
-            new_rules = set(self.rules(include_inactive=True))
+            new_rules = set(self.rules())
             for r in new_rules: new_rules_dict[r] = r
         else:
-            for r in self.rules(include_inactive=True):
+            for r in self.rules():
                 copy_rules = []
                 for rule in r.rules:
                     leftPart = []
