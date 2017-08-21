@@ -36,8 +36,12 @@ class MultipleRulesGrammar(StringGrammar):
             if not inspect.isclass(i) or not issubclass(i, Rule):
                 r.append(i)
             elif (i.is_valid(self) and i.count() > 1) or (not _validate and i.count() > 1):
-                for rule in i.rules:
-                    r.append(self._create_class(rule))
+                for rule_index in range(len(i.rules)):
+                    rule = i.rules[rule_index]
+                    created = self._create_class(rule)
+                    created.from_rule = i
+                    created.rule_index = rule_index
+                    r.append(created)
             else:
                 r.append(i)
         return r
