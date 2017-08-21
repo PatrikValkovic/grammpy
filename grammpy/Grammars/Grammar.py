@@ -22,8 +22,5 @@ class Grammar(_G):
                        rules=list(c.new_rules),
                        start_symbol=c.start)
 
-    def copy_rules(self):
-        return self.copy(rules=True)
-
     def __deepcopy__(self, memodict={}):
         return self.copy(terminals=True, nonterminals=True, rules=True)
