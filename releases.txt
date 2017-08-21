@@ -7,6 +7,7 @@ dev
 
 * ADD: Implement copying of Grammar (shallow, deep and also custom)
 * REM: Removed logic about inactive rules
+* FIX: HashContainer.get method returns inner items instead of parameters
 
 ---------------------------------------------------------------------------
 1.1.9
