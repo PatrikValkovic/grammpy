@@ -8,3 +8,4 @@ Part of grammpy
 """
 
 from .Rule import Rule
+from ..Grammars.MultipleRulesGrammar import SplitRule
