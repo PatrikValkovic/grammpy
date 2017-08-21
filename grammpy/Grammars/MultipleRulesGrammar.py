@@ -12,6 +12,11 @@ from ..Rules import Rule
 from .StringGrammar import StringGrammar
 from ..HashContainer import HashContainer
 
+class SplitRule(Rule):
+    from_rule = None
+    rule_index = None
+    rule = None
+
 
 class MultipleRulesGrammar(StringGrammar):
     def __init__(self,
@@ -25,9 +30,9 @@ class MultipleRulesGrammar(StringGrammar):
     def _create_class(self, rule):
         name = 'SplitRules' + str(self._count)
         self._count += 1
-        return type(name,
-                    (Rule,),
-                    {"rule": rule})
+        created = type(name, (SplitRule,), SplitRule.__dict__.copy())
+        created.rule = rule
+        return created
 
     def _transform_rules(self, rules, *, _validate=True):
         rules = HashContainer.to_iterable(rules)
