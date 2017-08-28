@@ -9,7 +9,7 @@ Part of grammpy
 
 from setuptools import setup
 
-v = '1.1.10'
+v = '1.1.11'
 
 setup(
     name='grammpy',
