@@ -70,7 +70,7 @@ class HashContainer:
         transformed = HashContainer.to_iterable(item)
         ret = []
         for t in transformed:
-            ret.append(t if hash(t) in self.__items else None)
+            ret.append(self.__items[hash(t)] if hash(t) in self.__items else None)
         if not HashContainer.is_iterable(item):
             return ret[0]
         return ret

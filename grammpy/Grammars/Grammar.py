@@ -7,12 +7,20 @@ Part of grammpy
 
 """
 
-from .RulesRemovingGrammar import RulesRemovingGrammar as _G
+from .CopyableGrammar import CopyableGrammar as _G
+
 
 
 class Grammar(_G):
     def __copy__(self):
-        return Grammar(terminals=(t.s for t in self.terms()),
-                       nonterminals=self.nonterms(),
-                       rules=self.rules(),
-                       start_symbol=self.start_get())
+        return self.copy()
+
+    def copy(self, terminals=False, nonterminals=False, rules=False):
+        c = self._copy(terminals=terminals, nonterminals=nonterminals, rules=rules)
+        return Grammar(terminals=list(c.new_terms),
+                       nonterminals=list(c.new_nonterms),
+                       rules=list(c.new_rules),
+                       start_symbol=c.start)
+
+    def __deepcopy__(self, memodict={}):
+        return self.copy(terminals=True, nonterminals=True, rules=True)

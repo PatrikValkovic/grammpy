@@ -7,7 +7,7 @@ Part of grammpy
 
 """
 
-from distutils.core import setup
+from setuptools import setup
 
 v = '1.1.10'
 

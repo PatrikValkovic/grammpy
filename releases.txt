@@ -1,0 +1,92 @@
+
+This is a list of major changes in SDL's version history.
+
+---------------------------------------------------------------------------
+dev
+---------------------------------------------------------------------------
+
+* ADD: Implement copying of Grammar (shallow, deep and also custom)
+* REM: Removed logic about inactive rules
+* FIX: HashContainer.get method returns inner items instead of parameters
+* ADD: Split rules remember their parent (in from_rule property) with their index (in rule_index property)
+* ADD: Class SplitRule in grammpy.Rules package
+
+---------------------------------------------------------------------------
+1.1.9
+---------------------------------------------------------------------------
+
+* FIX: Fixed passing of Rule with epsilon appearance
+
+
+---------------------------------------------------------------------------
+1.1.8
+---------------------------------------------------------------------------
+
+* FIX: Fixed removing of rules, that have multiple appearance of same symbol
+
+
+---------------------------------------------------------------------------
+1.1.7
+---------------------------------------------------------------------------
+
+* FIX: With terminals and nonterminals Grammar now remove also rules, that use them
+
+
+---------------------------------------------------------------------------
+1.1.6
+---------------------------------------------------------------------------
+
+* FIX: Add methods on Grammar now returns only newly added entities
+
+
+---------------------------------------------------------------------------
+1.1.5
+---------------------------------------------------------------------------
+
+* ADD: Add and remove methods on Grammar now return added or deleted entities
+
+
+---------------------------------------------------------------------------
+1.1.4
+---------------------------------------------------------------------------
+
+* FIX: Correct link to archive with source codes in settup.py file
+
+
+---------------------------------------------------------------------------
+1.1.3
+---------------------------------------------------------------------------
+
+* FIX: Add Rules directory into package, that was missing
+
+
+---------------------------------------------------------------------------
+1.1.2
+---------------------------------------------------------------------------
+
+* ADD: Implement Grammar.__copy__ method
+* ADD: Add global Grammar and Rule classes
+* ADD: Add ActivableRule class that have _active property
+
+
+---------------------------------------------------------------------------
+1.1.1
+---------------------------------------------------------------------------
+
+* FIX: Implement Rule.__hash__ method
+* ADD: Rule class with more rules is split into more rules with single rule
+
+
+---------------------------------------------------------------------------
+1.1.0
+---------------------------------------------------------------------------
+
+* ADD: Add start symbol of Grammar
+
+
+---------------------------------------------------------------------------
+1.0.1
+---------------------------------------------------------------------------
+
+* FIX: Parametres passed into Grammar constructor are validate
+* FIX: Grammar.have_rule method returns False instead of expcetion when rule with symbols out of grammar is pass

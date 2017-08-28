@@ -133,11 +133,12 @@ class RawGrammar:
 
     def get_rule(self, rules=None):
         if rules is None:
-            return [rule for rule in self.__rules.get() if rule._active]
+            return self.__rules.get()
         converted = self._control_rules(rules)
+        obtain = self.__rules.get(converted)
         if not HashContainer.is_iterable(rules):
-            return self.__rules.get(converted)[0]
-        return self.__rules.get(converted)
+            return obtain[0]
+        return obtain
 
     def rule(self, rules=None):
         return self.get_rule(rules)
