@@ -66,8 +66,8 @@ class WeakList(list):
         while list.__contains__(self, item):
             list.remove(self, item)
 
-    def index(self, item, start=None, stop=None):
-        return list.index(self, self.ref(item), start=start, stop=stop)
+    def index(self, item):
+        return list.index(self, self.ref(item))
 
     def count(self, item):
         return list.count(self, self.ref(item))
