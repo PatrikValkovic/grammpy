@@ -7,7 +7,7 @@ Part of grammpy
 
 """
 
-from weakreflist import WeakList
+from ..WeakList import WeakList
 from .IsMethodsRuleExtension import IsMethodsRuleExtension
 
 
