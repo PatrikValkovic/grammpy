@@ -31,29 +31,46 @@ def _create_mapping(grammar: Grammar) -> tuple:
             rulemap[key].add(r)
     return (termmap, rulemap)
 
-def _all_combinations(first, second):
-    for f in first:
-        for s in second:
+def _all_combinations(tpl):
+    for f in tpl[0]:
+        for s in tpl[1]:
             yield (f, s)
+
+class _place_item:
+    def __init__(self, r, t1, t2):
+        self.to_rule = [t1, t2]
+        self.rule = r
+
+    def __hash__(self):
+        return hash(self.rule)
+
+    @property
+    def fromSymbol(self):
+        return self.rule.fromSymbol
+
+
 
 def cyk(grammar: Grammar, input: Iterable) -> Nonterminal:
     i = list(input)
-    f = Field(grammar, len(i))
+    l = len(i)
+    f = Field(grammar, l)
     # creating mapping for speedup rules searching
     (termmap, rulemap) = _create_mapping(grammar)
     # fill first line with rules directly rewritable to terminal
     f.fill(termmap, i)
     # fill rest of field
-    for y in range(1, len(i)):
-        for x in range(len(i) - y):
+    for y in range(1, l):
+        for x in range(l - y):
             positions = f.positions(x, y)
-            pairs = [(f.nonterms(pos[0].x, pos[0].y),
-                      f.nonterms(pos[1].x, pos[1].y))
+            pairs_of_rules = [(f.rules(pos[0].x, pos[0].y),
+                      f.rules(pos[1].x, pos[1].y))
                      for pos in positions]
-            r = set()
-            for pair in pairs:
-                for (first, second) in _all_combinations(pair[0], pair[1]):
-                    h = hash((first, second))
-                    if h in rulemap: r |= rulemap[h]
-            f.put(x, y, list(r))
+            rules = set()
+            for pair_of_rule in pairs_of_rules:
+                for (first_rule, second_rule) in _all_combinations(pair_of_rule):
+                    h = hash((first_rule.fromSymbol, second_rule.fromSymbol))
+                    if h in rulemap:
+                        for r in rulemap[h]: # list of rules
+                            rules.add(_place_item(r, first_rule, second_rule))
+            f.put(x, y, list(rules))
     raise NotImplementedError()

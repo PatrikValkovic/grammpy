@@ -36,8 +36,8 @@ class Field:
             t = terms[i]
             self._field[0][i] += term_dict[t]
 
-    def nonterms(self, x, y):
-        return [r.fromSymbol for r in self._field[y][x]]
+    def rules(self, x, y):
+        return [r for r in self._field[y][x]]
 
     def positions(self, x, y):
         return [(Point(x, v), Point(x+1+v, y-1-v)) for v in range(y)]
