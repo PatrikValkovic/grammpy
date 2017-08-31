@@ -21,7 +21,7 @@ class B1(Rule): rule=([B], [1])
 
 
 
-class OneRuleTest(TestCase):
+class TwoNonterminalsTest(TestCase):
     def __init__(self, methodName='runTest'):
         super().__init__(methodName)
         self.g = None
