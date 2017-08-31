@@ -26,7 +26,7 @@ class A2(Rule): rule=([A], [2])
 
 
 
-class TwoNonterminalsTest(TestCase):
+class SimpleLoopTest(TestCase):
     def __init__(self, methodName='runTest'):
         super().__init__(methodName)
         self.g = None
@@ -73,8 +73,8 @@ class TwoNonterminalsTest(TestCase):
         self.assertIsInstance(a.to_rule, AAC)
         self.assertIsInstance(a.to_rule.to_symbols[0], A)
         self.assertIsInstance(a.to_rule.to_symbols[1], C)
-        a = a.to_rule.to_symbols[0]
         c = a.to_rule.to_symbols[1]
+        a = a.to_rule.to_symbols[0]
         self.assertIsInstance(a.to_rule, A2)
         self.assertIsInstance(a.to_rule.to_symbols[0], Terminal)
         self.assertIsInstance(c.to_rule, C0)
@@ -84,8 +84,8 @@ class TwoNonterminalsTest(TestCase):
         parsed = cyk(self.g, [2, 0, 1])
         a = parsed.to_rule.to_symbols[0]
         b = parsed.to_rule.to_symbols[1]
-        a = a.to_rule.to_symbols[0]
         c = a.to_rule.to_symbols[1]
+        a = a.to_rule.to_symbols[0]
         self.assertEqual(a.to_rule.to_symbols[0].s, 2)
         self.assertEqual(b.to_rule.to_symbols[0].s, 1)
         self.assertEqual(c.to_rule.to_symbols[0].s, 0)
@@ -117,7 +117,7 @@ class TwoNonterminalsTest(TestCase):
         self.assertIsInstance(a3.to_rule, AAC)
         self.assertIsInstance(a3.to_rule.to_symbols[0], A)
         self.assertIsInstance(a3.to_rule.to_symbols[1], C)
-        a4 = a1.to_rule.to_symbols[0]
+        a4 = a3.to_rule.to_symbols[0]
         c3 = a3.to_rule.to_symbols[1]
         self.assertIsInstance(c3.to_rule, C0)
         self.assertIsInstance(c3.to_rule.to_symbols[0], Terminal)
@@ -132,7 +132,7 @@ class TwoNonterminalsTest(TestCase):
         c1 = a1.to_rule.to_symbols[1]
         a3 = a2.to_rule.to_symbols[0]
         c2 = a2.to_rule.to_symbols[1]
-        a4 = a1.to_rule.to_symbols[0]
+        a4 = a3.to_rule.to_symbols[0]
         c3 = a3.to_rule.to_symbols[1]
         self.assertEqual(a4.to_rule.to_symbols[0].s, 2)
         self.assertEqual(c3.to_rule.to_symbols[0].s, 0)
