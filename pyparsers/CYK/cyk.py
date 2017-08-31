@@ -7,7 +7,8 @@ Part of pyparsers
 
 """
 
+from typing import Iterable
 from grammpy import *
 
-def cyk(grammar: Grammar):
+def cyk(grammar: Grammar, input: Iterable) -> Nonterminal:
     raise NotImplementedError()
