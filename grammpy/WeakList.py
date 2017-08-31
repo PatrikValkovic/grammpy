@@ -1,0 +1,97 @@
+#!/usr/bin/env python
+"""
+:Author Patrik Valkovic
+:Created 31.08.2017 12:11
+:Licence GNUv3
+Part of grammpy
+
+
+Original implementation: https://github.com/apieum/weakreflist
+"""
+
+import weakref
+from .exceptions import TreeDeletedException
+
+__all__ = ["WeakList"]
+
+
+def is_slice(index):
+    return isinstance(index, slice)
+
+
+class WeakList(list):
+    def __init__(self, items=list()):
+        list.__init__(self, self._refs(items))
+
+    def value(self, item):
+        if isinstance(item, weakref.ReferenceType):
+            if item() is None:
+                raise TreeDeletedException()
+            return item()
+        return item
+
+    def ref(self, item):
+        try:
+            item = weakref.ref(item)
+        finally:
+            return item
+
+    def __contains__(self, item):
+        return list.__contains__(self, self.ref(item))
+
+    def __getitem__(self, index):
+        items = list.__getitem__(self, index)
+        return type(self)(self._values(items)) if is_slice(index) else self.value(items)
+
+    def __setitem__(self, index, item):
+        items = self._refs(item) if is_slice(index) else self.ref(item)
+        return list.__setitem__(self, index, items)
+
+    def __iter__(self):
+        return iter(self[index] for index in range(len(self)))
+
+    def __reversed__(self):
+        reversed_self = type(self)(self)
+        reversed_self.reverse()
+        return reversed_self
+
+    def append(self, item):
+        list.append(self, self.ref(item))
+
+    def remove(self, item):
+        return list.remove(self, self.ref(item))
+
+    def remove_all(self, item):
+        item = self.ref(item)
+        while list.__contains__(self, item):
+            list.remove(self, item)
+
+    def index(self, item, start=None, stop=None):
+        return list.index(self, self.ref(item), start=start, stop=stop)
+
+    def count(self, item):
+        return list.count(self, self.ref(item))
+
+    def pop(self, index=-1):
+        return self.value(list.pop(self, self.ref(index)))
+
+    def insert(self, index, item):
+        return list.insert(self, index, self.ref(item))
+
+    def extend(self, items):
+        return list.extend(self, self._refs(items))
+
+    def __iadd__(self, other):
+        return list.__iadd__(self, self._refs(other))
+
+    def _refs(self, items):
+        return map(self.ref, items)
+
+    def _values(self, items):
+        return map(self.value, items)
+
+    def _sort_key(self, key=None):
+        return self.value if key is None else lambda item: key(self.value(item))
+
+    def sort(self, *, key=None, reverse=False):
+        return list.sort(self, key=self._sort_key(key), reverse=reverse)
