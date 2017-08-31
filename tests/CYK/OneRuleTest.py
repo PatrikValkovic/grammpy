@@ -13,7 +13,7 @@ from pyparsers import cyk
 
 
 class S(Nonterminal): pass
-class R(Rule): rule=([S], [0, 1])
+class R(Rule): rule=([S], [0])
 
 
 class OneRuleTest(TestCase):
@@ -22,25 +22,23 @@ class OneRuleTest(TestCase):
         self.g = None
 
     def setUp(self):
-        self.g = Grammar(terminals=[0,1],
+        self.g = Grammar(terminals=[0],
                     nonterminals=[S],
                     rules=[R],
                     start_symbol=S)
 
     def test_shouldParse(self):
-        parsed = cyk(self.g, [0, 1])
+        parsed = cyk(self.g, [0])
 
     def test_shouldParseCorrectTypes(self):
-        parsed = cyk(self.g, [0, 1])
-        self.assertIsInstance(parsed, Nonterminal)
+        parsed = cyk(self.g, [0])
+        self.assertIsInstance(parsed, S)
         self.assertIsInstance(parsed.to_rule, R)
         self.assertIsInstance(parsed.to_rule.to_nonterms[0], Terminal)
-        self.assertIsInstance(parsed.to_rule.to_nonterms[1], Terminal)
 
     def test_shouldParseCorrectSymbols(self):
-        parsed = cyk(self.g, [0, 1])
+        parsed = cyk(self.g, [0])
         self.assertEqual(parsed.to_rule.to_nonterms[0].s, 0)
-        self.assertEqual(parsed.to_rule.to_nonterms[1].s, 1)
 
 
 

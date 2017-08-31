@@ -27,7 +27,7 @@ class OneRuleTest(TestCase):
         self.g = None
 
     def setUp(self):
-        self.g = Grammar(terminals=[0,1],
+        self.g = Grammar(terminals=[0, 1],
                     nonterminals=[S, A, B],
                     rules=[SAB, A0, B1],
                     start_symbol=S)
@@ -37,10 +37,10 @@ class OneRuleTest(TestCase):
 
     def test_shouldParseCorrectTypes(self):
         parsed = cyk(self.g, [0, 1])
-        self.assertIsInstance(parsed, Nonterminal)
+        self.assertIsInstance(parsed, S)
         self.assertIsInstance(parsed.to_rule, SAB)
-        self.assertIsInstance(parsed.to_rule.to_nonterms[0], Nonterminal)
-        self.assertIsInstance(parsed.to_rule.to_nonterms[1], Nonterminal)
+        self.assertIsInstance(parsed.to_rule.to_nonterms[0], A)
+        self.assertIsInstance(parsed.to_rule.to_nonterms[1], B)
         self.assertIsInstance(parsed.to_rule.to_nonterms[0].to_rule, A0)
         self.assertIsInstance(parsed.to_rule.to_nonterms[1].to_rule, B1)
         self.assertIsInstance(parsed.to_rule.to_nonterms[0].to_rule.to_nonterms[0], Terminal)
