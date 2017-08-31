@@ -20,7 +20,5 @@ setup(
     download_url='https://github.com/PatrikValkovic/grammpy/archive/v1.0.1.tar.gz',
     author_email='patrik.valkovic@hotmail.cz',
     description='Package for representing formal grammars.',
-    install_requires=[
-        'weakreflist',
-    ],
+    install_requires=[],
 )
