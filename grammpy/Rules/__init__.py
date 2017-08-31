@@ -9,3 +9,4 @@ Part of grammpy
 
 from .Rule import Rule
 from ..Grammars.MultipleRulesGrammar import SplitRule
+from .RuleChainable import RuleChainable
