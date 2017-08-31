@@ -8,10 +8,9 @@ Part of pyparsers
 """
 
 from typing import Iterable
-
-import itertools
 from grammpy import *
 from .Field import Field
+from .PlaceItem import PlaceItem
 
 
 def _create_mapping(grammar: Grammar) -> tuple:
@@ -36,19 +35,6 @@ def _all_combinations(tpl):
         for s in tpl[1]:
             yield (f, s)
 
-class _place_item:
-    def __init__(self, r, t1, t2):
-        self.to_rule = [t1, t2]
-        self.rule = r
-
-    def __hash__(self):
-        return hash(self.rule)
-
-    @property
-    def fromSymbol(self):
-        return self.rule.fromSymbol
-
-
 
 def cyk(grammar: Grammar, input: Iterable) -> Nonterminal:
     i = list(input)
@@ -71,11 +57,11 @@ def cyk(grammar: Grammar, input: Iterable) -> Nonterminal:
                     h = hash((first_rule.fromSymbol, second_rule.fromSymbol))
                     if h in rulemap:
                         for r in rulemap[h]: # list of rules
-                            rules.add(_place_item(r, first_rule, second_rule))
+                            rules.add(PlaceItem(r, first_rule, second_rule))
             f.put(x, y, list(rules))
     # Check if is start symol on the bottom of field
     if grammar.start_get() not in [r.fromSymbol for r in f.rules(0,l-1)]:
-        raise NotImplementedError() # TODO exception
+        raise NotImplementedError()  # TODO exception
     # Find init symbol and rule
     start = grammar.start_get()()  # type: Nonterminal
     start_rule = [r for r in f.rules(0, l-1) if grammar.start_is(r.fromSymbol)][0]
@@ -88,7 +74,7 @@ def cyk(grammar: Grammar, input: Iterable) -> Nonterminal:
         rule_class = working['r']
         working_nonterm = working['n']  # type: Nonterminal
         # it middle rule - not rewritable to nonterminal
-        if isinstance(rule_class, _place_item):
+        if isinstance(rule_class, PlaceItem):
             created_rule = rule_class.rule() # type: Rule
             working_nonterm._set_to_rule(created_rule)
             created_rule._from_symbols.append(working_nonterm)
