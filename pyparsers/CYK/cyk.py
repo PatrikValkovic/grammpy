@@ -9,6 +9,9 @@ Part of pyparsers
 
 from typing import Iterable
 from grammpy import *
+from .Field import Field
 
 def cyk(grammar: Grammar, input: Iterable) -> Nonterminal:
+    i = list(input)
+    f = Field(grammar, len(i))
     raise NotImplementedError()
