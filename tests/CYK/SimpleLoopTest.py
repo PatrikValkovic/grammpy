@@ -125,7 +125,7 @@ class TwoNonterminalsTest(TestCase):
         self.assertIsInstance(a4.to_rule.to_symbols[0], Terminal)
 
     def test_shouldParseCorrectSymbolsThreeLoops(self):
-        parsed = cyk(self.g, [2, 0, 1])
+        parsed = cyk(self.g, [2, 0, 0, 0, 1])
         a1 = parsed.to_rule.to_symbols[0]
         b = parsed.to_rule.to_symbols[1]
         a2 = a1.to_rule.to_symbols[0]
