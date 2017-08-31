@@ -18,7 +18,7 @@ class InstantiableRule(IsMethodsRuleExtension):
 
     @property
     def from_nonterms(self):
-        return self._from_nonterms
+        return list(self._from_nonterms)
 
     @property
     def to_nonterms(self):

@@ -44,6 +44,8 @@ class RulesTest(TestCase):
         del a
         with self.assertRaises(TreeDeletedException):
             t.from_nonterms[0]
+        with self.assertRaises(TreeDeletedException):
+            t.from_nonterms
 
     def test_shouldNotDeleteChild(self):
         t = To()
