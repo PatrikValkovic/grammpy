@@ -73,4 +73,35 @@ def cyk(grammar: Grammar, input: Iterable) -> Nonterminal:
                         for r in rulemap[h]: # list of rules
                             rules.add(_place_item(r, first_rule, second_rule))
             f.put(x, y, list(rules))
-    raise NotImplementedError()
+    # Check if is start symol on the bottom of field
+    if grammar.start_get() not in [r.fromSymbol for r in f.rules(0,l-1)]:
+        raise NotImplementedError() # TODO exception
+    # Find init symbol and rule
+    start = grammar.start_get()()  # type: Nonterminal
+    start_rule = [r for r in f.rules(0, l-1) if grammar.start_is(r.fromSymbol)][0]
+    # Prepare buffer for proccess
+    to_process = list()
+    to_process.append({'n': start, 'r': start_rule})
+    # Prepare tree
+    while len(to_process) > 0:
+        working = to_process.pop()
+        rule_class = working['r']
+        working_nonterm = working['n']  # type: Nonterminal
+        # it middle rule - not rewritable to nonterminal
+        if isinstance(rule_class, _place_item):
+            created_rule = rule_class.rule() # type: Rule
+            working_nonterm._set_to_rule(created_rule)
+            created_rule._from_symbols.append(working_nonterm)
+            for side in rule_class.to_rule:
+                symbol = side.fromSymbol() # type: Nonterminal
+                symbol._set_from_rule(created_rule)
+                created_rule._to_symbols.append(symbol)
+                to_process.append({'n': symbol, 'r': side})
+        # it is rule rewritable to nonterminal
+        else:
+            created_rule = rule_class() # type: Rule
+            working_nonterm._set_to_rule(created_rule)
+            t = grammar.term(rule_class.toSymbol)
+            created_rule._to_symbols = [t]
+            t._set_from_rule(created_rule)
+    return start
