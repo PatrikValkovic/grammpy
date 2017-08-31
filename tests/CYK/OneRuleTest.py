@@ -33,14 +33,14 @@ class OneRuleTest(TestCase):
     def test_shouldParseCorrectTypes(self):
         parsed = cyk(self.g, [0, 1])
         self.assertIsInstance(parsed, Nonterminal)
-        self.assertIsInstance(parsed.to_rule, Rule)
+        self.assertIsInstance(parsed.to_rule, R)
         self.assertIsInstance(parsed.to_rule.to_nonterms[0], Terminal)
         self.assertIsInstance(parsed.to_rule.to_nonterms[1], Terminal)
 
     def test_shouldParseCorrectSymbols(self):
         parsed = cyk(self.g, [0, 1])
-        self.assertIsInstance(parsed.to_rule.to_nonterms[0].s, 0)
-        self.assertIsInstance(parsed.to_rule.to_nonterms[1].s, 1)
+        self.assertEqual(parsed.to_rule.to_nonterms[0].s, 0)
+        self.assertEqual(parsed.to_rule.to_nonterms[1].s, 1)
 
 
 
