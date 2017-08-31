@@ -24,8 +24,8 @@ class RulesTest(TestCase):
         t = To()
         b = B()
         c = C()
-        t._to_nonterms.append(b)
-        t._to_nonterms.append(c)
+        t._to_symbols.append(b)
+        t._to_symbols.append(c)
         self.assertEqual(t.to_symbols[0], b)
         self.assertEqual(t.to_symbols[1], c)
         self.assertEqual(t.to_symbols, [b, c])
@@ -33,14 +33,14 @@ class RulesTest(TestCase):
     def test_correctParent(self):
         t = To()
         a = A()
-        t._from_nonterms.append(a)
+        t._from_symbols.append(a)
         self.assertEqual(t.from_symbols[0], a)
         self.assertEqual(t.from_symbols, [a])
 
     def test_correctDeleteParent(self):
         t = To()
         a = A()
-        t._from_nonterms.append(a)
+        t._from_symbols.append(a)
         del a
         with self.assertRaises(TreeDeletedException):
             t.from_symbols[0]
@@ -51,8 +51,8 @@ class RulesTest(TestCase):
         t = To()
         b = B()
         c = C()
-        t._to_nonterms.append(b)
-        t._to_nonterms.append(c)
+        t._to_symbols.append(b)
+        t._to_symbols.append(c)
         del b
         del c
         t.to_symbols[0]

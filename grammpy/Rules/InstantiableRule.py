@@ -13,13 +13,13 @@ from .IsMethodsRuleExtension import IsMethodsRuleExtension
 
 class InstantiableRule(IsMethodsRuleExtension):
     def __init__(self):
-        self._from_nonterms = WeakList()
-        self._to_nonterms = list()
+        self._from_symbols = WeakList()
+        self._to_symbols = list()
 
     @property
     def from_symbols(self):
-        return list(self._from_nonterms)
+        return list(self._from_symbols)
 
     @property
     def to_symbols(self):
-        return self._to_nonterms
+        return self._to_symbols
