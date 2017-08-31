@@ -44,101 +44,101 @@ class TwoNonterminalsTest(TestCase):
         parsed = cyk(self.g, [2, 1])
         self.assertIsInstance(parsed, S)
         self.assertIsInstance(parsed.to_rule, SAB)
-        self.assertIsInstance(parsed.to_rule.to_nonterms[0], A)
-        self.assertIsInstance(parsed.to_rule.to_nonterms[1], B)
-        a = parsed.to_rule.to_nonterms[0]
-        b = parsed.to_rule.to_nonterms[1]
+        self.assertIsInstance(parsed.to_rule.to_symbols[0], A)
+        self.assertIsInstance(parsed.to_rule.to_symbols[1], B)
+        a = parsed.to_rule.to_symbols[0]
+        b = parsed.to_rule.to_symbols[1]
         self.assertIsInstance(a.to_rule, A2)
-        self.assertIsInstance(a.to_rule.to_nonterms[0], Terminal)
+        self.assertIsInstance(a.to_rule.to_symbols[0], Terminal)
         self.assertIsInstance(b.to_rule, B1)
-        self.assertIsInstance(b.to_rule.to_nonterms[0], Terminal)
+        self.assertIsInstance(b.to_rule.to_symbols[0], Terminal)
 
     def test_shouldParseCorrectSymbolsNoLoop(self):
         parsed = cyk(self.g, [2, 1])
-        a = parsed.to_rule.to_nonterms[0]
-        b = parsed.to_rule.to_nonterms[1]
-        self.assertEqual(a.to_rule.to_nonterms[0].s, 2)
-        self.assertEqual(b.to_rule.to_nonterms[0].s, 1)
+        a = parsed.to_rule.to_symbols[0]
+        b = parsed.to_rule.to_symbols[1]
+        self.assertEqual(a.to_rule.to_symbols[0].s, 2)
+        self.assertEqual(b.to_rule.to_symbols[0].s, 1)
 
     def test_shouldParseCorrectTypesForOneLoop(self):
         parsed = cyk(self.g, [2, 0, 1])
         self.assertIsInstance(parsed, S)
         self.assertIsInstance(parsed.to_rule, SAB)
-        self.assertIsInstance(parsed.to_rule.to_nonterms[0], A)
-        self.assertIsInstance(parsed.to_rule.to_nonterms[1], B)
-        a = parsed.to_rule.to_nonterms[0]
-        b = parsed.to_rule.to_nonterms[1]
+        self.assertIsInstance(parsed.to_rule.to_symbols[0], A)
+        self.assertIsInstance(parsed.to_rule.to_symbols[1], B)
+        a = parsed.to_rule.to_symbols[0]
+        b = parsed.to_rule.to_symbols[1]
         self.assertIsInstance(b.to_rule, B1)
-        self.assertIsInstance(b.to_rule.to_nonterms[0], Terminal)
+        self.assertIsInstance(b.to_rule.to_symbols[0], Terminal)
         self.assertIsInstance(a.to_rule, AAC)
-        self.assertIsInstance(a.to_rule.to_nonterms[0], A)
-        self.assertIsInstance(a.to_rule.to_nonterms[1], C)
-        a = a.to_rule.to_nonterms[0]
-        c = a.to_rule.to_nonterms[1]
+        self.assertIsInstance(a.to_rule.to_symbols[0], A)
+        self.assertIsInstance(a.to_rule.to_symbols[1], C)
+        a = a.to_rule.to_symbols[0]
+        c = a.to_rule.to_symbols[1]
         self.assertIsInstance(a.to_rule, A2)
-        self.assertIsInstance(a.to_rule.to_nonterms[0], Terminal)
+        self.assertIsInstance(a.to_rule.to_symbols[0], Terminal)
         self.assertIsInstance(c.to_rule, C0)
-        self.assertIsInstance(c.to_rule.to_nonterms[0], Terminal)
+        self.assertIsInstance(c.to_rule.to_symbols[0], Terminal)
 
     def test_shouldParseCorrectSymbolsOneLoop(self):
         parsed = cyk(self.g, [2, 0, 1])
-        a = parsed.to_rule.to_nonterms[0]
-        b = parsed.to_rule.to_nonterms[1]
-        a = a.to_rule.to_nonterms[0]
-        c = a.to_rule.to_nonterms[1]
-        self.assertEqual(a.to_rule.to_nonterms[0].s, 2)
-        self.assertEqual(b.to_rule.to_nonterms[0].s, 1)
-        self.assertEqual(c.to_rule.to_nonterms[0].s, 0)
+        a = parsed.to_rule.to_symbols[0]
+        b = parsed.to_rule.to_symbols[1]
+        a = a.to_rule.to_symbols[0]
+        c = a.to_rule.to_symbols[1]
+        self.assertEqual(a.to_rule.to_symbols[0].s, 2)
+        self.assertEqual(b.to_rule.to_symbols[0].s, 1)
+        self.assertEqual(c.to_rule.to_symbols[0].s, 0)
 
     def test_shouldParseCorrectTypesForThreeLoops(self):
         parsed = cyk(self.g, [2, 0, 0, 0, 1])
         self.assertIsInstance(parsed, S)
         self.assertIsInstance(parsed.to_rule, SAB)
-        self.assertIsInstance(parsed.to_rule.to_nonterms[0], A)
-        self.assertIsInstance(parsed.to_rule.to_nonterms[1], B)
-        a1 = parsed.to_rule.to_nonterms[0]
-        b = parsed.to_rule.to_nonterms[1]
+        self.assertIsInstance(parsed.to_rule.to_symbols[0], A)
+        self.assertIsInstance(parsed.to_rule.to_symbols[1], B)
+        a1 = parsed.to_rule.to_symbols[0]
+        b = parsed.to_rule.to_symbols[1]
         self.assertIsInstance(b.to_rule, B1)
-        self.assertIsInstance(b.to_rule.to_nonterms[0], Terminal)
+        self.assertIsInstance(b.to_rule.to_symbols[0], Terminal)
         self.assertIsInstance(a1.to_rule, AAC)
-        self.assertIsInstance(a1.to_rule.to_nonterms[0], A)
-        self.assertIsInstance(a1.to_rule.to_nonterms[1], C)
-        a2 = a1.to_rule.to_nonterms[0]
-        c1 = a1.to_rule.to_nonterms[1]
+        self.assertIsInstance(a1.to_rule.to_symbols[0], A)
+        self.assertIsInstance(a1.to_rule.to_symbols[1], C)
+        a2 = a1.to_rule.to_symbols[0]
+        c1 = a1.to_rule.to_symbols[1]
         self.assertIsInstance(c1.to_rule, C0)
-        self.assertIsInstance(c1.to_rule.to_nonterms[0], Terminal)
+        self.assertIsInstance(c1.to_rule.to_symbols[0], Terminal)
         self.assertIsInstance(a2.to_rule, AAC)
-        self.assertIsInstance(a2.to_rule.to_nonterms[0], A)
-        self.assertIsInstance(a2.to_rule.to_nonterms[1], C)
-        a3 = a2.to_rule.to_nonterms[0]
-        c2 = a2.to_rule.to_nonterms[1]
+        self.assertIsInstance(a2.to_rule.to_symbols[0], A)
+        self.assertIsInstance(a2.to_rule.to_symbols[1], C)
+        a3 = a2.to_rule.to_symbols[0]
+        c2 = a2.to_rule.to_symbols[1]
         self.assertIsInstance(c2.to_rule, C0)
-        self.assertIsInstance(c2.to_rule.to_nonterms[0], Terminal)
+        self.assertIsInstance(c2.to_rule.to_symbols[0], Terminal)
         self.assertIsInstance(a3.to_rule, AAC)
-        self.assertIsInstance(a3.to_rule.to_nonterms[0], A)
-        self.assertIsInstance(a3.to_rule.to_nonterms[1], C)
-        a4 = a1.to_rule.to_nonterms[0]
-        c3 = a3.to_rule.to_nonterms[1]
+        self.assertIsInstance(a3.to_rule.to_symbols[0], A)
+        self.assertIsInstance(a3.to_rule.to_symbols[1], C)
+        a4 = a1.to_rule.to_symbols[0]
+        c3 = a3.to_rule.to_symbols[1]
         self.assertIsInstance(c3.to_rule, C0)
-        self.assertIsInstance(c3.to_rule.to_nonterms[0], Terminal)
+        self.assertIsInstance(c3.to_rule.to_symbols[0], Terminal)
         self.assertIsInstance(a4.to_rule, A2)
-        self.assertIsInstance(a4.to_rule.to_nonterms[0], Terminal)
+        self.assertIsInstance(a4.to_rule.to_symbols[0], Terminal)
 
     def test_shouldParseCorrectSymbolsThreeLoops(self):
         parsed = cyk(self.g, [2, 0, 1])
-        a1 = parsed.to_rule.to_nonterms[0]
-        b = parsed.to_rule.to_nonterms[1]
-        a2 = a1.to_rule.to_nonterms[0]
-        c1 = a1.to_rule.to_nonterms[1]
-        a3 = a2.to_rule.to_nonterms[0]
-        c2 = a2.to_rule.to_nonterms[1]
-        a4 = a1.to_rule.to_nonterms[0]
-        c3 = a3.to_rule.to_nonterms[1]
-        self.assertEqual(a4.to_rule.to_nonterms[0].s, 2)
-        self.assertEqual(c3.to_rule.to_nonterms[0].s, 0)
-        self.assertEqual(c2.to_rule.to_nonterms[0].s, 0)
-        self.assertEqual(c1.to_rule.to_nonterms[0].s, 0)
-        self.assertEqual(b.to_rule.to_nonterms[0].s, 1)
+        a1 = parsed.to_rule.to_symbols[0]
+        b = parsed.to_rule.to_symbols[1]
+        a2 = a1.to_rule.to_symbols[0]
+        c1 = a1.to_rule.to_symbols[1]
+        a3 = a2.to_rule.to_symbols[0]
+        c2 = a2.to_rule.to_symbols[1]
+        a4 = a1.to_rule.to_symbols[0]
+        c3 = a3.to_rule.to_symbols[1]
+        self.assertEqual(a4.to_rule.to_symbols[0].s, 2)
+        self.assertEqual(c3.to_rule.to_symbols[0].s, 0)
+        self.assertEqual(c2.to_rule.to_symbols[0].s, 0)
+        self.assertEqual(c1.to_rule.to_symbols[0].s, 0)
+        self.assertEqual(b.to_rule.to_symbols[0].s, 1)
 
 
 

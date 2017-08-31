@@ -43,31 +43,31 @@ class FiveNonterminalsTest(TestCase):
         parsed = cyk(self.g, [0, 1, 2])
         self.assertIsInstance(parsed, S)
         self.assertIsInstance(parsed.to_rule, SAB)
-        self.assertIsInstance(parsed.to_rule.to_nonterms[0], A)
-        self.assertIsInstance(parsed.to_rule.to_nonterms[1], B)
-        a = parsed.to_rule.to_nonterms[0]
-        b = parsed.to_rule.to_nonterms[1]
+        self.assertIsInstance(parsed.to_rule.to_symbols[0], A)
+        self.assertIsInstance(parsed.to_rule.to_symbols[1], B)
+        a = parsed.to_rule.to_symbols[0]
+        b = parsed.to_rule.to_symbols[1]
         self.assertIsInstance(a.to_rule, A0)
-        self.assertIsInstance(a.to_rule.to_nonterms[0], Terminal)
+        self.assertIsInstance(a.to_rule.to_symbols[0], Terminal)
         self.assertIsInstance(b.to_rule, BCD)
-        self.assertIsInstance(b.to_rule.to_nonterms[0], C)
-        self.assertIsInstance(b.to_rule.to_nonterms[1], D)
-        c = b.to_rule.to_nonterms[0]
-        d = b.to_rule.to_nonterms[1]
+        self.assertIsInstance(b.to_rule.to_symbols[0], C)
+        self.assertIsInstance(b.to_rule.to_symbols[1], D)
+        c = b.to_rule.to_symbols[0]
+        d = b.to_rule.to_symbols[1]
         self.assertIsInstance(c.to_rule, C1)
-        self.assertIsInstance(c.to_rule.to_nonterms[0], Terminal)
+        self.assertIsInstance(c.to_rule.to_symbols[0], Terminal)
         self.assertIsInstance(d.to_rule, D2)
-        self.assertIsInstance(d.to_rule.to_nonterms[0], Terminal)
+        self.assertIsInstance(d.to_rule.to_symbols[0], Terminal)
 
     def test_shouldParseCorrectSymbols(self):
         parsed = cyk(self.g, [0, 1, 2])
-        a = parsed.to_rule.to_nonterms[0]
-        b = parsed.to_rule.to_nonterms[1]
-        c = b.to_rule.to_nonterms[0]
-        d = b.to_rule.to_nonterms[1]
-        self.assertEqual(a.to_rule.to_nonterms[0].s, 0)
-        self.assertEqual(c.to_rule.to_nonterms[0].s, 1)
-        self.assertEqual(d.to_rule.to_nonterms[0].s, 2)
+        a = parsed.to_rule.to_symbols[0]
+        b = parsed.to_rule.to_symbols[1]
+        c = b.to_rule.to_symbols[0]
+        d = b.to_rule.to_symbols[1]
+        self.assertEqual(a.to_rule.to_symbols[0].s, 0)
+        self.assertEqual(c.to_rule.to_symbols[0].s, 1)
+        self.assertEqual(d.to_rule.to_symbols[0].s, 2)
 
 
 if __name__ == '__main__':

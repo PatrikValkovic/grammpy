@@ -39,18 +39,18 @@ class TwoNonterminalsTest(TestCase):
         parsed = cyk(self.g, [0, 1])
         self.assertIsInstance(parsed, S)
         self.assertIsInstance(parsed.to_rule, SAB)
-        self.assertIsInstance(parsed.to_rule.to_nonterms[0], A)
-        self.assertIsInstance(parsed.to_rule.to_nonterms[1], B)
-        self.assertIsInstance(parsed.to_rule.to_nonterms[0].to_rule, A0)
-        self.assertIsInstance(parsed.to_rule.to_nonterms[1].to_rule, B1)
-        self.assertIsInstance(parsed.to_rule.to_nonterms[0].to_rule.to_nonterms[0], Terminal)
-        self.assertIsInstance(parsed.to_rule.to_nonterms[1].to_rule.to_nonterms[0], Terminal)
+        self.assertIsInstance(parsed.to_rule.to_symbols[0], A)
+        self.assertIsInstance(parsed.to_rule.to_symbols[1], B)
+        self.assertIsInstance(parsed.to_rule.to_symbols[0].to_rule, A0)
+        self.assertIsInstance(parsed.to_rule.to_symbols[1].to_rule, B1)
+        self.assertIsInstance(parsed.to_rule.to_symbols[0].to_rule.to_symbols[0], Terminal)
+        self.assertIsInstance(parsed.to_rule.to_symbols[1].to_rule.to_symbols[0], Terminal)
 
 
     def test_shouldParseCorrectSymbols(self):
         parsed = cyk(self.g, [0, 1])
-        self.assertEqual(parsed.to_rule.to_nonterms[0].to_rule.to_nonterms[0].s, 0)
-        self.assertEqual(parsed.to_rule.to_nonterms[1].to_rule.to_nonterms[0].s, 1)
+        self.assertEqual(parsed.to_rule.to_symbols[0].to_rule.to_symbols[0].s, 0)
+        self.assertEqual(parsed.to_rule.to_symbols[1].to_rule.to_symbols[0].s, 1)
 
 
 
