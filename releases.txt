@@ -5,7 +5,7 @@ This is a list of major changes in SDL's version history.
 dev
 ---------------------------------------------------------------------------
 
-
+* ADD: Add support for Nonterminal and Rule instantiating and tree building
 
 
 ---------------------------------------------------------------------------
