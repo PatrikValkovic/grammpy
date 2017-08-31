@@ -7,6 +7,7 @@ Part of grammpy
 
 
 Original implementation: https://github.com/apieum/weakreflist
+Changes: List raise TreeDeletedException instead of reducing its size
 """
 
 import weakref
