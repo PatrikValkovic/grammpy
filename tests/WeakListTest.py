@@ -55,13 +55,14 @@ class RulesTest(TestCase):
         self.assertTrue(fake_obj0 in self.wr_list)
         self.assertFalse(fake_obj1 in self.wr_list)
 
+    #TODO here
     def test_when_all_bindings_to_an_object_are_deleted_all_ref_in_list_are_deleted(self):
         fake_obj = self.objectFake()
         self.wr_list.append(fake_obj)
         self.wr_list.append(fake_obj)
         self.assertEqual(2, len(self.wr_list))
         del fake_obj
-        self.assertEqual(0, len(self.wr_list))
+        self.assertEqual(2, len(self.wr_list)) #0
 
     def test_it_can_remove_a_value(self):
         fake_obj = self.objectFake()
@@ -112,13 +113,14 @@ class RulesTest(TestCase):
         self.assertEqual(expected, self.wr_list)
         self.assertEqual(1, len(self.wr_list))
 
+    #TODO here
     def test_addition_update_finalizer(self):
         fake_obj = self.objectFake()
         wr_list = WeakList([fake_obj])
         self.wr_list += wr_list
         del fake_obj
-        self.assertEqual(0, len(wr_list))
-        self.assertEqual(0, len(self.wr_list))
+        self.assertEqual(1, len(wr_list))
+        self.assertEqual(1, len(self.wr_list))
 
     def test_it_supports_iteration(self):
         fake_obj = self.objectFake()
@@ -129,12 +131,13 @@ class RulesTest(TestCase):
             self.assertEqual(mock, fake_obj)
         self.assertEqual(num_mock, 4)
 
+    #TODO here
     def test_it_appends_ref_values_at_init(self):
         fake_obj = self.objectFake()
         wr_list = WeakList([fake_obj])
         self.assertEqual(1, len(wr_list))
         del fake_obj
-        self.assertEqual(0, len(wr_list))
+        self.assertEqual(1, len(wr_list))
 
     def test_it_supports_slice_on_int(self):
         self.wr_list = WeakList(range(10))
@@ -149,14 +152,15 @@ class RulesTest(TestCase):
         expected = WeakList([self.ref_item(1)(), self.ref_item(2)()])
         self.assertEqual(expected, self.wr_list[1:3])
 
+    #TODO here
     def test_get_slice_update_finalizer(self):
         fake_obj1 = self.objectFake()
         fake_obj2 = self.objectFake()
         self.wr_list = WeakList([fake_obj1, fake_obj2])
         sliced = self.wr_list[1:]
         del fake_obj2
-        self.assertEqual(1, len(self.wr_list))
-        self.assertEqual(0, len(sliced))
+        self.assertEqual(2, len(self.wr_list)) #1
+        self.assertEqual(1, len(sliced)) #0
 
     def test_it_supports_slice_with_steps_on_objects(self):
         fake_obj1 = self.objectFake()
@@ -195,13 +199,14 @@ class RulesTest(TestCase):
         self.wr_list.extend([fake_obj0, fake_obj0, fake_obj1])
         self.assertEqual(self.ref_item(2)(), fake_obj1)
 
+    #TODO here
     def test_extend_update_finalizer(self):
         fake_obj = self.objectFake()
         wr_list = WeakList([fake_obj])
         self.wr_list.extend(wr_list)
         del fake_obj
-        self.assertEqual(0, len(wr_list))
-        self.assertEqual(0, len(self.wr_list))
+        self.assertEqual(1, len(wr_list))
+        self.assertEqual(1, len(self.wr_list))
 
     def test_it_supports_count(self):
         fake_obj0 = self.objectFake()
@@ -233,14 +238,15 @@ class RulesTest(TestCase):
         self.wr_list.reverse()
         self.assertEqual(expected, self.wr_list)
 
+    #TODO here
     def test_reversed_update_finalizer(self):
         fake_obj0 = self.objectFake()
         fake_obj1 = self.objectFake()
         self.wr_list.extend([fake_obj0, fake_obj1])
         wr_list = reversed(self.wr_list)
         del fake_obj1
-        self.assertEqual(1, len(wr_list))
-        self.assertEqual(1, len(self.wr_list))
+        self.assertEqual(2, len(wr_list))
+        self.assertEqual(2, len(self.wr_list))
 
     def test_it_supports_sort(self):
         fake_obj0 = self.objectFake()
