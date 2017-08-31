@@ -41,6 +41,13 @@ class NonterminalsTest(TestCase):
         with self.assertRaises(TreeDeletedException):
             a.from_rule
 
+    def test_shouldNotDeleteChild(self):
+        a = A()
+        t = To()
+        a._set_to_rule(t)
+        del t
+        a.to_rule
+
 
 
 if __name__ == '__main__':
