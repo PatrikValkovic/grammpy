@@ -60,7 +60,7 @@ def cyk(grammar: Grammar, input: Iterable) -> Nonterminal:
                             rules.add(PlaceItem(r, first_rule, second_rule))
             f.put(x, y, list(rules))
     # Check if is start symol on the bottom of field
-    if grammar.start_get() not in [r.fromSymbol for r in f.rules(0,l-1)]:
+    if grammar.start_get() not in [r.fromSymbol for r in f.rules(0, l-1)]:
         raise NotImplementedError()  # TODO exception
     # Find init symbol and rule
     start = grammar.start_get()()  # type: Nonterminal
@@ -87,7 +87,8 @@ def cyk(grammar: Grammar, input: Iterable) -> Nonterminal:
         else:
             created_rule = rule_class() # type: Rule
             working_nonterm._set_to_rule(created_rule)
+            created_rule._from_symbols.append(working_nonterm)
             t = grammar.term(rule_class.toSymbol)
-            created_rule._to_symbols = [t]
+            created_rule._to_symbols.append(t)
             t._set_from_rule(created_rule)
     return start
