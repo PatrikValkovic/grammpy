@@ -1,0 +1,382 @@
+#!/usr/bin/env python
+"""
+:Author Patrik Valkovic
+:Created 31.08.2017 12:22
+:Licence GNUv3
+Part of grammpy
+
+"""
+
+import weakref
+from unittest import TestCase, main
+from grammpy.WeakList import WeakList
+from grammpy.exceptions import TreeDeletedException
+
+class RulesTest(TestCase):
+    class objectFake(object):
+        __count__ = 0
+        def __init__(self):
+            type(self).__count__ += 1
+            self.index = type(self).__count__
+        def __gt__(self, other):
+            return self.index > other.index
+        def __lt__(self, other):
+            return self.index < other.index
+        def __eq__(self, other):
+            return self.index == other.index
+
+
+    def setUp(self):
+        self.wr_list = WeakList()
+
+    def ref_item(self, index):
+        return list.__getitem__(self.wr_list, index)
+
+
+    def test_it_is_instance_of_list(self):
+        self.assertIsInstance(self.wr_list, list)
+
+    def test_it_stores_a_weakref_ref(self):
+        fake_obj = self.objectFake()
+        self.wr_list.append(fake_obj)
+        self.assertIsInstance(self.ref_item(0), weakref.ReferenceType)
+
+    def test_if_a_weakref_is_already_stored_it_reuses_it(self):
+        fake_obj = self.objectFake()
+        self.wr_list.append(fake_obj)
+        self.wr_list.append(fake_obj)
+        self.assertEqual(self.ref_item(0), self.ref_item(1))
+        self.assertIs(self.wr_list[0], self.wr_list[1])
+
+    def test_it_knows_if_it_contains_an_object(self):
+        fake_obj0 = self.objectFake()
+        fake_obj1 = self.objectFake()
+        self.wr_list.append(fake_obj0)
+        self.assertTrue(fake_obj0 in self.wr_list)
+        self.assertFalse(fake_obj1 in self.wr_list)
+
+    def test_when_all_bindings_to_an_object_are_deleted_all_ref_in_list_are_deleted(self):
+        fake_obj = self.objectFake()
+        self.wr_list.append(fake_obj)
+        self.wr_list.append(fake_obj)
+        self.assertEqual(2, len(self.wr_list))
+        del fake_obj
+        self.assertEqual(2, len(self.wr_list))
+
+    def test_it_can_remove_a_value(self):
+        fake_obj = self.objectFake()
+        self.wr_list.append(fake_obj)
+        self.wr_list.append(fake_obj)
+        self.assertEqual(2, len(self.wr_list))
+        self.wr_list.remove(fake_obj)
+        self.assertEqual(1, len(self.wr_list))
+
+    def test_it_can_remove_all_values(self):
+        fake_obj = self.objectFake()
+        self.wr_list.append(fake_obj)
+        self.wr_list.append(fake_obj)
+        self.assertEqual(2, len(self.wr_list))
+        self.wr_list.remove_all(fake_obj)
+        self.assertEqual(0, len(self.wr_list))
+
+    def test_it_can_del_a_slice(self):
+        fake_obj0 = self.objectFake()
+        fake_obj1 = self.objectFake()
+        self.wr_list.append(fake_obj0)
+        self.wr_list.append(fake_obj0)
+        self.wr_list.append(fake_obj1)
+        del self.wr_list[1:]
+        with self.assertRaises(IndexError):
+            self.wr_list[1]
+        self.assertEqual(1, len(self.wr_list))
+
+    def test_it_returns_value_and_not_a_ref(self):
+        fake_obj = self.objectFake()
+        self.wr_list.append(fake_obj)
+        self.wr_list[0] = fake_obj
+        self.assertEqual(fake_obj, self.wr_list[0])
+
+    def test_it_returns_the_index_of_a_value(self):
+        fake_obj0 = self.objectFake()
+        fake_obj1 = self.objectFake()
+        self.wr_list.append(fake_obj0)
+        self.wr_list.append(fake_obj0)
+        self.wr_list.append(fake_obj1)
+        self.assertEqual(0, self.wr_list.index(fake_obj0))
+        self.assertEqual(2, self.wr_list.index(fake_obj1))
+
+    def test_it_supports_addition(self):
+        fake_obj = self.objectFake()
+        expected = WeakList([fake_obj])
+        self.wr_list += expected
+        self.assertEqual(expected, self.wr_list)
+        self.assertEqual(1, len(self.wr_list))
+
+    def test_addition_update_finalizer(self):
+        fake_obj = self.objectFake()
+        wr_list = WeakList([fake_obj])
+        self.wr_list += wr_list
+        del fake_obj
+        self.assertEqual(1, len(wr_list))
+        self.assertEqual(1, len(self.wr_list))
+
+    def test_it_supports_iteration(self):
+        fake_obj = self.objectFake()
+        self.wr_list.extend([fake_obj, fake_obj, fake_obj, fake_obj])
+        num_mock = 0
+        for mock in self.wr_list:
+            num_mock += 1
+            self.assertEqual(mock, fake_obj)
+        self.assertEqual(num_mock, 4)
+
+    def test_it_appends_ref_values_at_init(self):
+        fake_obj = self.objectFake()
+        wr_list = WeakList([fake_obj])
+        self.assertEqual(1, len(wr_list))
+        del fake_obj
+        self.assertEqual(1, len(wr_list))
+
+    def test_it_supports_slice_on_int(self):
+        self.wr_list = WeakList(range(10))
+        self.assertEqual([self.ref_item(1), self.ref_item(2), self.ref_item(3)], self.wr_list[1:4])
+
+    def test_it_supports_slice_on_objects(self):
+        fake_obj1 = self.objectFake()
+        fake_obj2 = self.objectFake()
+        fake_obj3 = self.objectFake()
+        fake_obj4 = self.objectFake()
+        self.wr_list = WeakList([fake_obj1, fake_obj2, fake_obj3, fake_obj4])
+        expected = WeakList([self.ref_item(1)(), self.ref_item(2)()])
+        self.assertEqual(expected, self.wr_list[1:3])
+
+    def test_get_slice_update_finalizer(self):
+        fake_obj1 = self.objectFake()
+        fake_obj2 = self.objectFake()
+        self.wr_list = WeakList([fake_obj1, fake_obj2])
+        sliced = self.wr_list[1:]
+        del fake_obj2
+        self.assertEqual(2, len(self.wr_list))
+        self.assertEqual(1, len(sliced))
+
+    def test_it_supports_slice_with_steps_on_objects(self):
+        fake_obj1 = self.objectFake()
+        fake_obj2 = self.objectFake()
+        fake_obj3 = self.objectFake()
+        fake_obj4 = self.objectFake()
+        self.wr_list = WeakList([fake_obj1, fake_obj2, fake_obj3, fake_obj4])
+        expected = WeakList([self.ref_item(1)(), self.ref_item(3)()])
+        self.assertEqual(expected, self.wr_list[1::2])
+
+    def test_it_can_set_slice_on_int(self):
+        self.wr_list[0:] = range(3)
+        self.assertEqual(self.wr_list[1:], [1, 2])
+        self.assertEqual(3, len(self.wr_list))
+
+    def test_it_can_set_slice_on_objects(self):
+        fake_obj0 = self.objectFake()
+        fake_obj1 = self.objectFake()
+        self.wr_list.append(fake_obj0)
+        self.wr_list[1:2] = [fake_obj0, fake_obj1]
+        self.assertEqual(self.ref_item(1)(), fake_obj0)
+        self.assertEqual(self.ref_item(2)(), fake_obj1)
+        self.assertEqual(3, len(self.wr_list))
+
+    def test_it_can_del_slices(self):
+        fake_obj0 = self.objectFake()
+        fake_obj1 = self.objectFake()
+        self.wr_list[0:] = [fake_obj0, fake_obj0, fake_obj1]
+        del self.wr_list[:2]
+        self.assertEqual(self.ref_item(0)(), fake_obj1)
+        self.assertEqual(1, len(self.wr_list))
+
+    def test_it_supports_extend(self):
+        fake_obj0 = self.objectFake()
+        fake_obj1 = self.objectFake()
+        self.wr_list.extend([fake_obj0, fake_obj0, fake_obj1])
+        self.assertEqual(self.ref_item(2)(), fake_obj1)
+
+    def test_extend_update_finalizer(self):
+        fake_obj = self.objectFake()
+        wr_list = WeakList([fake_obj])
+        self.wr_list.extend(wr_list)
+        del fake_obj
+        self.assertEqual(1, len(wr_list))
+        self.assertEqual(1, len(self.wr_list))
+
+    def test_it_supports_count(self):
+        fake_obj0 = self.objectFake()
+        fake_obj1 = self.objectFake()
+        self.wr_list.extend([fake_obj0, fake_obj0, fake_obj1])
+        self.assertEqual(2, self.wr_list.count(fake_obj0))
+
+    def test_it_supports_insert(self):
+        fake_obj0 = self.objectFake()
+        fake_obj1 = self.objectFake()
+        self.wr_list.extend([fake_obj0, fake_obj1])
+        self.wr_list.insert(1, fake_obj0)
+        self.assertEqual(self.ref_item(1)(), fake_obj0)
+        self.assertEqual(self.ref_item(2)(), fake_obj1)
+
+    def test_it_supports_reverse(self):
+        fake_obj0 = self.objectFake()
+        fake_obj1 = self.objectFake()
+        self.wr_list.extend([fake_obj0, fake_obj1])
+        self.wr_list.reverse()
+        self.assertEqual(self.ref_item(0)(), fake_obj1)
+        self.assertEqual(self.ref_item(1)(), fake_obj0)
+
+    def test_it_supports_reversed(self):
+        fake_obj0 = self.objectFake()
+        fake_obj1 = self.objectFake()
+        self.wr_list.extend([fake_obj0, fake_obj1])
+        expected = reversed(self.wr_list)
+        self.wr_list.reverse()
+        self.assertEqual(expected, self.wr_list)
+
+    def test_reversed_update_finalizer(self):
+        fake_obj0 = self.objectFake()
+        fake_obj1 = self.objectFake()
+        self.wr_list.extend([fake_obj0, fake_obj1])
+        wr_list = reversed(self.wr_list)
+        del fake_obj1
+        self.assertEqual(2, len(wr_list))
+        self.assertEqual(2, len(self.wr_list))
+
+    def test_it_supports_sort(self):
+        fake_obj0 = self.objectFake()
+        fake_obj1 = self.objectFake()
+        self.wr_list.extend([fake_obj1, fake_obj0])
+        expected = WeakList(sorted(list(self.wr_list)))
+        self.wr_list.sort()
+        self.assertGreater(fake_obj1, fake_obj0)
+        self.assertEqual(expected, self.wr_list)
+
+    def test_it_supports_sort_with_reverse(self):
+        fake_obj0 = self.objectFake()
+        fake_obj1 = self.objectFake()
+        self.wr_list.extend([fake_obj0, fake_obj1])
+        expected = WeakList(sorted(list(self.wr_list), reverse=True))
+        not_expected = WeakList(sorted(list(self.wr_list)))
+        self.wr_list.sort(reverse=True)
+        self.assertEqual(expected, self.wr_list)
+        self.assertNotEqual(not_expected, self.wr_list)
+
+    def test_it_supports_sort_with_key(self):
+        def index_plus_2_if_odd(item):
+            return item.index + 2 if item.index % 2 != 0 else item.index
+
+        fake_obj0 = self.objectFake()
+        fake_obj1 = self.objectFake()
+        self.wr_list.extend([fake_obj1, fake_obj0])
+        expected = WeakList(sorted(list(self.wr_list), key=index_plus_2_if_odd))
+        self.wr_list.sort(key=index_plus_2_if_odd)
+        self.assertEqual(expected, self.wr_list)
+
+    def test_it_supports_pop(self):
+        fake_obj0 = self.objectFake()
+        fake_obj1 = self.objectFake()
+        self.wr_list.extend([fake_obj0, fake_obj1])
+        self.assertIs(fake_obj1, self.wr_list[1])
+        given = self.wr_list.pop(0)
+        self.assertIs(fake_obj0, given)
+        self.assertIs(fake_obj1, self.wr_list[0])
+
+    def test_pop_without_parameter_returns_last_item(self):
+        fake_obj0 = self.objectFake()
+        fake_obj1 = self.objectFake()
+        self.wr_list.extend([fake_obj0, fake_obj1])
+        given = self.wr_list.pop()
+        self.assertIs(fake_obj1, given)
+        self.assertIs(1, len(self.wr_list))
+
+    def test_pop_on_empty_list_raise_IndexError(self):
+        with self.assertRaises(IndexError):
+            given = self.wr_list.pop()
+
+    def test_pop_on_unexisting_index_raises_IndexError(self):
+        fake_obj0 = self.objectFake()
+        fake_obj1 = self.objectFake()
+        self.wr_list.extend([fake_obj0, fake_obj1])
+        with self.assertRaises(IndexError):
+            given = self.wr_list.pop(2)
+
+    def test_addition_update_finalizer_with_exception(self):
+        fake_obj = self.objectFake()
+        wr_list = WeakList([fake_obj])
+        self.wr_list += wr_list
+        del fake_obj
+        self.assertEqual(1, len(wr_list))
+        self.assertEqual(1, len(self.wr_list))
+        with self.assertRaises(TreeDeletedException):
+            wr_list[0]
+        with self.assertRaises(TreeDeletedException):
+            self.wr_list[0]
+
+    def test_reversed_update_finalizer_with_exception(self):
+        fake_obj0 = self.objectFake()
+        fake_obj1 = self.objectFake()
+        self.wr_list.extend([fake_obj0, fake_obj1])
+        wr_list = reversed(self.wr_list)
+        del fake_obj1
+        self.assertEqual(2, len(wr_list))
+        self.assertEqual(2, len(self.wr_list))
+        with self.assertRaises(TreeDeletedException):
+            wr_list[0]
+        with self.assertRaises(TreeDeletedException):
+            self.wr_list[1]
+
+    def test_extend_update_finalizer_with_exception(self):
+        fake_obj = self.objectFake()
+        wr_list = WeakList([fake_obj])
+        self.wr_list.extend(wr_list)
+        del fake_obj
+        self.assertEqual(1, len(wr_list))
+        self.assertEqual(1, len(self.wr_list))
+        with self.assertRaises(TreeDeletedException):
+            wr_list[0]
+        with self.assertRaises(TreeDeletedException):
+            self.wr_list[0]
+
+    def test_get_slice_update_finalizer_with_exception(self):
+        fake_obj1 = self.objectFake()
+        fake_obj2 = self.objectFake()
+        self.wr_list = WeakList([fake_obj1, fake_obj2])
+        sliced = self.wr_list[1:]
+        del fake_obj2
+        self.assertEqual(2, len(self.wr_list)) #1
+        self.assertEqual(1, len(sliced)) #0
+        with self.assertRaises(TreeDeletedException):
+            sliced[0]
+        with self.assertRaises(TreeDeletedException):
+            self.wr_list[1]
+
+    def test_it_appends_ref_values_at_init_wth_exception(self):
+        fake_obj = self.objectFake()
+        wr_list = WeakList([fake_obj])
+        self.assertEqual(1, len(wr_list))
+        del fake_obj
+        self.assertEqual(1, len(wr_list))
+        with self.assertRaises(TreeDeletedException):
+            wr_list[0]
+
+
+    def test_when_all_bindings_to_an_object_are_deleted_all_ref_in_list_are_deleted_with_exception(self):
+        fake_obj = self.objectFake()
+        self.wr_list.append(fake_obj)
+        self.wr_list.append(fake_obj)
+        self.assertEqual(2, len(self.wr_list))
+        del fake_obj
+        self.assertEqual(2, len(self.wr_list))
+        with self.assertRaises(TreeDeletedException):
+            self.wr_list[0]
+        with self.assertRaises(TreeDeletedException):
+            self.wr_list[1]
+
+
+
+
+
+
+
+if __name__ == '__main__':
+    main()

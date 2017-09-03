@@ -7,8 +7,9 @@ Part of grammpy
 
 """
 
+from .Rules import RuleChainable
 
-class Terminal:
+class Terminal(RuleChainable):
     '''
     Represent Terminal in former grammar
     '''
@@ -19,6 +20,7 @@ class Terminal:
         :param symbol: Symbol representing terminal
         :param grammar: The grammar to which the terminal belongs
         '''
+        super().__init__()
         self.__symbol = symbol
         self.__grammar = grammar
 

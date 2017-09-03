@@ -20,5 +20,6 @@ setup(
     author='Patrik Valkovic',
     download_url='https://github.com/PatrikValkovic/grammpy/archive/v' + v + '.tar.gz',
     author_email='patrik.valkovic@hotmail.cz',
-    description='Package for representing formal grammars.'
+    description='Package for representing formal grammars.',
+    install_requires=[],
 )

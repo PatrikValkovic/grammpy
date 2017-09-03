@@ -7,6 +7,8 @@ Part of grammpy
 
 """
 
+from .Rules import RuleChainable
 
-class Nonterminal:
+
+class Nonterminal(RuleChainable):
     pass

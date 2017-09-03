@@ -7,5 +7,6 @@ Part of grammpy
 
 """
 
+from .RuleChainable import RuleChainable
 from .Rule import Rule
-from ..Grammars.MultipleRulesGrammar import SplitRule
+
