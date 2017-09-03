@@ -4,7 +4,7 @@ python:
 
 # command to install dependencies
 install:
-- pip install coverage python-coveralls grammpy grammpy-transforms
+- pip install coverage python-coveralls grammpy
 
 # command to run tests with coverage
 script:
