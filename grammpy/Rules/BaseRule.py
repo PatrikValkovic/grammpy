@@ -11,6 +11,12 @@ import inspect
 from grammpy.exceptions import CantCreateSingleRuleException, RuleNotDefinedException, NotASingleSymbolException
 
 
+def lists_to_tuples(lst):
+    if not isinstance(lst, list) and not isinstance(lst, tuple):
+        return lst
+    return tuple(lists_to_tuples(item) for item in tuple(lst))
+
+
 class CP(object):
     def __init__(self, getter):
         self._getter = getter
@@ -18,17 +24,12 @@ class CP(object):
     def __get__(self, obj, cls=None):
         return self._getter(cls)  # for static remove cls from the call
 
-
-class MetaWithHash(type):
-    @staticmethod
-    def _lists_to_tuples(lst):
-        if not isinstance(lst, list) and not isinstance(lst, tuple):
-            return lst
-        return tuple(MetaWithHash._lists_to_tuples(item) for item in tuple(lst))
-
+class MetaRule(type):
     def __hash__(cls):
-        transformed = MetaWithHash._lists_to_tuples(cls.rules)
-        return hash(transformed)
+        try:
+            return cls.ruleHash()
+        except RuleNotDefinedException:
+            return super(BaseRule, cls).__hash__(cls)
 
     def __eq__(cls, other):
         return inspect.isclass(other) and \
@@ -36,7 +37,7 @@ class MetaWithHash(type):
                hash(cls) == hash(other)
 
 
-class BaseRule(metaclass=MetaWithHash):
+class BaseRule(metaclass=MetaRule):
     """
     fromSymbol = EPSILON
     toSymbol = EPSILON
@@ -108,3 +109,8 @@ class BaseRule(metaclass=MetaWithHash):
     @classmethod
     def count(cls):
         return cls.rules_count()
+
+    @classmethod
+    def ruleHash(cls):
+        transformed = lists_to_tuples(cls.rules)
+        return hash(transformed)

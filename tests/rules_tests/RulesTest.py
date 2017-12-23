@@ -103,5 +103,20 @@ class RulesTest(TestCase):
         for rule in r:
             self.assertIn(rule.rule, Tmp1.rules)
 
+    def test_unidefinedRules(self):
+        class Tmp1(Rule): pass
+        class Tmp2(Rule): pass
+        h1 = hash(Tmp1)
+        h2 = hash(Tmp2)
+        self.assertNotEqual(h1, h2)
+        self.assertNotEqual(Tmp1, Tmp2)
+        Tmp1.rule = ([0], [0])
+        Tmp2.rule = ([0], [0])
+        h1 = hash(Tmp1)
+        h2 = hash(Tmp2)
+        self.assertEqual(h1, h2)
+        self.assertEqual(Tmp1, Tmp2)
+
+
 if __name__ == '__main__':
     main()
