@@ -18,6 +18,8 @@ class RuleChainable:
 
     @property
     def from_rule(self):
+        if self._from_rule is None:
+            return None
         if self._from_rule() is None:
             raise TreeDeletedException()
         return self._from_rule()
