@@ -8,9 +8,7 @@ Part of grammpy
 """
 from unittest import TestCase, main
 
-from grammpy import Nonterminal
-from grammpy.Grammars.RawGrammar import RawGrammar as Grammar
-from grammpy.Terminal import Terminal
+from grammpy import Nonterminal, Grammar, Terminal
 from grammpy.exceptions import NotNonterminalException
 
 
