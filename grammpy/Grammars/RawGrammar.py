@@ -55,15 +55,6 @@ class RawGrammar:
             vals.append(Terminal(t, self) if t is not None else None)
         return vals
 
-    def term(self, term=None):
-        return self.get_term(term)
-
-    def terms(self):
-        return [Terminal(term, self) for term in self.__terminals.all()]
-
-    def terms_count(self):
-        return self.__terminals.count()
-
     # Non term part
     @staticmethod
     def _controll_nonterms(nonterms):
@@ -94,15 +85,6 @@ class RawGrammar:
         if not HashContainer.is_iterable(nonterms):
             return self.__nonterminals.get(converted)[0]
         return self.__nonterminals.get(converted)
-
-    def nonterm(self, nonterms=None):
-        return self.get_nonterm(nonterms)
-
-    def nonterms(self):
-        return self.__nonterminals.get()
-
-    def nonterms_count(self):
-        return self.__nonterminals.count()
 
     # Rules part
     def _control_rules(self, rules):
@@ -140,15 +122,6 @@ class RawGrammar:
             return obtain[0]
         return obtain
 
-    def rule(self, rules=None):
-        return self.get_rule(rules)
-
-    def rules(self):
-        return self.rule()
-
-    def rules_count(self):
-        return len(self.rules())
-
     # StartSymbol
     def start_get(self):
         return self.__start_symbol
@@ -162,9 +135,3 @@ class RawGrammar:
         if not self.have_nonterm(nonterminal):
             raise NonterminalDoesNotExistsException(None, nonterminal, self)
         self.__start_symbol = nonterminal
-
-    def start_isSet(self):
-        return self.__start_symbol is not None
-
-    def start_is(self, nonterminal):
-        return self.__start_symbol is nonterminal
