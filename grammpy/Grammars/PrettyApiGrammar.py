@@ -11,17 +11,4 @@ from .MultipleRulesGrammar import MultipleRulesGrammar
 
 
 class PrettyApiGrammar(MultipleRulesGrammar):
-    def __init__(self,
-                 terminals=None,
-                 nonterminals=None,
-                 rules=None,
-                 start_symbol=None):
-        if isinstance(terminals, str):
-            temp = []
-            for ch in terminals:
-                temp.append(ch)
-            terminals = temp
-        super().__init__(terminals=terminals,
-                         nonterminals=nonterminals,
-                         rules=rules,
-                         start_symbol=start_symbol)
+    pass

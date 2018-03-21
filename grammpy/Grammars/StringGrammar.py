@@ -10,6 +10,11 @@ Part of grammpy
 from .RawGrammar import RawGrammar
 
 class StringGrammar(RawGrammar):
+    def __init__(self, terminals=None, nonterminals=None, rules=None, start_symbol=None):
+        if isinstance(terminals, str):
+            terminals = [t for t in terminals]
+        super().__init__(terminals, nonterminals, rules, start_symbol)
+
     @staticmethod
     def __to_string_arr(t):
         if isinstance(t, str):
