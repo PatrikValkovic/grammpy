@@ -7,9 +7,9 @@ Part of grammpy
 
 """
 
-from .Rules import RuleChainable
+from .Rules import RuleConnectable
 
-class Terminal(RuleChainable):
+class Terminal(RuleConnectable):
     '''
     Represent Terminal in former grammar
     '''

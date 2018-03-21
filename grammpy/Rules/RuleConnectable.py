@@ -11,7 +11,7 @@ import weakref
 from ..exceptions import TreeDeletedException
 
 
-class RuleChainable:
+class RuleConnectable:
     def __init__(self):
         self._from_rule = None
         self._to_rule = None
