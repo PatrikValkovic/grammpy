@@ -29,6 +29,9 @@ class PrettyApiGrammar(MultipleRulesGrammar):
     def rules_count(self):
         return len(self.rules())
 
+    def rules_clear(self):
+        return self.remove_rule()
+
     # Nonterminals
     def nonterm(self, nonterms=None):
         return self.get_nonterm(nonterms)
@@ -39,6 +42,9 @@ class PrettyApiGrammar(MultipleRulesGrammar):
     def nonterms_count(self):
         return len(self.nonterms())
 
+    def nonterms_clear(self):
+        return self.remove_nonterm()
+
     # Terminals
     def term(self, term=None):
         return self.get_term(term)
@@ -48,3 +54,6 @@ class PrettyApiGrammar(MultipleRulesGrammar):
 
     def terms_count(self):
         return len(self.terms())
+
+    def terms_clear(self):
+        return self.remove_term()
