@@ -7,11 +7,11 @@ Part of grammpy
 
 """
 
-from .CopyableGrammar import CopyableGrammar as _G
+from .CopyableGrammar import CopyableGrammar
 
 
 
-class Grammar(_G):
+class Grammar(CopyableGrammar):
     def __copy__(self):
         return self.copy()
 
