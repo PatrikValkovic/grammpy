@@ -8,10 +8,10 @@ Part of grammpy
 """
 
 from ..WeakList import WeakList
-from .IsMethodsRuleExtension import IsMethodsRuleExtension
+from .ValidationRule import ValidationRule
 
 
-class InstantiableRule(IsMethodsRuleExtension):
+class InstantiableRule(ValidationRule):
     def __init__(self):
         self._from_symbols = WeakList()
         self._to_symbols = list()

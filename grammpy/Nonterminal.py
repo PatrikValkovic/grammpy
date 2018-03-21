@@ -11,4 +11,7 @@ from .Rules import RuleChainable
 
 
 class Nonterminal(RuleChainable):
+    '''
+    Base class that represents nonterminals
+    '''
     pass
