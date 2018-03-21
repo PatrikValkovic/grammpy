@@ -48,6 +48,9 @@ class NonterminalsTest(TestCase):
         del t
         a.to_rule
 
+    def test_emptyParent(self):
+        a = A()
+        self.assertIsNone(a.from_rule)
 
 
 if __name__ == '__main__':

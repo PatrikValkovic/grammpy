@@ -27,9 +27,6 @@ class StringGrammar(RawGrammar):
     def add_term(self, term):
         return super().add_term(StringGrammar.__to_string_arr(term))
 
-    def term(self, term=None):
-        return self.get_term(term)
-
     def get_term(self, term=None):
         res = super().get_term(StringGrammar.__to_string_arr(term))
         if isinstance(term, str):
