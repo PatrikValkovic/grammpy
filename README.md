@@ -1,2 +1,3 @@
-# lambda_interpreter
-Program that parse lambda calculus and performs reductions
+# lambda-cli
+
+Program that interprets lambda calculus.
