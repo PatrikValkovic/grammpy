@@ -1,9 +1,9 @@
 from setuptools import setup
 
 setup(
-    name='lambda-cli',
+    name='lambda_cli',
     version='0.0.1',
-    packages=['lambda-cli'],
+    packages=['lambda_cli'],
     #url='https://bitbucket.org/simonasya/lambda-interpreter',
     license='GNU General Public License v3.0',
     author='Patrik Valkovic',

@@ -6,3 +6,6 @@
 Part of lambda-cli
 
 """
+
+from .lambda_grammar import lambda_grammar
+from .lex import lambda_cli_lex
