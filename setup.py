@@ -9,5 +9,11 @@ setup(
     author='Patrik Valkovic',
     author_email='patrik.valkovic@hotmail.cz',
     description='Application parse and evaluate lambda expressions',
-    install_requires=['lambda_interpreter', 'pyparsers', 'grammpy-transforms']
+    install_requires=[
+        'grammpy',
+        'pyparsers',
+        'grammpy-transforms',
+        'lambda_interpreter',
+        'ply',
+    ]
 )
