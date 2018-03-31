@@ -8,6 +8,7 @@ Part of lambda-cli
 """
 
 from ply import lex
+from .exceptions import LexException
 from .terminals import *
 
 states = (
@@ -70,6 +71,8 @@ def t_INITIAL_RIGHTBRACKET(t):
     t.value = RightBracket
     return t
 
+def t_INITIAL_parameters_error(t):
+    raise LexException()
 
 lexer = lex.lex()
 
