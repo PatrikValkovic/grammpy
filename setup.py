@@ -12,7 +12,7 @@ from setuptools import setup
 
 setup(
     name='grammpy',
-    version='1.1.1',
+    version='1.2.1',
     packages=['grammpy', 'grammpy.Grammars', 'grammpy.exceptions', 'grammpy.Rules'],
     url='https://github.com/PatrikValkovic/grammpy',
     license='GNU General Public License v3.0',
