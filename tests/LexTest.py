@@ -19,7 +19,7 @@ def to_generator(param):
     return (n for n in param)
 
 
-class ParsingTest(TestCase):
+class LexTest(TestCase):
     def test_first_alpha_reduction(self):
         result = lambda_cli_lex("((lambda x y. (x y)) y)")
         self.assertEqual(next(result), LeftBracket)

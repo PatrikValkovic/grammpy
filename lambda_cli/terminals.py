@@ -7,19 +7,20 @@ Part of lambda-cli
 
 """
 
-
 class LambdaKeyword:
     pass
-
-
 class Dot:
     pass
+class LeftBracket:
+    pass
+class RightBracket:
+    pass
+
 
 
 class Number:
     def __init__(self, value):
         self.value = value
-
     def __hash__(self):
         return hash(Number)
 
@@ -27,7 +28,6 @@ class Number:
 class Variable:
     def __init__(self, name):
         self.name = name
-
     def __hash__(self):
         return hash(Variable)
 
@@ -35,18 +35,8 @@ class Variable:
 class Parameter:
     def __init__(self, name):
         self.name = name
-
     def __hash__(self):
         return hash(Parameter)
-
-
-class LeftBracket:
-    pass
-
-
-class RightBracket:
-    pass
-
 
 all_terms = [
     LambdaKeyword,
