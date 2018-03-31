@@ -7,8 +7,11 @@ Part of grammpy
 
 """
 
-from .Rules import RuleChainable
+from .Rules import RuleConnectable
 
 
-class Nonterminal(RuleChainable):
+class Nonterminal(RuleConnectable):
+    '''
+    Base class that represents nonterminals
+    '''
     pass

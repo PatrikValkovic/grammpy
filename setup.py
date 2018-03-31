@@ -9,7 +9,7 @@ Part of grammpy
 
 from setuptools import setup
 
-v = '1.2.0'
+v = '1.2.1'
 
 setup(
     name='grammpy',
@@ -21,5 +21,7 @@ setup(
     download_url='https://github.com/PatrikValkovic/grammpy/archive/v' + v + '.tar.gz',
     author_email='patrik.valkovic@hotmail.cz',
     description='Package for representing formal grammars.',
-    install_requires=[],
+    install_requires=[
+        'typing'
+    ],
 )

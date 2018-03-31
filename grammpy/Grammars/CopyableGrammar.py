@@ -9,14 +9,14 @@ Part of grammpy
 
 from copy import deepcopy
 from inspect import isclass
-from .RulesRemovingGrammar import RulesRemovingGrammar as Grammar
+from .RulesRemovingGrammar import RulesRemovingGrammar
 from ..Nonterminal import Nonterminal
 from ..Rules import Rule
 from ..Constants import EPSILON
 
 # TODO Optimize
 
-class CopyableGrammar(Grammar):
+class CopyableGrammar(RulesRemovingGrammar):
     class _CopyContainer:
         def __init__(self, new_terms, new_terms_dict,
                      new_nonterms, new_nonterms_dict,

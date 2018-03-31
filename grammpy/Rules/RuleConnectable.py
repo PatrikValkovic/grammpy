@@ -11,13 +11,15 @@ import weakref
 from ..exceptions import TreeDeletedException
 
 
-class RuleChainable:
+class RuleConnectable:
     def __init__(self):
         self._from_rule = None
         self._to_rule = None
 
     @property
     def from_rule(self):
+        if self._from_rule is None:
+            return None
         if self._from_rule() is None:
             raise TreeDeletedException()
         return self._from_rule()

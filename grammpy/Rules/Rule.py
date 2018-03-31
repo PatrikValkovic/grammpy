@@ -7,8 +7,8 @@ Part of grammpy
 
 """
 
-from .InstantiableRule import InstantiableRule as _R
+from .InstantiableRule import InstantiableRule
 
 
-class Rule(_R):
+class Rule(InstantiableRule):
     pass

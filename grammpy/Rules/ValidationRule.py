@@ -16,7 +16,7 @@ from ..exceptions import RuleException, UselessEpsilonException, RuleSyntaxExcep
     NonterminalDoesNotExistsException
 
 
-class IsMethodsRuleExtension(BaseRule):
+class ValidationRule(BaseRule):
     @staticmethod
     def _controlSide(cls, side, grammar):
         if not isinstance(side, list):
@@ -46,8 +46,8 @@ class IsMethodsRuleExtension(BaseRule):
                 raise RuleSyntaxException(cls, 'One of the rules does not have define left and right part', rule)
             l = rule[0]
             r = rule[1]
-            IsMethodsRuleExtension._controlSide(cls, l, grammar)
-            IsMethodsRuleExtension._controlSide(cls, r, grammar)
+            ValidationRule._controlSide(cls, l, grammar)
+            ValidationRule._controlSide(cls, r, grammar)
             if l == [EPS] and r == [EPS]:
                 raise UselessEpsilonException(cls)
 
