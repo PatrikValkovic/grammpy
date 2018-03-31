@@ -20,7 +20,7 @@ def _create_mapping(grammar: Grammar) -> tuple:
         if len(r.right) == 1:
             # rule to terminal
             h = hash(r.toSymbol)
-            if r.toSymbol not in termmap:
+            if h not in termmap:
                 termmap[h] = set()
             termmap[h].add(r)
         else:

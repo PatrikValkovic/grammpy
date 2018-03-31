@@ -29,7 +29,7 @@ class R(Rule):
 
 
 
-class CorrectTerminalsTest(TestCase):
+class CorrectSimpleTerminalsTest(TestCase):
 
     def setUp(self):
         self.g = Grammar(terminals=[My],
