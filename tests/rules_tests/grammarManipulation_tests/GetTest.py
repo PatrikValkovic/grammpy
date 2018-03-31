@@ -35,6 +35,14 @@ class GetTest(TestCase):
         self.g.add_rule([Tmp1, Tmp2, Tmp3])
         self.assertEqual(self.g.get_rule([Tmp1, Tmp2, Tmp3]), [Tmp1, Tmp2, Tmp3])
 
+    def test_getOne(self):
+        class Tmp1(_R):
+            rule = ([NFirst], ['a', 0])
+        self.assertEqual(self.g.rules_count(), 0)
+        self.g.add_rule([Tmp1])
+        self.assertEqual(self.g.get_rule(Tmp1), Tmp1)
+
+
     def test_getAsArrayWithNone(self):
         class Tmp1(_R):
             rule = ([NFirst], ['a', 0])
