@@ -34,7 +34,7 @@ class Field:
     def fill(self, term_dict, terms):
         for i in range(len(terms)):
             t = terms[i]
-            self._field[0][i] += term_dict[t]
+            self._field[0][i] += term_dict[hash(t)]
 
     def rules(self, x, y):
         return [r for r in self._field[y][x]]

@@ -19,9 +19,10 @@ def _create_mapping(grammar: Grammar) -> tuple:
     for r in grammar.rules():
         if len(r.right) == 1:
             # rule to terminal
-            if r.toSymbol not in termmap:
-                termmap[r.toSymbol] = set()
-            termmap[r.toSymbol].add(r)
+            h = hash(r.toSymbol)
+            if h not in termmap:
+                termmap[h] = set()
+            termmap[h].add(r)
         else:
             # rule with nonterms
             key = hash(tuple(r.right))
@@ -39,6 +40,7 @@ def _all_combinations(tpl):
 def cyk(grammar: Grammar, input: Iterable) -> Nonterminal:
     i = list(input)
     l = len(i)
+    index = l - 1
     f = Field(grammar, l)
     # creating mapping for speedup rules searching
     (termmap, rulemap) = _create_mapping(grammar)
@@ -73,7 +75,7 @@ def cyk(grammar: Grammar, input: Iterable) -> Nonterminal:
         working = to_process.pop()
         rule_class = working['r']
         working_nonterm = working['n']  # type: Nonterminal
-        # it middle rule - not rewritable to nonterminal
+        # its middle rule - not rewritable to nonterminal
         if isinstance(rule_class, PlaceItem):
             created_rule = rule_class.rule() # type: Rule
             working_nonterm._set_to_rule(created_rule)
@@ -88,7 +90,9 @@ def cyk(grammar: Grammar, input: Iterable) -> Nonterminal:
             created_rule = rule_class() # type: Rule
             working_nonterm._set_to_rule(created_rule)
             created_rule._from_symbols.append(working_nonterm)
-            t = grammar.term(rule_class.toSymbol)
+            #t = grammar.term(rule_class.toSymbol)
+            t = Terminal(i[index], grammar)
+            index -= 1
             created_rule._to_symbols.append(t)
             t._set_from_rule(created_rule)
     return start
