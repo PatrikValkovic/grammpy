@@ -84,7 +84,7 @@ class ExpressionBodyToExpression(Rule):
         ([ExpressionBody], [Expression])
     ]
     def get_body(self):
-        expr = self.to_symbols[0].s #type: Expression
+        expr = self.to_symbols[0] #type: Expression
         yield expr.get_representation()
         try:
             yield from self.to_symbols[1].get_body()
