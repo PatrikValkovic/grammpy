@@ -72,7 +72,7 @@ def t_INITIAL_RIGHTBRACKET(t):
     return t
 
 def t_INITIAL_parameters_error(t):
-    raise LexException()
+    raise LexException(t)
 
 lexer = lex.lex()
 

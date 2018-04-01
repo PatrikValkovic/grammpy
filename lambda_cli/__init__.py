@@ -9,3 +9,4 @@ Part of lambda-cli
 
 from .lambda_grammar import lambda_grammar
 from .lex import lambda_cli_lex
+from .parsing import parse_from_tokens, parse, steps
