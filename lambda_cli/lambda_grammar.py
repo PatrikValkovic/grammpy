@@ -7,7 +7,7 @@ Part of lambda-cli
 
 """
 
-from grammpy import Grammar, Nonterminal, Rule
+from grammpy import Grammar, Nonterminal, Rule, EPS
 import interpreter
 from .terminals import *
 
@@ -22,9 +22,11 @@ class Lambda(Nonterminal):
 class Parameters(Nonterminal):
     def parameters(self):
         term = self.to_rule.to_symbols[0].s #type: Parameter
+        if term is EPS:
+            return []
         yield term.name
         try:
-            yield from self.to_rule.to_symbols[1].parameters
+            yield from self.to_rule.to_symbols[1].parameters()
         except IndexError:
             return
 class NoBracketExpression(Nonterminal):
@@ -70,7 +72,7 @@ class ExpressionBodyToLambda(Rule):
         ([ExpressionBody], [Lambda])
     ]
     def get_body(self):
-        l = self.to_symbols[0].s #type: Lambda
+        l = self.to_symbols[0] #type: Lambda
         yield l.get_representation()
         try:
             yield from self.to_symbols[1].get_body()
@@ -109,6 +111,7 @@ class LambdaRule(Rule):
 
 class ParametersRule(Rule):
     rules = [
+        ([Parameters], [EPS]),
         ([Parameters], [Parameter, Parameters]),
         ([Parameters], [Parameter])
     ]
