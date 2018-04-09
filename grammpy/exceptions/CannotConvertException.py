@@ -9,5 +9,5 @@ Part of grammpy
 
 from .GrammpyException import GrammpyException
 
-class CannotConvertException(GrammpyException):
+class CannotConvertException(GrammpyException, ValueError):
     pass

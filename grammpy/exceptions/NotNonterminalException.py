@@ -11,7 +11,7 @@ from typing import Any
 from .GrammpyException import GrammpyException
 
 
-class NotNonterminalException(GrammpyException):
+class NotNonterminalException(GrammpyException, TypeError):
     def __init__(self, parameter, *args: Any) -> None:
         super().__init__(*args)
         self.object = parameter

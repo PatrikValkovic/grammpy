@@ -10,7 +10,7 @@ Part of grammpy
 from .GrammpyException import GrammpyException
 
 
-class RuleException(GrammpyException):
+class RuleException(GrammpyException, ValueError):
     def __init__(self, rule):
         super().__init__()
         self.rule = rule
