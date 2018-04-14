@@ -8,9 +8,10 @@ Part of grammpy
 """
 import inspect
 
-from ..Rules import Rule
+from grammpy import Rule
 from .StringGrammar import StringGrammar
-from ..HashContainer import HashContainer
+from grammpy.representation.HashContainer import HashContainer
+
 
 class SplitRule(Rule):
     from_rule = None

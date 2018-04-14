@@ -10,9 +10,9 @@ Part of grammpy
 from copy import deepcopy
 from inspect import isclass
 from .RulesRemovingGrammar import RulesRemovingGrammar
-from ..Nonterminal import Nonterminal
-from ..Rules import Rule
-from ..Constants import EPSILON
+from grammpy import Nonterminal
+from grammpy import Rule
+from grammpy import EPSILON
 
 # TODO Optimize
 
@@ -104,7 +104,7 @@ class CopyableGrammar(RulesRemovingGrammar):
                 new_rules_dict[r] = created
         return (new_rules, new_rules_dict)
 
-    def _copy(self, terminals=False, nonterminals=False, rules=False) -> _CopyContainer:
+    def _copy(self, terminals=False, nonterminals=False, rules=False):
         # Copy terminals
         (new_terms, new_terms_dict) = self._copy_terminals(_copy=terminals)
         rules = terminals if rules is False else True

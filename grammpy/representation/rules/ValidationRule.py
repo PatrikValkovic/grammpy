@@ -9,11 +9,12 @@ Part of grammpy
 
 from inspect import isclass
 
-from .BaseRule import BaseRule
-from ..Constants import EPS
-from ..Nonterminal import Nonterminal
-from ..exceptions import RuleException, UselessEpsilonException, RuleSyntaxException, TerminalDoesNotExistsException, \
+from grammpy.exceptions import RuleException, UselessEpsilonException, RuleSyntaxException, \
+    TerminalDoesNotExistsException, \
     NonterminalDoesNotExistsException
+from grammpy import EPS
+from grammpy import Nonterminal
+from .BaseRule import BaseRule
 
 
 class ValidationRule(BaseRule):

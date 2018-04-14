@@ -8,7 +8,7 @@ Part of grammpy
 """
 
 import weakref
-from ..exceptions import TreeDeletedException
+from grammpy.exceptions import TreeDeletedException
 
 
 class RuleConnectable:

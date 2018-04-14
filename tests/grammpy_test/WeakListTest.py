@@ -9,8 +9,11 @@ Part of grammpy
 
 import weakref
 from unittest import TestCase, main
+
 from grammpy.WeakList import WeakList
+
 from grammpy.exceptions import TreeDeletedException
+
 
 class RulesTest(TestCase):
     class objectFake(object):

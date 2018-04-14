@@ -7,7 +7,7 @@ Part of grammpy
 
 """
 
-from ..WeakList import WeakList
+from grammpy.representation.WeakList import WeakList
 from .ValidationRule import ValidationRule
 
 

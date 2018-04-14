@@ -8,9 +8,9 @@ Part of grammpy
 """
 
 from unittest import main, TestCase
+
 from grammpy import Rule
-from grammpy.exceptions.NotASingleSymbolException import NotASingleSymbolException
-from grammpy.exceptions.CantCreateSingleRuleException import CantCreateSingleRuleException
+from grammpy.exceptions import CantCreateSingleRuleException, NotASingleSymbolException
 
 
 class OneRule(Rule):

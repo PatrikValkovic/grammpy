@@ -8,6 +8,7 @@ Part of grammpy
 """
 
 from unittest import main, TestCase
+
 from grammpy import Rule
 from grammpy.exceptions import RuleNotDefinedException
 

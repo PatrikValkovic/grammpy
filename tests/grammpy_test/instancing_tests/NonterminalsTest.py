@@ -9,8 +9,9 @@ Part of grammpy
 
 
 from unittest import TestCase, main
-from grammpy import *
+from grammpy import Nonterminal, Rule
 from grammpy.exceptions import TreeDeletedException
+
 
 class A(Nonterminal): pass
 class B(Nonterminal): pass

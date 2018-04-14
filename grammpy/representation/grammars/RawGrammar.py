@@ -8,12 +8,12 @@ Part of grammpy
 """
 import inspect
 
-from ..Rules import Rule
-from ..HashContainer import HashContainer
-from ..Nonterminal import Nonterminal
-from ..Terminal import Terminal
-from ..exceptions import NotNonterminalException, NotRuleException, TerminalDoesNotExistsException, \
+from grammpy.exceptions import NotNonterminalException, NotRuleException, TerminalDoesNotExistsException, \
     NonterminalDoesNotExistsException
+from grammpy.representation.HashContainer import HashContainer
+from grammpy import Nonterminal
+from grammpy import Rule
+from grammpy import Terminal
 
 
 class RawGrammar:

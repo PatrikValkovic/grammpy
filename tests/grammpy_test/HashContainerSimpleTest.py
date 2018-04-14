@@ -8,7 +8,8 @@ Part of grammpy
 """
 
 from unittest import TestCase, main
-from grammpy.HashContainer import HashContainer
+
+from grammpy.representation.HashContainer import HashContainer
 
 
 class HashContainerSimpleTest(TestCase):

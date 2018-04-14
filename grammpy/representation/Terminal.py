@@ -7,7 +7,7 @@ Part of grammpy
 
 """
 
-from .Rules import RuleConnectable
+from .rules import RuleConnectable
 
 class Terminal(RuleConnectable):
     '''

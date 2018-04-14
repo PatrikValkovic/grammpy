@@ -7,7 +7,7 @@ Part of grammpy
 
 """
 
-from grammpy import Grammar as _G, Rule as _R, Nonterminal as _N
+from grammpy import Grammar as _G, Nonterminal as _N
 
 
 class TFirst:

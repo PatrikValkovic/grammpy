@@ -11,7 +11,8 @@ Changes: List raise TreeDeletedException instead of reducing its size
 """
 
 import weakref
-from .exceptions import TreeDeletedException
+
+from grammpy.exceptions import TreeDeletedException
 
 __all__ = ["WeakList"]
 

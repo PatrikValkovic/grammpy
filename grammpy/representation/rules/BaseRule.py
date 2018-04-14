@@ -8,7 +8,10 @@ Part of grammpy
 """
 import inspect
 
-from grammpy.exceptions import CantCreateSingleRuleException, RuleNotDefinedException, NotASingleSymbolException
+from grammpy.exceptions import \
+    CantCreateSingleRuleException, \
+    RuleNotDefinedException, \
+    NotASingleSymbolException
 
 
 def lists_to_tuples(lst):
