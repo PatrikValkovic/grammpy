@@ -12,8 +12,8 @@ from inspect import isclass
 from grammpy.exceptions import RuleException, UselessEpsilonException, RuleSyntaxException, \
     TerminalDoesNotExistsException, \
     NonterminalDoesNotExistsException
-from grammpy import EPS
-from grammpy import Nonterminal
+from ..constants import EPS
+from ..Nonterminal import Nonterminal
 from .BaseRule import BaseRule
 
 

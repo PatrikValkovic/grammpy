@@ -11,9 +11,9 @@ import inspect
 from grammpy.exceptions import NotNonterminalException, NotRuleException, TerminalDoesNotExistsException, \
     NonterminalDoesNotExistsException
 from grammpy.representation.HashContainer import HashContainer
-from grammpy import Nonterminal
-from grammpy import Rule
-from grammpy import Terminal
+from ..Nonterminal import Nonterminal
+from ..rules import Rule
+from ..Terminal import Terminal
 
 
 class RawGrammar:

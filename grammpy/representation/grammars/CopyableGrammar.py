@@ -10,9 +10,9 @@ Part of grammpy
 from copy import deepcopy
 from inspect import isclass
 from .RulesRemovingGrammar import RulesRemovingGrammar
-from grammpy import Nonterminal
-from grammpy import Rule
-from grammpy import EPSILON
+from ..Nonterminal import Nonterminal
+from ..rules import Rule
+from ..constants import EPSILON
 
 # TODO Optimize
 

@@ -8,7 +8,7 @@ Part of grammpy
 """
 import inspect
 
-from grammpy import Rule
+from ..rules import Rule
 from .StringGrammar import StringGrammar
 from grammpy.representation.HashContainer import HashContainer
 

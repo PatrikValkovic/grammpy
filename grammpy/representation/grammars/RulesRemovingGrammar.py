@@ -8,7 +8,7 @@ Part of grammpy
 """
 
 from .PrettyApiGrammar import PrettyApiGrammar
-from grammpy import EPSILON
+from ..constants import EPSILON
 
 class RulesRemovingGrammar(PrettyApiGrammar):
     def __init__(self,
