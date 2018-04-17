@@ -189,7 +189,21 @@ Library that will deal with obedience or transformations into another type of gr
 - Add layer so terminals, nonterminals and rules could be add in simple string.
 - Add additional API into Rule class, so you can simply check type of rule.
 
-There are also additional libraries in development, that will integrate with this library.
+# grammpy.parsers
+
+Library implements CYK algorithm.
+It uses grammpy library for grammar specification.
+
+Only exposed method is `cyk`.
+
+```python
+from pyparsers import cyk
+
+g = Grammar()
+# ...
+
+parsed = cyk(g, [*input])
+```
 
 -----
 
