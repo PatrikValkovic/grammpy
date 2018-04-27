@@ -12,12 +12,20 @@ from grammpy.exceptions import CantCreateSingleRuleException, RuleNotDefinedExce
 
 
 def lists_to_tuples(lst):
+    """
+    Recursively transforms lists to tuples
+    :param lst: List, that can contain another lists
+    :return: Tuple
+    """
     if not isinstance(lst, list) and not isinstance(lst, tuple):
         return lst
     return tuple(lists_to_tuples(item) for item in tuple(lst))
 
 
 class CP(object):
+    """
+    Definition of class property decorator
+    """
     def __init__(self, getter):
         self._getter = getter
 
@@ -25,13 +33,25 @@ class CP(object):
         return self._getter(cls)  # for static remove cls from the call
 
 class MetaRule(type):
+    """
+    Metaclass for rule
+    """
     def __hash__(cls):
+        """
+        Get hash for Rule class
+        :return: Hash of the Rule class
+        """
         try:
             return cls.ruleHash()
         except RuleNotDefinedException:
             return super(BaseRule, cls).__hash__(cls)
 
     def __eq__(cls, other):
+        """
+        Compare two Rule classes
+        :param other: Another Rule class
+        :return: True if both classes contains same rules, false otherwise
+        """
         return inspect.isclass(other) and \
                issubclass(other, BaseRule) and \
                hash(cls) == hash(other)
@@ -39,10 +59,12 @@ class MetaRule(type):
 
 class BaseRule(metaclass=MetaRule):
     """
+    Basic implementation of rules.
+    For definition of rule, you can use following attributes:
     fromSymbol = EPSILON
     toSymbol = EPSILON
-    right = [EPSILON]
     left = [EPSILON]
+    right = [EPSILON]
     rule = ([EPSILON], [EPSILON])
     rules = [([EPSILON], [EPSILON])]
     """
@@ -104,13 +126,25 @@ class BaseRule(metaclass=MetaRule):
 
     @classmethod
     def rules_count(cls):
+        """
+        Get count of rules defined in the class
+        :return: Count of rules
+        """
         return len(cls.rules)
 
     @classmethod
     def count(cls):
+        """
+        Get count of rules defined in the class
+        :return: Count of rules
+        """
         return cls.rules_count()
 
     @classmethod
     def ruleHash(cls):
+        """
+        Return hash of Rule class
+        :return: Hash of the class
+        """
         transformed = lists_to_tuples(cls.rules)
         return hash(transformed)
