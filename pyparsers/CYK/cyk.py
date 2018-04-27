@@ -11,6 +11,7 @@ from typing import Iterable
 from grammpy import *
 from .Field import Field
 from .PlaceItem import PlaceItem
+from .NotParsedException import NotParsedException
 
 
 def _create_mapping(grammar: Grammar) -> tuple:
@@ -74,7 +75,7 @@ def cyk(grammar: Grammar, input: Iterable) -> Nonterminal:
             f.put(x, y, list(rules))
     # Check if is start symol on the bottom of field
     if grammar.start_get() not in [r.fromSymbol for r in f.rules(0, l-1)]:
-        raise NotImplementedError()  # TODO exception
+        raise NotParsedException()
     # Find init symbol and rule
     start = grammar.start_get()()  # type: Nonterminal
     start_rule = [r for r in f.rules(0, l-1) if grammar.start_is(r.fromSymbol)][0]
