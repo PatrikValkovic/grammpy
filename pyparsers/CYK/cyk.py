@@ -14,6 +14,11 @@ from .PlaceItem import PlaceItem
 
 
 def _create_mapping(grammar: Grammar) -> tuple:
+    """
+    Create mapping between symbols and rules rewritable to these symbols
+    :param grammar: Grammar to use
+    :return: Tuple of dictionary terminal-rule and 2 nonterminals-rule
+    """
     termmap = dict()
     rulemap = dict()
     for r in grammar.rules():
@@ -38,10 +43,16 @@ def _all_combinations(tpl):
 
 
 def cyk(grammar: Grammar, input: Iterable) -> Nonterminal:
+    """
+    Perform CYK algorithm
+    :param grammar: Grammar to use in Chomsky Normal Form
+    :param input: Input sequence to parse
+    :return: Instance of Nonterminal in parsed tree
+    """
     i = list(input)
     l = len(i)
     index = l - 1
-    f = Field(grammar, l)
+    f = Field(l)
     # creating mapping for speedup rules searching
     (termmap, rulemap) = _create_mapping(grammar)
     # fill first line with rules directly rewritable to terminal
