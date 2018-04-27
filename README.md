@@ -17,7 +17,7 @@ parsed = cyk(g, [*input])
 
 -----
 
-Version: 0.0.1
+Version: 0.0.2
 
 Author: Patrik Valkovič
 
