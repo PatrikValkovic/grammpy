@@ -11,4 +11,7 @@ from .InstantiableRule import InstantiableRule
 
 
 class Rule(InstantiableRule):
+    """
+    Rule class that hide underlying classes.
+    """
     pass

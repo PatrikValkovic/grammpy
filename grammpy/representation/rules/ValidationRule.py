@@ -18,8 +18,20 @@ from .BaseRule import BaseRule
 
 
 class ValidationRule(BaseRule):
+    """
+    Rule class that is able to validate rules
+    """
     @staticmethod
     def _controlSide(cls, side, grammar):
+        """
+        Validate one side of the rule
+        :param side: Iterable side of the rule
+        :param grammar: Grammar on which to validate
+        :raise RuleSyntaxException: If invalid syntax is use
+        :raise UselessEpsilonException: If useless epsilon is used
+        :raise TerminalDoesNotExistsException: If terminal does not exists in the grammar
+        :raise NonterminalDoesNotExistsException: If nonterminal does not exists in the grammar
+        """
         if not isinstance(side, list):
             raise RuleSyntaxException(cls, 'One side of rule is not enclose by list', side)
         if len(side) == 0:
@@ -37,6 +49,14 @@ class ValidationRule(BaseRule):
 
     @classmethod
     def validate(cls, grammar):
+        """
+        Perform rules validation of the class
+        :param grammar: Grammar on which to validate
+        :raise RuleSyntaxException: If invalid syntax is used
+        :raise UselessEpsilonException: If epsilon used in rules in useless
+        :raise TerminalDoesNotExistsException: If terminal does not exists in the grammar
+        :raise NonterminalDoesNotExistsException: If nonterminal does not exists in the grammar
+        """
         r = cls.rules
         if not isinstance(r, list):
             raise RuleSyntaxException(cls, 'Rules property is not enclose in list')
@@ -54,6 +74,11 @@ class ValidationRule(BaseRule):
 
     @classmethod
     def is_valid(cls, grammar):
+        """
+        Check if are rules correctly defined
+        :param grammar: Grammar on which to validate
+        :return: True if have class correct rules, false otherwise
+        """
         try:
             cls.validate(grammar)
             return True
