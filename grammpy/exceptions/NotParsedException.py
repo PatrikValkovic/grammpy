@@ -7,8 +7,9 @@ Part of pyparsers
 
 """
 
+from .ParsingException import ParsingException
 
-class NotParsedException(Exception):
+class NotParsedException(ParsingException):
     """
     Represent exception that the tree was not parsed successfully
     """
