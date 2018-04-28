@@ -10,4 +10,7 @@ Part of grammpy
 from .GrammpyException import GrammpyException
 
 class CannotConvertException(GrammpyException):
+    """
+    Library cant convert objects
+    """
     pass

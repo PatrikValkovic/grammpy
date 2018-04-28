@@ -11,5 +11,8 @@ from .CannotConvertException import CannotConvertException
 
 
 class NotASingleSymbolException(CannotConvertException):
+    """
+    More symbols defined at the place where one symbol is expected
+    """
     def __init__(self, symbols):
         self.symbols = symbols

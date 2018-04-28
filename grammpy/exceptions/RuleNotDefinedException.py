@@ -11,5 +11,8 @@ from .RuleException import RuleException
 
 
 class RuleNotDefinedException(RuleException):
+    """
+    For Rule class the rule is not defined
+    """
     def __init__(self, rule):
         self.rule = rule

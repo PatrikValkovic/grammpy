@@ -11,4 +11,7 @@ from .GrammpyException import GrammpyException
 
 
 class TreeDeletedException(GrammpyException):
+    """
+    Exception that parent of the AST was already deleted
+    """
     pass

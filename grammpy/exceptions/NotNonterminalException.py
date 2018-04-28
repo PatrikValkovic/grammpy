@@ -12,6 +12,9 @@ from .GrammpyException import GrammpyException
 
 
 class NotNonterminalException(GrammpyException):
+    """
+    Object is not Nonterminal class
+    """
     def __init__(self, parameter, *args: Any) -> None:
         super().__init__(*args)
         self.object = parameter

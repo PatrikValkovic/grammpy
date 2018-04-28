@@ -10,5 +10,8 @@ from typing import Any
 
 
 class GrammpyException(Exception):
+    """
+    Base class for all exceptions
+    """
     def __init__(self, *args: Any) -> None:
         super().__init__(*args)

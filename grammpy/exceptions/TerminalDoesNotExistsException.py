@@ -11,6 +11,9 @@ from .RuleSyntaxException import RuleSyntaxException
 
 
 class TerminalDoesNotExistsException(RuleSyntaxException):
+    """
+    Grammar does not exists in grammar provided
+    """
     def __init__(self, rule, terminal, grammar):
         super().__init__(rule, 'Terminal does not exists in current grammar')
         self.terminal = terminal
