@@ -14,10 +14,16 @@ from ..Nonterminal import Nonterminal
 from ..rules import Rule
 from ..constants import EPSILON
 
-# TODO Optimize
+# TODO Delete deep copy
 
 class CopyableGrammar(RulesRemovingGrammar):
+    """
+    Class that implement copy operations
+    """
     class _CopyContainer:
+        """
+        Class that hold info about copying structure
+        """
         def __init__(self, new_terms, new_terms_dict,
                      new_nonterms, new_nonterms_dict,
                      new_rules, new_rules_dict,
@@ -31,6 +37,11 @@ class CopyableGrammar(RulesRemovingGrammar):
             self.new_terms = new_terms
 
     def _copy_terminals(self, _copy=False):
+        """
+        Copy terminals
+        :param _copy: True if perform deep copy, False by default
+        :return: Tuple with set of new terminals and dictionary where key is old terminal and value is new one
+        """
         new_terms = set()
         new_terms_dict = dict()
         # if not copy just fill into set and dict to self
@@ -45,6 +56,11 @@ class CopyableGrammar(RulesRemovingGrammar):
         return (new_terms, new_terms_dict)
 
     def _copy_nonterminals(self, _copy=False):
+        """
+        Copy nonterminals
+        :param _copy: True if perform deep copy, False by default
+        :return: Tuple with set of new nonterminals and dictionary where key is old nonterminal and value is new one
+        """
         new_nonterms = set()
         new_nonterms_dict = dict()
         # if not copy just fill into set and dict to self
@@ -59,6 +75,13 @@ class CopyableGrammar(RulesRemovingGrammar):
         return (new_nonterms, new_nonterms_dict)
 
     def _copy_rules(self, terminals, nonterminals, _copy=False):
+        """
+        Copy rules
+        :param terminals: Dictionary that map old terminals with the new one
+        :param nonterminals: Dictionary that map old nonterminals to new one
+        :param _copy: True if perform deep copy, False by default
+        :return: Tuple with set of new rules and dictionary where key is old rule and value is new one
+        """
         new_rules = set()
         new_rules_dict = dict()
         # if not copy just fill into set and dict to self
@@ -104,7 +127,14 @@ class CopyableGrammar(RulesRemovingGrammar):
                 new_rules_dict[r] = created
         return (new_rules, new_rules_dict)
 
-    def _copy(self, terminals=False, nonterminals=False, rules=False):
+    def _copy(self, terminals=False, nonterminals=False, rules=False) -> _CopyContainer:
+        """
+        Copy grammar
+        :param terminals: True if terminals should be deep copied, False by default
+        :param nonterminals: True if nonterminals should be deep copied, False by default
+        :param rules: True if rules should be deep copied, False by default
+        :return: Instance of _CopyContainer
+        """
         # Copy terminals
         (new_terms, new_terms_dict) = self._copy_terminals(_copy=terminals)
         rules = terminals if rules is False else True

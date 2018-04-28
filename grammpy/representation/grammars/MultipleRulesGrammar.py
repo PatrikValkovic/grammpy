@@ -20,15 +20,24 @@ class SplitRule(Rule):
 
 
 class MultipleRulesGrammar(StringGrammar):
+    """
+    Class that split Rule class with multiple rules defined into multiple Rule classes inherited from SplitRule
+    """
     def __init__(self,
                  terminals=None,
                  nonterminals=None,
                  rules=None,
                  start_symbol=None):
+        __doc__ = StringGrammar.__init__.__doc__
         self._count = 0
         super().__init__(terminals, nonterminals, rules, start_symbol)
 
     def _create_class(self, rule):
+        """
+        Create subtype of SplitRule based on rule
+        :param rule: Rule to be used for new class
+        :return: Class inherited from SplitRule
+        """
         name = 'SplitRules' + str(self._count)
         self._count += 1
         created = type(name, (SplitRule,), SplitRule.__dict__.copy())
@@ -36,6 +45,12 @@ class MultipleRulesGrammar(StringGrammar):
         return created
 
     def _transform_rules(self, rules, *, _validate=True):
+        """
+        Process rules and if Rule class contain definition of more rules, separate SplitRule class are created for every rule
+        :param rules: Rules to proccess
+        :param _validate: Flag if validate removing rules, only for internal use
+        :return: Sequence of rules
+        """
         rules = HashContainer.to_iterable(rules)
         r = []
         for i in rules:
@@ -53,6 +68,7 @@ class MultipleRulesGrammar(StringGrammar):
         return r
 
     def get_rule(self, rules=None):
+        __doc__ = StringGrammar.get_rule.__doc__
         if rules is None:
             return super().get_rule()
         results = super().get_rule(self._transform_rules(rules))
@@ -61,12 +77,15 @@ class MultipleRulesGrammar(StringGrammar):
         return results
 
     def have_rule(self, rules):
+        __doc__ = StringGrammar.have_rule.__doc__
         return super().have_rule(self._transform_rules(rules))
 
     def remove_rule(self, rules=None, *, _validate=True):
+        __doc__ = StringGrammar.remove_rule.__doc__
         if rules is None:
             return super().remove_rule(_validate=_validate)
         return super().remove_rule(self._transform_rules(rules, _validate=_validate), _validate=_validate)
 
     def add_rule(self, rules):
+        __doc__ = StringGrammar.add_rule.__doc__
         return super().add_rule(self._transform_rules(rules))
