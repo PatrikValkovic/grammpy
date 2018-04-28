@@ -11,5 +11,8 @@ from .RuleSyntaxException import RuleSyntaxException
 
 
 class UselessEpsilonException(RuleSyntaxException):
+    """
+    Exception that exception used in grammar is useless
+    """
     def __init__(self, rule):
         super().__init__(rule, 'Usage of epsilon in this context if useless')

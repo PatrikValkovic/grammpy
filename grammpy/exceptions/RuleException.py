@@ -11,6 +11,9 @@ from .GrammpyException import GrammpyException
 
 
 class RuleException(GrammpyException, ValueError):
+    """
+    Error with the rule or rules
+    """
     def __init__(self, rule):
         super().__init__()
         self.rule = rule

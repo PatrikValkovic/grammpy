@@ -11,5 +11,8 @@ from .RuleException import RuleException
 
 
 class CantCreateSingleRuleException(RuleException):
+    """
+    From Rule class with multiple rules defined library was unable to split separate rules
+    """
     def __init__(self, rules):
         self.rules = rules

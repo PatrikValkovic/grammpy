@@ -10,6 +10,9 @@ Part of grammpy
 from .RuleException import RuleException
 
 class RuleSyntaxException(RuleException):
+    """
+    Syntax of the rule or rules is invalid
+    """
     def __init__(self, rule, message, additional = None):
         super().__init__(rule)
         self.message = message
