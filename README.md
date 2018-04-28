@@ -195,6 +195,7 @@ Library implements CYK algorithm.
 It uses grammpy library for grammar specification.
 
 Only exposed method is `cyk`.
+It raise `NotParsedException` if input sequence was syntactically invalid and CYK was unable to parse it.
 
 ```python
 from pyparsers import cyk

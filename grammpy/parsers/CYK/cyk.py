@@ -11,9 +11,15 @@ from typing import Iterable
 from grammpy import *
 from .Field import Field
 from .PlaceItem import PlaceItem
+from .NotParsedException import NotParsedException
 
 
 def _create_mapping(grammar: Grammar) -> tuple:
+    """
+    Create mapping between symbols and rules rewritable to these symbols
+    :param grammar: Grammar to use
+    :return: Tuple of dictionary terminal-rule and 2 nonterminals-rule
+    """
     termmap = dict()
     rulemap = dict()
     for r in grammar.rules():
@@ -38,10 +44,16 @@ def _all_combinations(tpl):
 
 
 def cyk(grammar: Grammar, input: Iterable) -> Nonterminal:
+    """
+    Perform CYK algorithm
+    :param grammar: Grammar to use in Chomsky Normal Form
+    :param input: Input sequence to parse
+    :return: Instance of Nonterminal in parsed tree
+    """
     i = list(input)
     l = len(i)
     index = l - 1
-    f = Field(grammar, l)
+    f = Field(l)
     # creating mapping for speedup rules searching
     (termmap, rulemap) = _create_mapping(grammar)
     # fill first line with rules directly rewritable to terminal
@@ -63,7 +75,7 @@ def cyk(grammar: Grammar, input: Iterable) -> Nonterminal:
             f.put(x, y, list(rules))
     # Check if is start symol on the bottom of field
     if grammar.start_get() not in [r.fromSymbol for r in f.rules(0, l-1)]:
-        raise NotImplementedError()  # TODO exception
+        raise NotParsedException()
     # Find init symbol and rule
     start = grammar.start_get()()  # type: Nonterminal
     start_rule = [r for r in f.rules(0, l-1) if grammar.start_is(r.fromSymbol)][0]
