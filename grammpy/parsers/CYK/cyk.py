@@ -11,7 +11,7 @@ from typing import Iterable
 from grammpy import *
 from .Field import Field
 from .PlaceItem import PlaceItem
-from .NotParsedException import NotParsedException
+from grammpy.exceptions import NotParsedException
 
 
 def _create_mapping(grammar: Grammar) -> tuple:

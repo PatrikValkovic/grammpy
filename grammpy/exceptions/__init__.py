@@ -20,3 +20,4 @@ from .TerminalDoesNotExistsException import TerminalDoesNotExistsException
 from .NonterminalDoesNotExistsException import NonterminalDoesNotExistsException
 from .NotRuleException import NotRuleException
 from .TreeDeletedException import TreeDeletedException
+from .NotParsedException import NotParsedException

@@ -8,4 +8,3 @@ Part of pyparsers
 """
 
 from .CYK import cyk
-from .CYK import NotParsedException
