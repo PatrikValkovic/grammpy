@@ -13,22 +13,31 @@ from setuptools import setup
 v = '1.2.4'
 
 setup(
-    name='grammpy-transforms',
+    name='grammpy',
     version=v,
     packages=[
-        'grammpy_transforms',
-        'grammpy_transforms.ChomskyForm',
-        'grammpy_transforms.UnitRulesRemove',
-        'grammpy_transforms.EpsilonRulesRemove',
-        'grammpy_transforms.UnreachableSymbolsRemove',
-        'grammpy_transforms.NongeneratingSymbolsRemove',
-        'grammpy_transforms.SplittedRules'
+        'grammpy',
+        'grammpy.exceptions',
+        'grammpy.parsers',
+        'grammpy.parsers.CYK',
+        'grammpy.representation',
+        'grammpy.representation.grammars',
+        'grammpy.representation.rules',
+        'grammpy.transforms',
+        'grammpy.transforms.ChomskyForm',
+        'grammpy.transforms.EpsilonRulesRemove',
+        'grammpy.transforms.NongeneratingSymbolsRemove',
+        'grammpy.transforms.SplittedRules',
+        'grammpy.transforms.UnitRulesRemove',
+        'grammpy.transforms.UnreachableSymbolsRemove',
     ],
-    url='https://github.com/PatrikValkovic/grammpy-transforms',
-    download_url='https://github.com/PatrikValkovic/grammpy-transforms/archive/v' + v + '.tar.gz',
+    url='https://github.com/PatrikValkovic/grammpy',
+    download_url='https://github.com/PatrikValkovic/grammpy/archive/v' + v + '.tar.gz',
     license='GNU General Public License v3.0',
     author='Patrik Valkovic',
     author_email='patrik.valkovic@hotmail.cz',
-    description='Set of transformations for grammpy library.',
-    install_requires=[],
+    description='CYk library with all required tools to parse context-free grammars.',
+    install_requires=[
+        'typing',
+    ],
 )
