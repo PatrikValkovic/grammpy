@@ -13,7 +13,7 @@ from grammpy.exceptions import NotNonterminalException, NotRuleException, Termin
 from grammpy.representation.HashContainer import HashContainer
 from ..Nonterminal import Nonterminal
 from ..rules import Rule
-from ..Terminal import Terminal
+from ._TerminalSet import _TerminalSet
 
 
 class RawGrammar:
@@ -34,58 +34,21 @@ class RawGrammar:
         None by default
         """
         terminals = [] if terminals is None else terminals
+        self._terminals = _TerminalSet(self, terminals)
+
         nonterminals = [] if nonterminals is None else nonterminals
         rules = [] if rules is None else rules
-        self.__terminals = HashContainer()
         self.__nonterminals = HashContainer()
         self.__rules = HashContainer()
         self.__start_symbol = None
-        self.add_term(terminals)
         self.add_nonterm(nonterminals)
         self.add_rule(rules)
         self.start_set(start_symbol)
 
-    # Term part
-    # TODO add validation of terminals that no rule or nonterminal is passed
-    def add_term(self, term):
-        """
-        Add terminal or terminals into grammar
-        :param term: Object or sequence of objects representing terminals
-        :return: List terminals added into grammar as sequence of Terminal instances
-        """
-        return [Terminal(t, self) for t in self.__terminals.add(term)]
+    @property
+    def terminals(self):
+        return self._terminals
 
-    def remove_term(self, term=None):
-        """
-        Delete terminal or terminals from grammar
-        :param term: Object or sequence of objects representing terminals
-        :return: List of terminals removed from the grammar as sequence of Terminal instances
-        """
-        return [Terminal(t, self) for t in self.__terminals.remove(term)]
-
-    def have_term(self, term):
-        """
-        Check if terminal or terminals are in the grammar
-        :param term: Object or sequence of objects representing terminals
-        :return: True if all objects in the parameter are in the grammar, false otherwise
-        """
-        return self.__terminals.have(term)
-
-    def get_term(self, term=None):
-        """
-        Get terminals stored in grammar that match terminal or terminals passed as parameter
-        :param term: Object or sequence of objects representing terminals
-        :return: List of terminals in the grammar as sequence of Terminal object
-        """
-        if term is not None and not HashContainer.is_iterable(term):
-            item = self.__terminals.get(term)
-            #TODO return sequence
-            return Terminal(item, self) if item is not None else None
-        vals = []
-        obtain = self.__terminals.get(term)
-        for t in obtain:
-            vals.append(Terminal(t, self) if t is not None else None)
-        return vals
 
     # Non term part
     @staticmethod

@@ -44,7 +44,7 @@ class ValidationRule(BaseRule):
                     raise NonterminalDoesNotExistsException(cls, symb, grammar)
             elif symb is EPS:
                 continue
-            elif not grammar.have_term(symb):
+            elif symb not in grammar.terminals:
                 raise TerminalDoesNotExistsException(cls, symb, grammar)
 
     @classmethod

@@ -6,7 +6,9 @@
 Part of grammpy
 
 """
-from .. import Grammar as NewGrammar
+from collections import Iterable
+
+from .. import Grammar as NewGrammar, Terminal
 
 
 class Grammar:
@@ -31,7 +33,17 @@ class Grammar:
         :param term: Object or sequence of objects representing terminals
         :return: List terminals added into grammar as sequence of Terminal instances
         """
-        return self._gr.add_term(term)
+        return list(self._add_term(term))
+
+    def _add_term(self, term):
+        if term is None:
+            term = []
+        if not isinstance(term, Iterable) or isinstance(term, str):
+            term = [term]
+        for t in term:
+            if t not in self._gr.terminals:
+                self._gr.terminals.add(t)
+                yield Terminal(t, self._gr)
 
     def remove_term(self, term=None):
         """
@@ -39,7 +51,17 @@ class Grammar:
         :param term: Object or sequence of objects representing terminals
         :return: List of terminals removed from the grammar as sequence of Terminal instances
         """
-        return self._gr.remove_term(term)
+        if term is None:
+            term = self._gr.terminals
+        if not isinstance(term, Iterable) or isinstance(term, str):
+            term = [term]
+        tmp = []
+        for t in list(term):
+            for i in self._gr.terminals:
+                if i == t:
+                    tmp.append(Terminal(i, self._gr))
+            self._gr.terminals.remove(t)
+        return tmp
 
     def have_term(self, term):
         """
@@ -47,7 +69,14 @@ class Grammar:
         :param term: Object or sequence of objects representing terminals
         :return: True if all objects in the parameter are in the grammar, false otherwise
         """
-        return self._gr.have_term(term)
+        if term is None:
+            term = []
+        if not isinstance(term, Iterable) or isinstance(term, str):
+            term = [term]
+        for t in term:
+            if t not in self._gr.terminals:
+                return False
+        return True
 
     def get_term(self, term=None):
         """
@@ -55,19 +84,41 @@ class Grammar:
         :param term: Object or sequence of objects representing terminals
         :return: List of terminals in the grammar as sequence of Terminal object
         """
-        return self._gr.get_term(term)
+        return self._get_term(term)
+
+    def _get_term(self, term=None):
+        if term is None:
+            return [Terminal(i, self._gr) for i in self._gr.terminals]
+        is_single = False
+        if not isinstance(term, Iterable) or isinstance(term, str):
+            term = [term]
+            is_single = True
+        tmp = []
+        for t in term:
+            handled = False
+            for i in self._gr.terminals:
+                if t == i and is_single is not True:
+                    handled = True
+                    tmp.append(Terminal(i, self._gr))
+                elif t == i:
+                    return Terminal(i, self._gr)
+            if not handled and is_single is not True:
+                tmp.append(None)
+            elif not handled:
+                return None
+        return tmp
 
     def term(self, term=None):
-        return self._gr.term(term)
+        return self.get_term(term)
 
     def terms(self):
-        return self._gr.terms()
+        return self.get_term(None)
 
     def terms_count(self):
-        return self._gr.terms_count()
+        return len(self._gr.terminals)
 
     def terms_clear(self):
-        return self._gr.terms_clear()
+        return self.remove_term(None)
 
     # Non term part
     def add_nonterm(self, nonterms):
@@ -185,5 +236,3 @@ class Grammar:
 
     def __deepcopy__(self, memodict={}):
         return self.copy(True, True, True)
-
-    # Copy

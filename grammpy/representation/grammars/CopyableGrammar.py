@@ -46,10 +46,11 @@ class CopyableGrammar(RulesRemovingGrammar):
         new_terms_dict = dict()
         # if not copy just fill into set and dict to self
         if not _copy:
-            new_terms = set(t.s for t in self.terms())
-            for t in new_terms: new_terms_dict[t] = t
+            new_terms = set(t for t in self.terminals)
+            for t in new_terms:
+                new_terms_dict[t] = t
         else:
-            for t in [t.s for t in self.terms()]:
+            for t in self.terminals:
                 created = deepcopy(t)
                 new_terms.add(created)
                 new_terms_dict[t] = created
