@@ -147,7 +147,7 @@ class RawGrammar:
     def _control_rules(self, rules):
         """
         Transform parameter into sequence, check if all objects are rules and if are valid
-        :param nonterms: Object or sequence of objects representing rules
+        :param rules: Object or sequence of objects representing rules
         :return: Sequence of rules
         """
         rules = HashContainer.to_iterable(rules)

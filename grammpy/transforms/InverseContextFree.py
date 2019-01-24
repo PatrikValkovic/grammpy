@@ -7,7 +7,7 @@ Part of grammpy-transforms
 
 """
 
-from grammpy import *
+from ..old_api import *
 from .UnitRulesRemove import unit_rules_restore
 from .EpsilonRulesRemove import epsilon_rules_restore
 from .ChomskyForm import transform_from_chomsky_normal_form

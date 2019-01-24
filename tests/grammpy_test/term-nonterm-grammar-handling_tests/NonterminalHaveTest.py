@@ -9,8 +9,8 @@ Part of grammpy
 
 
 from unittest import TestCase, main
-from grammpy import Grammar
-from grammpy import Nonterminal
+from grammpy.old_api import Grammar
+from grammpy.old_api import Nonterminal
 
 
 class TempClass(Nonterminal):

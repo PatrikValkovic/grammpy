@@ -8,7 +8,7 @@ Part of grammpy-transforms
 """
 from collections import deque
 
-from grammpy import *
+from ...old_api import *
 from .transform_to_chomsky_normal_form import *
 from ..Manipulations import Traversing, Manipulations
 

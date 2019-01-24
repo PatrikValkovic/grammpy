@@ -9,7 +9,7 @@ Part of grammpy
 
 from unittest import main, TestCase
 
-from grammpy import Rule as _R, Grammar
+from grammpy.old_api import Rule as _R, Grammar
 from ..grammar import *
 
 

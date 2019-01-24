@@ -8,7 +8,7 @@ Part of grammpy
 """
 
 from unittest import main, TestCase
-from grammpy import Grammar, Rule as _R
+from grammpy.old_api import Grammar, Rule as _R
 from ..grammar import *
 
 

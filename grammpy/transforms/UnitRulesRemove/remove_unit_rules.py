@@ -10,7 +10,7 @@ Part of grammpy-transforms
 from inspect import isclass
 from copy import copy
 from typing import List
-from grammpy import *
+from ...old_api import *
 from .find_symbols_reachable_by_unit_rules import find_nonterminals_reachable_by_unit_rules
 
 

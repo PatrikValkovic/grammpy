@@ -7,7 +7,7 @@ Part of grammpy
 
 """
 from unittest import TestCase, main
-from grammpy import *
+from grammpy.old_api import *
 
 
 class First(Nonterminal): pass

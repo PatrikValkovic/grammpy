@@ -9,7 +9,7 @@ Part of grammpy-transforms
 
 from inspect import isclass
 from copy import copy
-from grammpy import *
+from ...old_api import *
 
 
 class ChomskyNonterminal(Nonterminal):

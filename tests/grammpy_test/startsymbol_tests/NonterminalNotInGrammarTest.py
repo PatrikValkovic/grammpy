@@ -8,7 +8,7 @@ Part of grammpy
 """
 
 from unittest import TestCase, main
-from grammpy import Nonterminal, Grammar
+from grammpy.old_api import Nonterminal, Grammar
 from grammpy.exceptions import NonterminalDoesNotExistsException
 
 

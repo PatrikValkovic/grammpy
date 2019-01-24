@@ -7,7 +7,7 @@ Part of grammpy-transforms
 
 """
 
-from grammpy import *
+from ...old_api import *
 from .remove_rules_with_epsilon import EpsilonRemovedRule
 from ..Manipulations import Manipulations, Traversing
 

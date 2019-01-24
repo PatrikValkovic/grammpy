@@ -8,7 +8,7 @@ Part of grammpy
 """
 from unittest import TestCase, main
 
-from grammpy import Terminal
+from grammpy.old_api import Terminal
 
 
 class TempClass:

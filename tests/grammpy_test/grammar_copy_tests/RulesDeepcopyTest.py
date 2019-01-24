@@ -9,7 +9,7 @@ Part of grammpy
 
 from copy import deepcopy
 from unittest import TestCase, main
-from grammpy import *
+from grammpy.old_api import *
 
 
 class RulesAddingTest(TestCase):

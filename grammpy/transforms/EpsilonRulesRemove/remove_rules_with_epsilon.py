@@ -8,7 +8,7 @@ Part of grammpy-transforms
 """
 
 from copy import copy
-from grammpy import Grammar, Rule, EPSILON
+from ...old_api import Grammar, Rule, EPSILON
 from .find_nonterminals_rewritable_to_epsilon import find_nonterminals_rewritable_to_epsilon
 
 

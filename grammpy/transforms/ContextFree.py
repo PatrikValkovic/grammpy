@@ -8,7 +8,7 @@ Part of grammpy-transforms
 """
 
 from typing import List
-from grammpy import *
+from ..old_api import *
 from .NongeneratingSymbolsRemove import *
 from .UnreachableSymbolsRemove import *
 from .EpsilonRulesRemove import *

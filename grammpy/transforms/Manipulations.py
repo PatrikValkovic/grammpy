@@ -10,7 +10,7 @@ import functools
 import operator
 from typing import Callable
 
-from grammpy import Rule, Nonterminal, Terminal
+from ..old_api import Rule, Nonterminal, Terminal
 
 
 class Manipulations:

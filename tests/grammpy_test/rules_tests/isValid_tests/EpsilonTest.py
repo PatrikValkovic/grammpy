@@ -9,7 +9,7 @@ Part of grammpy
 
 from unittest import main, TestCase
 
-from grammpy import Rule, EPS
+from grammpy.old_api import Rule, EPS
 from grammpy.exceptions import UselessEpsilonException
 from ..grammar import *
 

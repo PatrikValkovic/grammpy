@@ -8,7 +8,7 @@ Part of pyparsers
 """
 from collections import namedtuple
 
-from grammpy import *
+from ...old_api import *
 
 """
 

@@ -10,7 +10,7 @@ Part of pyparsers
 
 from unittest import main, TestCase
 
-from grammpy import *
+from grammpy.old_api import *
 from grammpy.parsers import cyk
 
 

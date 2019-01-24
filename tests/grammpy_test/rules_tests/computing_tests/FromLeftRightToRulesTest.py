@@ -9,7 +9,7 @@ Part of grammpy
 
 from unittest import main, TestCase
 
-from grammpy import Rule
+from grammpy.old_api import Rule
 from grammpy.exceptions import NotASingleSymbolException
 
 

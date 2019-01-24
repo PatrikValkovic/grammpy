@@ -7,7 +7,7 @@ Part of grammpy-transforms
 
 """
 
-from grammpy import *
+from ...old_api import *
 from .remove_unit_rules import ReducedUnitRule
 from ..Manipulations import Manipulations, Traversing
 

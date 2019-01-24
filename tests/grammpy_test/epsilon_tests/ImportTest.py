@@ -8,8 +8,8 @@ Part of grammpy
 """
 
 from unittest import TestCase, main
-from grammpy import EPS
-from grammpy import EPSILON
+from grammpy.old_api import EPS
+from grammpy.old_api import EPSILON
 
 
 class ImportTest(TestCase):

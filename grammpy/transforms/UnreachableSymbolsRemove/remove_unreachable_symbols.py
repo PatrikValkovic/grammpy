@@ -7,8 +7,8 @@ Part of grammpy-transforms
 
 """
 
-from grammpy import Grammar
-from grammpy.exceptions import NotNonterminalException
+from ...old_api import Grammar
+from ...exceptions import NotNonterminalException
 from copy import copy
 
 

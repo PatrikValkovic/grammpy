@@ -9,7 +9,7 @@ Part of grammpy-transforms
 
 from inspect import isclass
 from typing import List, Dict, Optional
-from grammpy import Grammar, Nonterminal, Rule
+from ...old_api import Grammar, Nonterminal, Rule
 
 
 class UnitSymbolRechablingResults:

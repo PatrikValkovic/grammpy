@@ -9,7 +9,7 @@ Part of grammpy-transforms
 from inspect import isclass
 from unittest import main, TestCase
 
-from grammpy import *
+from grammpy.old_api import *
 from grammpy.transforms import ContextFree
 
 

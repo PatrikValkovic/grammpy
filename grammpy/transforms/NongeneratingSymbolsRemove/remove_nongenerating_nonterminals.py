@@ -8,7 +8,7 @@ Part of grammpy-transforms
 """
 
 from copy import copy
-from grammpy import Grammar, EPSILON
+from ...old_api import Grammar, EPSILON
 
 def remove_nongenerating_nonterminals(grammar: Grammar, transform_grammar=False) -> Grammar:
     """

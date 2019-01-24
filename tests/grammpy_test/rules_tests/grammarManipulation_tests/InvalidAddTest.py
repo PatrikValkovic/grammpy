@@ -9,7 +9,7 @@ Part of grammpy
 
 from unittest import TestCase, main
 
-from grammpy import Rule as _R, Grammar, Nonterminal
+from grammpy.old_api import Rule as _R, Grammar, Nonterminal
 from grammpy.exceptions import RuleSyntaxException, NotRuleException
 from ..grammar import *
 

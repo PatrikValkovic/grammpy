@@ -18,6 +18,7 @@ setup(
     packages=[
         'grammpy',
         'grammpy.exceptions',
+        'grammpy.old_api',
         'grammpy.parsers',
         'grammpy.parsers.CYK',
         'grammpy.representation',
@@ -36,7 +37,7 @@ setup(
     license='GNU General Public License v3.0',
     author='Patrik Valkovic',
     author_email='patrik.valkovic@hotmail.cz',
-    description='CYk library with all required tools to parse context-free grammars.',
+    description='CYK library with all required tools to parse context-free grammars.',
     install_requires=[
         'typing',
     ],

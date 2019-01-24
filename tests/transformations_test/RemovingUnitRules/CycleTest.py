@@ -10,7 +10,7 @@ Part of grammpy-transforms
 from inspect import isclass
 from unittest import TestCase
 
-from grammpy import *
+from grammpy.old_api import *
 from grammpy.transforms import ContextFree
 
 
