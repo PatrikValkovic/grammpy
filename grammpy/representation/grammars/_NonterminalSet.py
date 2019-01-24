@@ -45,8 +45,8 @@ class _NonterminalSet(set):
                 continue
             self._grammar.remove_rule(list(self._grammar._symbs_of_rules[nonterm]), _validate=False)
             del self._grammar._symbs_of_rules[nonterm]
-            if self._grammar.start_get() == nonterm:
-                self._grammar.start_set(None)
+            if self._grammar.start is nonterm:
+                del self._grammar.start
             super().remove(nonterm)
 
     def __contains__(self, o):

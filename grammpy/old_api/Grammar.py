@@ -255,16 +255,16 @@ class Grammar:
 
     # StartSymbol
     def start_get(self):
-        return self._gr.start_get()
+        return self._gr.start
 
     def start_set(self, nonterminal):
-        return self._gr.start_set(nonterminal)
+        self._gr.start = nonterminal
 
     def start_isSet(self):
-        return self._gr.start_isSet()
+        return self._gr.start is not None
 
     def start_is(self, nonterminal):
-        return self._gr.start_is(nonterminal)
+        return self._gr.start is nonterminal
 
     # Copy
     def __copy__(self):

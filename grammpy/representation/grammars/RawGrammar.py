@@ -7,6 +7,7 @@ Part of grammpy
 
 """
 import inspect
+from typing import Type, Optional
 
 from grammpy.exceptions import NotNonterminalException, NotRuleException, TerminalDoesNotExistsException, \
     NonterminalDoesNotExistsException
@@ -40,20 +41,40 @@ class RawGrammar:
         nonterminals = [] if nonterminals is None else nonterminals
         self._nonterminals = _NonterminalSet(self, nonterminals)
 
+        self._start_symbol = None
+        self.start = start_symbol
+
         rules = [] if rules is None else rules
-        self.__nonterminals = HashContainer()
         self.__rules = HashContainer()
-        self.__start_symbol = None
         self.add_rule(rules)
-        self.start_set(start_symbol)
 
     @property
     def terminals(self):
+        # type: () -> _TerminalSet
         return self._terminals
 
     @property
     def nonterminals(self):
+        # type: () -> _NonterminalSet
         return self._nonterminals
+
+    @property
+    def start(self):
+        # type: () -> Optional[Type[Nonterminal]]
+        return self._start_symbol
+
+    @start.setter
+    def start(self, s):
+        # type: (Optional[Type[Nonterminal]]) -> None
+        if s is not None and s not in self.nonterminals:
+            raise NonterminalDoesNotExistsException(None, s, self)
+        self._start_symbol = s
+
+    @start.deleter
+    def start(self):
+        # type: () -> None
+        self.start = None
+
 
     # Rules part
     def _control_rules(self, rules):
@@ -116,25 +137,3 @@ class RawGrammar:
         if not HashContainer.is_iterable(rules):
             return obtain[0]
         return obtain
-
-    # StartSymbol
-    def start_get(self):
-        """
-        Get start symbol
-        :return: Start symbol, None if start symbol is not set
-        """
-        return self.__start_symbol
-
-    def start_set(self, nonterminal):
-        """
-        Set start symbol
-        :param nonterminal: Nonterminal to be the start symbol
-        """
-        if nonterminal is None:
-            self.__start_symbol = None
-            return
-        if not inspect.isclass(nonterminal) or not issubclass(nonterminal, Nonterminal):
-            raise NotNonterminalException(nonterminal)
-        if nonterminal not in self.nonterminals:
-            raise NonterminalDoesNotExistsException(None, nonterminal, self)
-        self.__start_symbol = nonterminal

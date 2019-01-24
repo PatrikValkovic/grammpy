@@ -148,9 +148,9 @@ class CopyableGrammar(RulesRemovingGrammar):
         (new_rules, new_rules_dict) = self._copy_rules(new_terms_dict, new_nonterms_dict, _copy=rules)
 
         # Solve start symbol
-        start = self.start_get()
-        if self.start_isSet() and nonterminals:
-            start = new_nonterms_dict[self.start_get()]
+        start = self.start
+        if self.start is not None and nonterminals:
+            start = new_nonterms_dict[self.start]
 
         return CopyableGrammar._CopyContainer(new_terms, new_terms_dict,
                                               new_nonterms, new_nonterms_dict,
