@@ -14,6 +14,7 @@ from grammpy.representation.HashContainer import HashContainer
 from ..Nonterminal import Nonterminal
 from ..rules import Rule
 from ._TerminalSet import _TerminalSet
+from ._NonterminalSet import _NonterminalSet
 
 
 class RawGrammar:
@@ -37,11 +38,12 @@ class RawGrammar:
         self._terminals = _TerminalSet(self, terminals)
 
         nonterminals = [] if nonterminals is None else nonterminals
+        self._nonterminals = _NonterminalSet(self, nonterminals)
+
         rules = [] if rules is None else rules
         self.__nonterminals = HashContainer()
         self.__rules = HashContainer()
         self.__start_symbol = None
-        self.add_nonterm(nonterminals)
         self.add_rule(rules)
         self.start_set(start_symbol)
 
@@ -49,62 +51,9 @@ class RawGrammar:
     def terminals(self):
         return self._terminals
 
-
-    # Non term part
-    @staticmethod
-    def _controll_nonterms(nonterms):
-        """
-        Transform parameter into sequence and check if all objects are nonterminals
-        :param nonterms: Nonterminal or sequence of Nonterminal classes representing nonterminals
-        :return: Sequence of nonterminals
-        """
-        nonterms = HashContainer.to_iterable(nonterms)
-        for nonterm in nonterms:
-            if not inspect.isclass(nonterm) or not issubclass(nonterm, Nonterminal):
-                raise NotNonterminalException(nonterm)
-        return nonterms
-
-    def add_nonterm(self, nonterms):
-        """
-        Add nonterminal or nonterminals into grammar
-        :param nonterms: Nonterminal or sequence of Nonterminal classes representing nonterminals
-        :return: Sequence of nonterminals added into grammar
-        """
-        nonterms = RawGrammar._controll_nonterms(nonterms)
-        return self.__nonterminals.add(nonterms)
-
-    def remove_nonterm(self, nonterms=None):
-        """
-        Remove nonterminal or nonterminals from the grammar
-        :param nonterms: Nonterminal or sequence of Nonterminal classes representing nonterminals
-        :return: Sequence of nonterminals removed from the grammar
-        """
-        if nonterms is None:
-            return self.__nonterminals.remove()
-        nonterms = RawGrammar._controll_nonterms(nonterms)
-        return self.__nonterminals.remove(nonterms)
-
-    def have_nonterm(self, nonterms):
-        """
-        Check if nonterminal or nonterminals are in the grammar
-        :param nonterms: Rule or sequence of Rule classes representing nonterminals
-        :return: True if all nonterminals in parameter are in the grammar, false otherwise
-        """
-        nonterms = RawGrammar._controll_nonterms(nonterms)
-        return self.__nonterminals.have(nonterms)
-
-    def get_nonterm(self, nonterms=None):
-        """
-        Get nonterminals from the grammar
-        :param nonterms: Nonterminal or sequence of Nonterminal classes representing nonterminals
-        :return: Sequence of nonterminals in the grammar
-        """
-        if nonterms is None:
-            return self.__nonterminals.get()
-        converted = RawGrammar._controll_nonterms(nonterms)
-        if not HashContainer.is_iterable(nonterms):
-            return self.__nonterminals.get(converted)[0]
-        return self.__nonterminals.get(converted)
+    @property
+    def nonterminals(self):
+        return self._nonterminals
 
     # Rules part
     def _control_rules(self, rules):
@@ -186,6 +135,6 @@ class RawGrammar:
             return
         if not inspect.isclass(nonterminal) or not issubclass(nonterminal, Nonterminal):
             raise NotNonterminalException(nonterminal)
-        if not self.have_nonterm(nonterminal):
+        if nonterminal not in self.nonterminals:
             raise NonterminalDoesNotExistsException(None, nonterminal, self)
         self.__start_symbol = nonterminal

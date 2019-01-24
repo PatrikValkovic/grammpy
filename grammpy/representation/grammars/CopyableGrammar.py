@@ -66,10 +66,10 @@ class CopyableGrammar(RulesRemovingGrammar):
         new_nonterms_dict = dict()
         # if not copy just fill into set and dict to self
         if not _copy:
-            new_nonterms = set(self.nonterms())
+            new_nonterms = set(self.nonterminals)
             for n in new_nonterms: new_nonterms_dict[n] = n
         else:
-            for n in self.nonterms():
+            for n in self.nonterminals:
                 created = type("Copy" + n.__name__, (Nonterminal,), dict(n.__dict__))
                 new_nonterms.add(created)
                 new_nonterms_dict[n] = created

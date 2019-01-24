@@ -13,7 +13,7 @@ from .. import Grammar as NewGrammar, Terminal
 
 class Grammar:
     """
-        Provide base interface for manipulating with the grammar
+    Provide base interface for manipulating with the grammar
     """
 
     def __init__(self,
@@ -84,9 +84,6 @@ class Grammar:
         :param term: Object or sequence of objects representing terminals
         :return: List of terminals in the grammar as sequence of Terminal object
         """
-        return self._get_term(term)
-
-    def _get_term(self, term=None):
         if term is None:
             return [Terminal(i, self._gr) for i in self._gr.terminals]
         is_single = False
@@ -120,50 +117,95 @@ class Grammar:
     def terms_clear(self):
         return self.remove_term(None)
 
-    # Non term part
-    def add_nonterm(self, nonterms):
+    # Nonterm part
+    def add_nonterm(self, nonterm):
         """
-        Add nonterminal or nonterminals into grammar
-        :param nonterms: Nonterminal or sequence of Nonterminal classes representing nonterminals
-        :return: Sequence of nonterminals added into grammar
+        Add terminal or terminals into grammar
+        :param nonterm: Object or sequence of objects representing terminals
+        :return: List terminals added into grammar as sequence of Terminal instances
         """
-        return self._gr.add_nonterm(nonterms)
+        return list(self._add_nonterm(nonterm))
 
-    def remove_nonterm(self, nonterms=None):
-        """
-        Remove nonterminal or nonterminals from the grammar
-        :param nonterms: Nonterminal or sequence of Nonterminal classes representing nonterminals
-        :return: Sequence of nonterminals removed from the grammar
-        """
-        return self._gr.remove_nonterm(nonterms)
+    def _add_nonterm(self, nonterm):
+        if nonterm is None:
+            nonterm = []
+        if not isinstance(nonterm, Iterable):
+            nonterm = [nonterm]
+        for t in nonterm:
+            if t not in self._gr.nonterminals:
+                self._gr.nonterminals.add(t)
+                yield t
 
-    def have_nonterm(self, nonterms):
+    def remove_nonterm(self, nonterm=None):
         """
-        Check if nonterminal or nonterminals are in the grammar
-        :param nonterms: Rule or sequence of Rule classes representing nonterminals
-        :return: True if all nonterminals in parameter are in the grammar, false otherwise
+        Delete terminal or terminals from grammar
+        :param nonterm: Object or sequence of objects representing terminals
+        :return: List of terminals removed from the grammar as sequence of Terminal instances
         """
-        return self._gr.have_nonterm(nonterms)
+        if nonterm is None:
+            nonterm = self._gr.nonterminals
+        if not isinstance(nonterm, Iterable):
+            nonterm = [nonterm]
+        tmp = []
+        for t in list(nonterm):
+            if t in self._gr.nonterminals:
+                tmp.append(t)
+                self._gr.nonterminals.remove(t)
+        return tmp
 
-    def get_nonterm(self, nonterms=None):
+    def have_nonterm(self, nonterm):
         """
-        Get nonterminals from the grammar
-        :param nonterms: Nonterminal or sequence of Nonterminal classes representing nonterminals
-        :return: Sequence of nonterminals in the grammar
+        Check if terminal or terminals are in the grammar
+        :param nonterm: Object or sequence of objects representing terminals
+        :return: True if all objects in the parameter are in the grammar, false otherwise
         """
-        return self._gr.get_nonterm(nonterms)
+        if nonterm is None:
+            nonterm = []
+        if not isinstance(nonterm, Iterable):
+            nonterm = [nonterm]
+        contains = True
+        for t in nonterm:
+            contains = t in self._gr.nonterminals and contains
+        return contains
 
-    def nonterm(self, nonterms=None):
-        return self._gr.nonterm(nonterms)
+    def get_nonterm(self, nonterm=None):
+        """
+        Get terminals stored in grammar that match terminal or terminals passed as parameter
+        :param nonterm: Object or sequence of objects representing terminals
+        :return: List of terminals in the grammar as sequence of Terminal object
+        """
+        if nonterm is None:
+            return list(self._gr.nonterminals)
+        is_single = False
+        if not isinstance(nonterm, Iterable):
+            nonterm = [nonterm]
+            is_single = True
+        tmp = []
+        for t in nonterm:
+            if t in self._gr.nonterminals and is_single is not True:
+                tmp.append(t)
+            elif t in self._gr.nonterminals:
+                return t
+            elif is_single is not True:
+                tmp.append(None)
+            else:
+                return None
+        return tmp
+
+    def nonterm(self, nonterm=None):
+        return self.get_nonterm(nonterm)
 
     def nonterms(self):
-        return self._gr.nonterms()
+        return self.get_nonterm(None)
 
     def nonterms_count(self):
-        return self._gr.nonterms_count()
+        return len(self._gr.nonterminals)
 
     def nonterms_clear(self):
-        return self._gr.nonterms_clear()
+        return self.remove_nonterm(None)
+
+
+
 
     # Rules part
     def add_rule(self, rules):

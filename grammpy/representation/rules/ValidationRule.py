@@ -21,6 +21,7 @@ class ValidationRule(BaseRule):
     """
     Rule class that is able to validate rules
     """
+
     @staticmethod
     def _controlSide(cls, side, grammar):
         """
@@ -40,7 +41,7 @@ class ValidationRule(BaseRule):
             raise UselessEpsilonException(cls)
         for symb in side:
             if isclass(symb) and issubclass(symb, Nonterminal):
-                if not grammar.have_nonterm(symb):
+                if symb not in grammar.nonterminals:
                     raise NonterminalDoesNotExistsException(cls, symb, grammar)
             elif symb is EPS:
                 continue
