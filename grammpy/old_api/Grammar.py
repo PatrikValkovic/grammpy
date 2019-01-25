@@ -7,8 +7,9 @@ Part of grammpy
 
 """
 from collections import Iterable
+from typing import List, Union, Type, Optional
 
-from .. import Grammar as NewGrammar, Terminal
+from .. import Grammar as NewGrammar, Terminal, Rule
 
 
 class Grammar:
@@ -119,11 +120,6 @@ class Grammar:
 
     # Nonterm part
     def add_nonterm(self, nonterm):
-        """
-        Add terminal or terminals into grammar
-        :param nonterm: Object or sequence of objects representing terminals
-        :return: List terminals added into grammar as sequence of Terminal instances
-        """
         return list(self._add_nonterm(nonterm))
 
     def _add_nonterm(self, nonterm):
@@ -204,26 +200,25 @@ class Grammar:
     def nonterms_clear(self):
         return self.remove_nonterm(None)
 
-
-
-
     # Rules part
     def add_rule(self, rules):
-        """
-        Add rule or sequence of rules into grammar
-        :param rules: Object or sequence of objects representing rules
-        :return: Sequence of rules added into grammar
-        """
-        return self._gr.add_rule(rules)
+        if rules is None:
+            rules = []
+        if not isinstance(rules, Iterable):
+            rules = [rules]
+        return list(self._gr.rules.add(*rules))
 
     def remove_rule(self, rules=None, *, _validate=True):
-        """
-        Remove rule or sequence of rules from the grammar
-        :param rules: Object or sequence of objects representing rules
-        :param _validate: Flag if validate removing rules, only for internal use
-        :return: Sequence of rules removed from the grammar
-        """
-        return self._gr.remove_rule(rules, _validate=_validate)
+        if rules is None:
+            rules = self._gr.rules
+        if not isinstance(rules, Iterable):
+            rules = [rules]
+        tmp = []
+        for t in list(rules):
+            if t in self._gr.rules:
+                tmp.append(t)
+                self._gr.rules.remove(t)
+        return tmp
 
     def have_rule(self, rules):
         """
@@ -231,27 +226,45 @@ class Grammar:
         :param rules: Object or sequence of objects representing rules
         :return: True if all rules in parameter are in the grammar, false otherwise
         """
-        return self._gr.have_rule(rules)
+        if rules is None:
+            rules = []
+        if not isinstance(rules, Iterable):
+            rules = [rules]
+        contains = True
+        for t in rules:
+            contains = t in self._gr.rules and contains
+        return contains
 
     def get_rule(self, rules=None):
+        # type: (Optional[Iterable[Type[Rule]]]) -> Union[Type[Rule], List[Type[Rule]]]
         """
         Get rule or sequence of rules stored in the grammar
         :param rules: Object or sequence of objects representing rules
         :return: Sequence of rules that are stored in the grammar
         """
-        return self._gr.get_rule(rules)
+        if rules is None:
+            return list(self._gr.rules)
+        is_single = False
+        if not isinstance(rules, Iterable):
+            rules = [rules]
+            is_single = True
+        result = []
+        for rule in rules:
+            rule.validate(self._gr)
+            result = result + self._gr.rules.get(rule)
+        return result[0] if is_single and len(result) == 1 else result
 
     def rule(self, rules=None):
-        return self._gr.rule(rules)
+        return self.get_rule(rules)
 
     def rules(self):
-        return self._gr.rules()
+        return self.get_rule()
 
     def rules_count(self):
-        return self._gr.rules_count()
+        return len(self._gr.rules)
 
     def rules_clear(self):
-        return self._gr.rules_clear()
+        return self.remove_rule(None)
 
     # StartSymbol
     def start_get(self):

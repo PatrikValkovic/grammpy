@@ -9,14 +9,14 @@ Part of grammpy
 
 from copy import deepcopy
 from inspect import isclass
-from .RulesRemovingGrammar import RulesRemovingGrammar
+from .RawGrammar import RawGrammar
 from ..Nonterminal import Nonterminal
 from ..rules import Rule
 from ..constants import EPSILON
 
 # TODO Delete deep copy
 
-class CopyableGrammar(RulesRemovingGrammar):
+class CopyableGrammar(RawGrammar):
     """
     Class that implement copy operations
     """
@@ -87,10 +87,10 @@ class CopyableGrammar(RulesRemovingGrammar):
         new_rules_dict = dict()
         # if not copy just fill into set and dict to self
         if not _copy:
-            new_rules = set(self.rules())
+            new_rules = set(self.rules)
             for r in new_rules: new_rules_dict[r] = r
         else:
-            for r in self.rules():
+            for r in self.rules:
                 copy_rules = []
                 for rule in r.rules:
                     leftPart = []
