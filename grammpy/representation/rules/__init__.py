@@ -7,6 +7,5 @@ Part of grammpy
 
 """
 
-from .RuleConnectable import RuleConnectable
 from .Rule import Rule
 

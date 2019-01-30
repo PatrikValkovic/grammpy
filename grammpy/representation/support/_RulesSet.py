@@ -34,11 +34,11 @@ class _RulesSet(set):
 
     def _split_rules(self, original_rule):
         # type: (Type[Rule]) -> Iterable[Type[Rule]]
-        if original_rule.count() == 1:
+        if original_rule.count == 1:
             return [original_rule]
 
         def yielding(original_rule):
-            for rule_index in range(original_rule.count()):
+            for rule_index in range(original_rule.count):
                 yield SplitRule._create_class(original_rule, rule_index)
 
         return yielding(original_rule)
