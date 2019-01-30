@@ -8,12 +8,12 @@ Part of grammpy
 """
 from typing import Type, Optional
 
-from ...exceptions import NonterminalDoesNotExistsException
-from ..Nonterminal import Nonterminal
-from ..constants import EPSILON
-from ._NonterminalSet import _NonterminalSet
-from ._RulesSet import _RulesSet
-from ._TerminalSet import _TerminalSet
+from ..exceptions import NonterminalDoesNotExistsException
+from .Nonterminal import Nonterminal
+from .constants import EPSILON
+from .support import _NonterminalSet
+from .support import _RulesSet
+from .support import _TerminalSet
 
 
 class Grammar:

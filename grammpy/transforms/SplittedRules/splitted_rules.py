@@ -7,8 +7,8 @@ Part of grammpy-transforms
 
 """
 
-from ...old_api import Nonterminal, Rule, EPSILON
-from grammpy.representation.rules.support import SplitRule
+from ...old_api import Nonterminal, Rule
+from ...representation.support import SplitRule
 from ..Manipulations import Manipulations, Traversing
 
 def splitted_rules(root: Nonterminal):

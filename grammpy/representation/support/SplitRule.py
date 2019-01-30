@@ -7,7 +7,7 @@ Part of grammpy
 
 """
 from typing import Type, TYPE_CHECKING, List, Tuple
-from . import Rule as _Rule
+from .. import Rule as _Rule
 
 if TYPE_CHECKING:
     from .. import Rule

@@ -13,7 +13,7 @@ from .. import Nonterminal
 from ...exceptions import NotNonterminalException
 
 if TYPE_CHECKING:
-    from ..grammars import Grammar
+    from .. import Grammar
 
 
 class _NonterminalSet(set):

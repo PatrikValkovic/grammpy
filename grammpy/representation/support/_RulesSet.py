@@ -10,11 +10,11 @@ import inspect
 from typing import Iterable, List, TYPE_CHECKING, Type, Generator
 
 from .. import Rule
-from ..rules.support import SplitRule
+from .SplitRule import SplitRule
 from ...exceptions import NotRuleException, NonterminalDoesNotExistsException, TerminalDoesNotExistsException
 
 if TYPE_CHECKING:
-    from ..grammars import Grammar
+    from .. import Grammar
 
 
 class _RulesSet(set):
