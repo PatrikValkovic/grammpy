@@ -1,45 +1,87 @@
 #!/usr/bin/env python
 """
 :Author Patrik Valkovic
-:Created 16.08.2017 19:25
+:Created 01.08.2017 07:33
 :Licence GNUv3
 Part of grammpy
 
 """
+from typing import Type, Optional
 
-from .CopyableGrammar import CopyableGrammar
+from ...exceptions import NonterminalDoesNotExistsException
+from ..Nonterminal import Nonterminal
+from ..constants import EPSILON
+from ._NonterminalSet import _NonterminalSet
+from ._RulesSet import _RulesSet
+from ._TerminalSet import _TerminalSet
 
 
-
-class Grammar(CopyableGrammar):
+class Grammar:
     """
-    Grammar class that hides underlying classes
+    Provide base interface for manipulating with the grammar
     """
+
+    def __init__(self,
+                 terminals=None,
+                 nonterminals=None,
+                 rules=None,
+                 start_symbol=None):
+        """
+        Create instance of grammar
+        :param terminals: Sequence of terminals to add, empty sequence by default
+        :param nonterminals: Sequence of nonterminals to add, empty sequence by default
+        :param rules: Sequence of rules to add, empty sequence by default
+        :param start_symbol: Start symbol of the grammar, start symbol must be in nonterminals.
+        None by default
+        """
+        assign_map = dict({EPSILON: set()})
+
+        terminals = [] if terminals is None else terminals
+        self._terminals = _TerminalSet(self, assign_map, terminals)
+
+        nonterminals = [] if nonterminals is None else nonterminals
+        self._nonterminals = _NonterminalSet(self, assign_map, nonterminals)
+
+        self._start_symbol = None
+        self.start = start_symbol
+
+        rules = [] if rules is None else rules
+        self._rules = _RulesSet(self, assign_map, rules)
+
+    @property
+    def terminals(self):
+        # type: () -> _TerminalSet
+        return self._terminals
+
+    @property
+    def nonterminals(self):
+        # type: () -> _NonterminalSet
+        return self._nonterminals
+
+    @property
+    def rules(self):
+        # type: () -> _RulesSet
+        return self._rules
+
+    @property
+    def start(self):
+        # type: () -> Optional[Type[Nonterminal]]
+        return self._start_symbol
+
+    @start.setter
+    def start(self, s):
+        # type: (Optional[Type[Nonterminal]]) -> None
+        if s is not None and s not in self.nonterminals:
+            raise NonterminalDoesNotExistsException(None, s, self)
+        self._start_symbol = s
+
+    @start.deleter
+    def start(self):
+        # type: () -> None
+        self.start = None
+
     def __copy__(self):
-        """
-        Create copy of the grammar
-        :return: Copy of the current grammar
-        """
-        return self.copy()
-
-    def copy(self, terminals=False, nonterminals=False, rules=False):
-        """
-        Copy current grammar
-        :param terminals: True if terminals should be deep copied, False by default
-        :param nonterminals: True if nonterminals should be deep copied, False by default
-        :param rules: True if rules should be deep copied, False by default
-        :return: Copied grammar
-        """
-        c = self._copy(terminals=terminals, nonterminals=nonterminals, rules=rules)
-        return Grammar(terminals=list(c.new_terms),
-                       nonterminals=list(c.new_nonterms),
-                       rules=list(c.new_rules),
-                       start_symbol=c.start)
-
-    def __deepcopy__(self, memodict={}):
-        """
-        Deep copy of the grammar
-        :param memodict:
-        :return: Deep copy of the current grammar
-        """
-        return self.copy(terminals=True, nonterminals=True, rules=True)
+        return Grammar(terminals=self.terminals,
+                       nonterminals=self.nonterminals,
+                       rules=self.rules,
+                       start_symbol=self.start)

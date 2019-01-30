@@ -8,6 +8,7 @@ Part of grammpy
 """
 from collections import Iterable
 from typing import List, Union, Type, Optional
+from copy import copy
 
 from .. import Grammar as NewGrammar, Terminal, Rule
 
@@ -281,13 +282,7 @@ class Grammar:
 
     # Copy
     def __copy__(self):
-        return self.copy()
-
-    def copy(self, terminals=False, nonterminals=False, rules=False):
-        newGr = self._gr.copy(terminals, nonterminals, rules)
+        new_grammar = copy(self._gr)
         i = Grammar()
-        i._gr = newGr
+        i._gr = new_grammar
         return i
-
-    def __deepcopy__(self, memodict={}):
-        return self.copy(True, True, True)

@@ -7,7 +7,7 @@ Part of grammpy
 
 """
 
-from copy import deepcopy, copy
+from copy import copy
 from unittest import main, TestCase
 from grammpy.old_api import *
 
