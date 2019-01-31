@@ -1,20 +1,21 @@
 #!/usr/bin/env python
 """
 :Author Patrik Valkovic
-:Created 31.08.2017 15:36
-:Licence GNUv3
+:Created 31.01.2019 13:48
+:Licence GPLv3
 Part of grammpy
 
 """
 
 import weakref
-from grammpy.exceptions import TreeDeletedException
+from ...exceptions import TreeDeletedException
 
 
-class RuleConnectable:
+class _RuleConnectable:
     """
     Represent entity that can be connected by Rule in the AST
     """
+
     def __init__(self):
         self._from_rule = None
         self._to_rule = None

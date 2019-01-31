@@ -11,9 +11,9 @@ from typing import Type, Optional
 from ..exceptions import NonterminalDoesNotExistsException
 from .Nonterminal import Nonterminal
 from .constants import EPSILON
-from .support import _NonterminalSet
-from .support import _RulesSet
-from .support import _TerminalSet
+from .support._NonterminalSet import _NonterminalSet
+from .support._RulesSet import _RulesSet
+from .support._TerminalSet import _TerminalSet
 
 
 class Grammar:

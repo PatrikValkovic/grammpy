@@ -1,16 +1,18 @@
 #!/usr/bin/env python
 """
 :Author Patrik Valkovic
-:Created 23.06.2017 16:45
-:Licence GNUv3
+:Created 31.01.2019 13:46
+:Licence GPLv3
 Part of grammpy
 
 """
+
 from inspect import isclass
-from ...exceptions import *
+from typing import Any
+
 from .. import EPS
-from ..WeakList import WeakList
 from ..Nonterminal import Nonterminal
+from ...exceptions import *
 
 
 class _MetaRule(type):
@@ -31,7 +33,7 @@ class _MetaRule(type):
             transformed = tuple((tuple(s for s in rule[0]), tuple(s for s in rule[1])) for rule in cls.rules)
             return hash(transformed)
         except RuleNotDefinedException:
-            return super(Rule, cls).__hash__(cls)
+            return super().__hash__()
 
     def __eq__(cls, other):
         """
@@ -39,9 +41,7 @@ class _MetaRule(type):
         :param other: Another Rule class
         :return: True if both classes contains same rules, false otherwise
         """
-        return isclass(other) and \
-               issubclass(other, Rule) and \
-               hash(cls) == hash(other)
+        return isclass(other) and hash(cls) == hash(other)
 
     @staticmethod
     def _get_toSymbol(cls):
@@ -106,7 +106,7 @@ class _MetaRule(type):
                     'rule',
                     'rules'}:
             return getattr(_MetaRule, '_get_' + name)(cls)
-        return super().__getattr__(name)
+        raise AttributeError
 
     @property
     def count(cls):
@@ -184,52 +184,3 @@ class _MetaRule(type):
             return True
         except RuleException:
             return False
-
-
-class Rule(metaclass=_MetaRule):
-    """
-    Basic implementation of rules.
-    For definition of rule, you can use following attributes:
-    fromSymbol = EPSILON
-    toSymbol = EPSILON
-    left = [EPSILON]
-    right = [EPSILON]
-    rule = ([EPSILON], [EPSILON])
-    rules = [([EPSILON], [EPSILON])]
-    """
-
-    def __init__(self):
-        self._from_symbols = WeakList()
-        self._to_symbols = list()
-
-    def __getattr__(self, name):
-        if name in {'toSymbol',
-                    'fromSymbol',
-                    'left',
-                    'right',
-                    'rule',
-                    'rules'}:
-            return getattr(self.__class__, name)
-        return super().__getattr__(name)
-
-    def __hash__(self) -> int:
-        return hash(self.__class__)
-
-    def __eq__(self, o: object) -> bool:
-        return hash(self) == hash(o)
-
-    @property
-    def from_symbols(self):
-        """
-        Instances of the left side of the rule
-        :return: List of symbols
-        """
-        return list(self._from_symbols)
-
-    @property
-    def to_symbols(self):
-        """
-        Instances of the right side of the rule
-        :return: List of symbols
-        """
-        return self._to_symbols

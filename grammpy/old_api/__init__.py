@@ -7,8 +7,5 @@ Part of grammpy
 
 """
 
-from ..representation.constants import EPS, EPSILON
-from ..representation.Terminal import Terminal
-from ..representation.Nonterminal import Nonterminal
-from ..representation.rules import Rule
+from ..representation import EPS, EPSILON, Terminal, Nonterminal, Rule
 from .Grammar import Grammar

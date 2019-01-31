@@ -7,10 +7,10 @@ Part of grammpy
 
 """
 
-from .rules.RuleConnectable import RuleConnectable
+from .support._RuleConnectable import _RuleConnectable
 
 
-class Nonterminal(RuleConnectable):
+class Nonterminal(_RuleConnectable):
     '''
     Base class that represents nonterminals
     '''
