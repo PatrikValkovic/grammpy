@@ -7,9 +7,9 @@ Part of grammpy-transforms
 
 """
 
-from ...old_api import *
 from .remove_rules_with_epsilon import EpsilonRemovedRule
-from ..Manipulations import Manipulations, Traversing
+from ..Manipulations import Traversing
+from ...old_api import *
 
 
 def _restore_tree_for(root, translate):
@@ -20,7 +20,7 @@ def _restore_tree_for(root, translate):
     :return: Nonterminal instance with part of AST generating epsilon.
     """
     if root is EPSILON:
-        return Terminal(EPSILON, None)
+        return Terminal(EPSILON)
     created_nonterm = root()  # type: Nonterminal
     created_rule = translate[root]()  # type: Rule
     created_nonterm._set_to_rule(created_rule)

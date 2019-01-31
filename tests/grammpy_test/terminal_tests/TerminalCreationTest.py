@@ -17,20 +17,20 @@ class TempClass:
 
 class TerminalCreationTest(TestCase):
     def test_createWithSymbol(self):
-        ter = Terminal('a', None)
+        ter = Terminal('a')
         self.assertEqual('a', ter.symbol(), 'Terminal should return same symbol')
 
     def test_createWithNumber(self):
-        ter = Terminal(5, None)
+        ter = Terminal(5)
         self.assertEqual(5, ter.symbol(), 'Terminal should return same number')
 
     def test_createWithClass(self):
-        ter = Terminal(TempClass, None)
+        ter = Terminal(TempClass)
         self.assertEqual(TempClass, ter.symbol(), 'Terminal should return same class')
 
     def test_createWithInstance(self):
         inst = TempClass()
-        ter = Terminal(inst, None)
+        ter = Terminal(inst)
         self.assertEqual(inst, ter.symbol(), 'Terminal should return same instance')
 
 if __name__ == '__main__':

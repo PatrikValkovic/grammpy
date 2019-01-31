@@ -12,6 +12,6 @@ from .support._RuleConnectable import _RuleConnectable
 
 class Nonterminal(_RuleConnectable):
     '''
-    Base class that represents nonterminals
+    Base class that represents nonterminals.
     '''
     pass

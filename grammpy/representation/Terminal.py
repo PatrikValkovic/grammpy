@@ -6,52 +6,57 @@
 Part of grammpy
 
 """
+from typing import Any
 
 from .support._RuleConnectable import _RuleConnectable
 
+
 class Terminal(_RuleConnectable):
     '''
-    Represent Terminal in former grammar
+    Represent Terminal in formal grammar.
     '''
 
-    def __init__(self, symbol, grammar):
+    def __init__(self, symbol):
+        # type: (Any) -> Terminal
         '''
-        Create new terminal, where symbol is provided terminal passed into grammar
-        :param symbol: Symbol representing terminal
+        Create new terminal.
+        :param symbol: Symbol representing terminal.
         :param grammar: The grammar to which the terminal belongs
+        TODO remove reference to grammar.
         '''
         super().__init__()
         self.__symbol = symbol
-        self.__grammar = grammar
 
     def __hash__(self):
+        # type: () -> int
         '''
-        Return hash based on symbol and instance of grammar
-        :return: Hash value
+        Return hash based on symbol (symbol's hash).
+        :return: Hash value of the terminal.
         '''
-        return hash((self.__symbol, id(self.__grammar)))
+        return hash(self.__symbol)
 
     def __eq__(self, other):
+        # type: (Any) -> bool
         '''
-        Compare two terminals based on hash values
-        :param other: Terminal to compare
-        :type other: Terminal
-        :return:
-        :rtype bool
+        Compare two terminals based on hash values.
+        :param other: Terminal to compare.
+        :return: True if objects are equal, false otherwise.
         '''
-        return isinstance(other, Terminal) and hash(self) == hash(other)
+        return hash(self) == hash(other)
 
     def symbol(self):
+        # type: () -> Any
         '''
         Get symbol for the terminal.
-        :return: Symbol that represent current terminal
+        :return: Symbol that represent current terminal.
         '''
         return self.__symbol
 
     @property
     def s(self):
+        # type: () -> Any
         """
-        Shortcut for symbol method
-        :return: Symbol that represent current terminal
+        Shortcut for symbol method.
+        :return: Symbol that represent current terminal.
         """
         return self.symbol()

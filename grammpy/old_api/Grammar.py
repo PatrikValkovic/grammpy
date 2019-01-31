@@ -7,8 +7,8 @@ Part of grammpy
 
 """
 from collections import Iterable
-from typing import List, Union, Type, Optional
 from copy import copy
+from typing import List, Union, Type, Optional
 
 from .. import Grammar as NewGrammar, Terminal, Rule
 
@@ -45,7 +45,7 @@ class Grammar:
         for t in term:
             if t not in self._gr.terminals:
                 self._gr.terminals.add(t)
-                yield Terminal(t, self._gr)
+                yield Terminal(t)
 
     def remove_term(self, term=None):
         """
@@ -61,7 +61,7 @@ class Grammar:
         for t in list(term):
             for i in self._gr.terminals:
                 if i == t:
-                    tmp.append(Terminal(i, self._gr))
+                    tmp.append(Terminal(i))
             self._gr.terminals.remove(t)
         return tmp
 
@@ -87,7 +87,7 @@ class Grammar:
         :return: List of terminals in the grammar as sequence of Terminal object
         """
         if term is None:
-            return [Terminal(i, self._gr) for i in self._gr.terminals]
+            return [Terminal(i) for i in self._gr.terminals]
         is_single = False
         if not isinstance(term, Iterable) or isinstance(term, str):
             term = [term]
@@ -98,9 +98,9 @@ class Grammar:
             for i in self._gr.terminals:
                 if t == i and is_single is not True:
                     handled = True
-                    tmp.append(Terminal(i, self._gr))
+                    tmp.append(Terminal(i))
                 elif t == i:
-                    return Terminal(i, self._gr)
+                    return Terminal(i)
             if not handled and is_single is not True:
                 tmp.append(None)
             elif not handled:

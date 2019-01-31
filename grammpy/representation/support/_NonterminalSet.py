@@ -9,7 +9,7 @@ Part of grammpy
 import inspect
 from typing import Iterable, TYPE_CHECKING, Type
 
-from .. import Nonterminal
+from ..Nonterminal import Nonterminal
 from ...exceptions import NotNonterminalException
 
 if TYPE_CHECKING:
@@ -17,13 +17,23 @@ if TYPE_CHECKING:
 
 
 class _NonterminalSet(set):
+    """
+    Set that store nonterminals inside the grammar.
+    TODO: implement rest of modify methods.
+    """
+
     def __init__(self, grammar, assign_map, iterable=None):
         # type: (Grammar, dict, Iterable[Type[Nonterminal]]) -> None
+        """
+        Create new instance of _NonterminalSet.
+        :param grammar: Grammar for which create the set.
+        :param assign_map: Map used for assignment rules to nonterminals.
+        :param iterable: Nonterminals to insert.
+        """
         self._grammar = grammar
         self._assign_map = assign_map
         super().__init__()
-        iterable = [] if iterable is None else iterable
-        self.add(*iterable)
+        self.add(*(iterable or []))
 
     @staticmethod
     def _control_nonterminal(nonterm):
@@ -38,6 +48,11 @@ class _NonterminalSet(set):
 
     def add(self, *nonterminals):
         # type: (Iterable[Type[Nonterminal]]) -> None
+        """
+        Add nonterminals into the set.
+        :param nonterminals: Nonterminals to insert.
+        :raise NotNonterminalException: If the object doesn't inherit from Nonterminal class.
+        """
         for nonterm in nonterminals:
             if nonterm in self:
                 continue
@@ -47,6 +62,12 @@ class _NonterminalSet(set):
 
     def remove(self, *nonterminals):
         # type: (Iterable[Type[Nonterminal]]) -> None
+        """
+        Remove nonterminals from the set.
+        Removes also rules using this nonterminal.
+        Set start symbol to None if deleting nonterminal is start symbol at the same time.
+        :param nonterminals: Nonterminals to remove.
+        """
         for nonterm in nonterminals:
             if nonterm not in self:
                 continue
@@ -58,5 +79,11 @@ class _NonterminalSet(set):
 
     def __contains__(self, o):
         # type: (Type[Nonterminal]) -> bool
+        """
+        Check, if is nonterminal in the set.
+        :param o: Nonterminal to check.
+        :return: True if the nonterminal is in the set, false otherwise.
+        :raise NotNonterminalException: If the object doesn't inherit from Nonterminal class.
+        """
         _NonterminalSet._control_nonterminal(o)
         return super().__contains__(o)

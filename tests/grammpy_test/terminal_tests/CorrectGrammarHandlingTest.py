@@ -17,24 +17,23 @@ class TempClass:
 
 class CorrectGrammarHandlingTest(TestCase):
     def test_sameNumber(self):
-        ter1 = Terminal(0, 1)
-        ter2 = Terminal(0, 1)
+        ter1 = Terminal(0)
+        ter2 = Terminal(0)
         self.assertEqual(ter1, ter2)
 
     def test_sameString(self):
-        ter1 = Terminal(0, 'a')
-        ter2 = Terminal(0, 'a')
+        ter1 = Terminal(0)
+        ter2 = Terminal(0)
         self.assertEqual(ter1, ter2)
 
     def test_sameClass(self):
-        ter1 = Terminal(0, TempClass)
-        ter2 = Terminal(0, TempClass)
+        ter1 = Terminal(0)
+        ter2 = Terminal(0)
         self.assertEqual(ter1, ter2)
 
     def test_sameInstance(self):
-        inst = TempClass()
-        ter1 = Terminal(0, inst)
-        ter2 = Terminal(0, inst)
+        ter1 = Terminal(0)
+        ter2 = Terminal(0)
         self.assertEqual(ter1, ter2)
 
 

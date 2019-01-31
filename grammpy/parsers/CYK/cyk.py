@@ -8,10 +8,11 @@ Part of pyparsers
 """
 
 from typing import Iterable
-from ...old_api import *
+
 from .Field import Field
 from .PlaceItem import PlaceItem
 from ...exceptions import NotParsedException
+from ...old_api import *
 
 
 def _create_mapping(grammar: Grammar) -> tuple:
@@ -103,7 +104,7 @@ def cyk(grammar: Grammar, input: Iterable) -> Nonterminal:
             working_nonterm._set_to_rule(created_rule)
             created_rule._from_symbols.append(working_nonterm)
             #t = grammar.term(rule_class.toSymbol)
-            t = Terminal(i[index], grammar)
+            t = Terminal(i[index])
             index -= 1
             created_rule._to_symbols.append(t)
             t._set_from_rule(created_rule)

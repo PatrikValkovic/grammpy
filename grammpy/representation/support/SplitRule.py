@@ -7,6 +7,7 @@ Part of grammpy
 
 """
 from typing import Type, TYPE_CHECKING, List, Tuple
+
 from ..Rule import Rule as _Rule
 
 if TYPE_CHECKING:
@@ -14,14 +15,19 @@ if TYPE_CHECKING:
 
 
 class SplitRule(_Rule):
+    """
+    Represent rule, that originate from splitting other rule.
+    This mean that the second Rule class consists of multiple rules.
+    """
 
     @staticmethod
     def _create_class(rule, index):
         # type: (Type[Rule], int) -> Type[SplitRule]
         """
-        Create subtype of SplitRule based on rule
-        :param rule: Rule to be used for new class
-        :return: Class inherited from SplitRule
+        Create subtype of SplitRule based on rule.
+        :param rule: Rule from which the SplitRule derive.
+        :param index: Index of the rule (in original Rule class) to use for SplitRule.
+        :return: Class inherited from SplitRule representing rule at index.
         """
         name = 'SplitRule_(' + str(rule.__name__) + ')_' + str(index)
         created = type(name, (SplitRule,), SplitRule.__dict__.copy())  # type: Type[SplitRule]
