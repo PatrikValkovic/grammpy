@@ -13,22 +13,14 @@ from ..WeakList import WeakList
 from ..Nonterminal import Nonterminal
 
 
-class _ClassProperty(object):
-    """
-    Definition of class property decorator
-    """
-
-    def __init__(self, getter):
-        self._getter = getter
-
-    def __get__(self, obj, cls=None):
-        return self._getter(cls)  # for static remove cls from the call
-
-
 class _MetaRule(type):
     """
     Metaclass for rule
     """
+
+    def __init__(cls, name, bases, dct):
+        cls._traverse = False
+        super(_MetaRule, cls).__init__(name, bases, dct)
 
     def __hash__(cls):
         """
@@ -51,27 +43,9 @@ class _MetaRule(type):
                issubclass(other, Rule) and \
                hash(cls) == hash(other)
 
-
-class Rule(metaclass=_MetaRule):
-    """
-    Basic implementation of rules.
-    For definition of rule, you can use following attributes:
-    fromSymbol = EPSILON
-    toSymbol = EPSILON
-    left = [EPSILON]
-    right = [EPSILON]
-    rule = ([EPSILON], [EPSILON])
-    rules = [([EPSILON], [EPSILON])]
-    """
-
-    def __init__(self):
-        self._from_symbols = WeakList()
-        self._to_symbols = list()
-
-    _traverse = False
-
-    @_ClassProperty
-    def toSymbol(cls):
+    @staticmethod
+    def _get_toSymbol(cls):
+        # type: (_MetaRule) -> object
         if cls._traverse:
             raise RuleNotDefinedException(cls)
         if len(cls.rules) > 1:
@@ -81,8 +55,8 @@ class Rule(metaclass=_MetaRule):
             raise NotASingleSymbolException(right)
         return right[0]
 
-    @_ClassProperty
-    def fromSymbol(cls):
+    @staticmethod
+    def _get_fromSymbol(cls):
         if cls._traverse:
             raise RuleNotDefinedException(cls)
         if len(cls.rules) > 1:
@@ -92,38 +66,49 @@ class Rule(metaclass=_MetaRule):
             raise NotASingleSymbolException(left)
         return left[0]
 
-    @_ClassProperty
-    def right(cls):
+    @staticmethod
+    def _get_right(cls):
         if cls._traverse:
             return [cls.toSymbol]
         if len(cls.rules) > 1:
             raise CantCreateSingleRuleException(cls)
         return cls.rules[0][1]
 
-    @_ClassProperty
-    def left(cls):
+    @staticmethod
+    def _get_left(cls):
         if cls._traverse:
             return [cls.fromSymbol]
         if len(cls.rules) > 1:
             raise CantCreateSingleRuleException(cls)
         return cls.rules[0][0]
 
-    @_ClassProperty
-    def rule(cls):
+    @staticmethod
+    def _get_rule(cls):
         if cls._traverse:
             return (cls.left, cls.right)
         if len(cls.rules) > 1:
             raise CantCreateSingleRuleException(cls)
         return cls.rules[0]
 
-    @_ClassProperty
-    def rules(cls):
+    @staticmethod
+    def _get_rules(cls):
         cls._traverse = True
         r = cls.rule
         cls._traverse = False
         return [r]
 
-    @_ClassProperty
+    def __getattr__(cls, name):
+        # type: (_MetaRule, str) -> Any
+        if name in {'toSymbol',
+                    'fromSymbol',
+                    'left',
+                    'right',
+                    'rule',
+                    'rules'}:
+            return getattr(_MetaRule, '_get_' + name)(cls)
+        return super().__getattr__(name)
+
+    @property
     def count(cls):
         """
         Get count of rules defined in the class
@@ -131,7 +116,7 @@ class Rule(metaclass=_MetaRule):
         """
         return len(cls.rules)
 
-    @_ClassProperty
+    @property
     def rules_count(cls):
         """
         Get count of rules defined in the class
@@ -139,13 +124,6 @@ class Rule(metaclass=_MetaRule):
         """
         return cls.count
 
-    def __hash__(self) -> int:
-        return hash(self.__class__)
-
-    def __eq__(self, o: object) -> bool:
-        return hash(self) == hash(o)
-
-    @staticmethod
     def _controlSide(cls, side, grammar):
         """
         Validate one side of the rule
@@ -171,7 +149,6 @@ class Rule(metaclass=_MetaRule):
             elif symb not in grammar.terminals:
                 raise TerminalDoesNotExistsException(cls, symb, grammar)
 
-    @classmethod
     def validate(cls, grammar):
         """
         Perform rules validation of the class
@@ -191,12 +168,11 @@ class Rule(metaclass=_MetaRule):
                 raise RuleSyntaxException(cls, 'One of the rules does not have define left and right part', rule)
             l = rule[0]
             r = rule[1]
-            Rule._controlSide(cls, l, grammar)
-            Rule._controlSide(cls, r, grammar)
+            cls._controlSide(l, grammar)
+            cls._controlSide(r, grammar)
             if l == [EPS] and r == [EPS]:
                 raise UselessEpsilonException(cls)
 
-    @classmethod
     def is_valid(cls, grammar):
         """
         Check if are rules correctly defined
@@ -208,6 +184,39 @@ class Rule(metaclass=_MetaRule):
             return True
         except RuleException:
             return False
+
+
+class Rule(metaclass=_MetaRule):
+    """
+    Basic implementation of rules.
+    For definition of rule, you can use following attributes:
+    fromSymbol = EPSILON
+    toSymbol = EPSILON
+    left = [EPSILON]
+    right = [EPSILON]
+    rule = ([EPSILON], [EPSILON])
+    rules = [([EPSILON], [EPSILON])]
+    """
+
+    def __init__(self):
+        self._from_symbols = WeakList()
+        self._to_symbols = list()
+
+    def __getattr__(self, name):
+        if name in {'toSymbol',
+                    'fromSymbol',
+                    'left',
+                    'right',
+                    'rule',
+                    'rules'}:
+            return getattr(self.__class__, name)
+        return super().__getattr__(name)
+
+    def __hash__(self) -> int:
+        return hash(self.__class__)
+
+    def __eq__(self, o: object) -> bool:
+        return hash(self) == hash(o)
 
     @property
     def from_symbols(self):
