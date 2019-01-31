@@ -6,3 +6,5 @@
 Part of grammpy
 
 """
+
+from .SplitRule import SplitRule

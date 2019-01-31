@@ -10,7 +10,7 @@ Part of grammpy
 from inspect import isclass
 from typing import Any
 
-from .. import EPS
+from ._constants import EPS
 from ..Nonterminal import Nonterminal
 from ...exceptions import *
 

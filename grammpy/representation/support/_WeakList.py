@@ -14,10 +14,7 @@ import weakref
 
 from grammpy.exceptions import TreeDeletedException
 
-__all__ = ["WeakList"]
-
-
-def is_slice(index):
+def _is_slice(index):
     """
     Check if parameter is instance of slice
     :param index: object to check
@@ -26,7 +23,7 @@ def is_slice(index):
     return isinstance(index, slice)
 
 
-class WeakList(list):
+class _WeakList(list):
     """
     Class that behave like list, but store just weakref of items
     """
@@ -77,7 +74,7 @@ class WeakList(list):
         :return: Element at specific index
         """
         items = list.__getitem__(self, index)
-        return type(self)(self._values(items)) if is_slice(index) else self.value(items)
+        return type(self)(self._values(items)) if _is_slice(index) else self.value(items)
 
     def __setitem__(self, index, item):
         """
@@ -85,7 +82,7 @@ class WeakList(list):
         :param index: Index where to store item
         :param item: Item to store
         """
-        items = self._refs(item) if is_slice(index) else self.ref(item)
+        items = self._refs(item) if _is_slice(index) else self.ref(item)
         return list.__setitem__(self, index, items)
 
     def __iter__(self):

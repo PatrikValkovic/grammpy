@@ -10,7 +10,7 @@ Part of grammpy
 import weakref
 from unittest import TestCase, main
 
-from grammpy.representation.WeakList import WeakList
+from grammpy.representation.support._WeakList import _WeakList as WeakList
 from grammpy.exceptions import TreeDeletedException
 
 

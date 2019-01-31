@@ -10,7 +10,7 @@ from typing import Type, Optional
 
 from ..exceptions import NonterminalDoesNotExistsException
 from .Nonterminal import Nonterminal
-from .constants import EPSILON
+from .support._constants import EPSILON
 from .support._NonterminalSet import _NonterminalSet
 from .support._RulesSet import _RulesSet
 from .support._TerminalSet import _TerminalSet

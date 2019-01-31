@@ -7,8 +7,9 @@ Part of grammpy
 
 """
 
-from .WeakList import WeakList
+from .support._WeakList import _WeakList
 from .support._MetaRule import _MetaRule
+
 
 class Rule(metaclass=_MetaRule):
     """
@@ -23,7 +24,7 @@ class Rule(metaclass=_MetaRule):
     """
 
     def __init__(self):
-        self._from_symbols = WeakList()
+        self._from_symbols = _WeakList()
         self._to_symbols = list()
 
     def __getattr__(self, name):
