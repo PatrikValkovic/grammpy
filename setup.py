@@ -40,5 +40,6 @@ setup(
     description='CYK library with all required tools to parse context-free grammars.',
     install_requires=[
         'typing',
+        'deprecated',
     ],
 )

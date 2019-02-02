@@ -14,7 +14,7 @@ from ._constants import EPS
 from ..Nonterminal import Nonterminal
 from ...exceptions import *
 
-if TYPE_CHECKING:
+if TYPE_CHECKING:  # pragma: no-cover
     from .. import Grammar
 
 

@@ -13,7 +13,7 @@ from .SplitRule import SplitRule
 from .. import Rule
 from ...exceptions import NotRuleException, NonterminalDoesNotExistsException, TerminalDoesNotExistsException
 
-if TYPE_CHECKING:
+if TYPE_CHECKING:  # pragma: no-cover
     from .. import Grammar
 
 

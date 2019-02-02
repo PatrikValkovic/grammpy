@@ -10,7 +10,7 @@ from typing import Type, TYPE_CHECKING, List, Tuple
 
 from ..Rule import Rule as _Rule
 
-if TYPE_CHECKING:
+if TYPE_CHECKING:  # pragma: no-cover
     from .. import Rule
 
 
