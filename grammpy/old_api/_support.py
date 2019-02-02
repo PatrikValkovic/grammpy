@@ -37,5 +37,10 @@ class RulesClass:
         """
         return self._gr._rules()
 
-    def __getattr__(self, item):
-        return getattr(self._gr.rules, item)
+    def __iter__(self):
+        return self._gr._gr.rules.__iter__()
+
+    def __getattribute__(self, item):
+        if item in {'__call__', '_gr'}:
+            return object.__getattribute__(self, item)
+        return getattr(self._gr._gr.rules, item)

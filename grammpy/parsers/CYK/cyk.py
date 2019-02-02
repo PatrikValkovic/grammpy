@@ -3,27 +3,33 @@
 :Author Patrik Valkovic
 :Created 31.08.2017 14:47
 :Licence GNUv3
-Part of pyparsers
+Part of grammpy
 
 """
 
-from typing import Iterable
+from typing import Iterable, TYPE_CHECKING, Generator, Any, Dict, Set, Type
 
 from .Field import Field
 from .PlaceItem import PlaceItem
 from ...exceptions import NotParsedException
 from ...old_api import *
 
+if TYPE_CHECKING:  # pragma: no cover
+    from ...representation import Grammar
 
-def _create_mapping(grammar: Grammar) -> tuple:
+
+def _create_mapping(grammar):
+    # type: (Grammar) -> (Dict[int, Set[Type[Rule]]], Dict[int, Set[Type[Rule]]])
     """
-    Create mapping between symbols and rules rewritable to these symbols
-    :param grammar: Grammar to use
-    :return: Tuple of dictionary terminal-rule and 2 nonterminals-rule
+    Create mapping between symbols and rules rewritable to these symbols.
+    :param grammar: Grammar to use.
+    :return: Tuple of two dictionaries.
+    First dictionary maps rule to terminal hash.
+    Second dictionary maps rule to nonterminals hash.
     """
     termmap = dict()
     rulemap = dict()
-    for r in grammar.rules():
+    for r in grammar.rules:
         if len(r.right) == 1:
             # rule to terminal
             h = hash(r.toSymbol)
@@ -31,7 +37,7 @@ def _create_mapping(grammar: Grammar) -> tuple:
                 termmap[h] = set()
             termmap[h].add(r)
         else:
-            # rule with nonterms
+            # rule to two nonterms
             key = hash(tuple(r.right))
             if key not in rulemap:
                 rulemap[key] = set()
@@ -39,19 +45,26 @@ def _create_mapping(grammar: Grammar) -> tuple:
     return (termmap, rulemap)
 
 def _all_combinations(tpl):
+    # type: ((Iterable, Iterable)) -> Generator[tuple]
+    """
+    Return all combinations of iterables passed as a parameter.
+    :param tpl: Tuple of two iterable.
+    :return: Generator of tuples.
+    """
     for f in tpl[0]:
         for s in tpl[1]:
             yield (f, s)
 
 
-def cyk(grammar: Grammar, input: Iterable) -> Nonterminal:
+def cyk(grammar, parse_sequence):
+    # type: (Grammar, Iterable[Any]) -> Nonterminal
     """
-    Perform CYK algorithm
-    :param grammar: Grammar to use in Chomsky Normal Form
-    :param input: Input sequence to parse
-    :return: Instance of Nonterminal in parsed tree
+    Perform CYK algorithm.
+    :param grammar: Grammar to use in Chomsky Normal Form.
+    :param parse_sequence: Input sequence to parse.
+    :return: Instance of root Nonterminal in parsed tree.
     """
-    i = list(input)
+    i = list(parse_sequence)
     l = len(i)
     index = l - 1
     f = Field(l)
@@ -59,7 +72,7 @@ def cyk(grammar: Grammar, input: Iterable) -> Nonterminal:
     (termmap, rulemap) = _create_mapping(grammar)
     # fill first line with rules directly rewritable to terminal
     f.fill(termmap, i)
-    # fill rest of field
+    # fill rest of fields
     for y in range(1, l):
         for x in range(l - y):
             positions = f.positions(x, y)
@@ -90,20 +103,19 @@ def cyk(grammar: Grammar, input: Iterable) -> Nonterminal:
         working_nonterm = working['n']  # type: Nonterminal
         # its middle rule - not rewritable to nonterminal
         if isinstance(rule_class, PlaceItem):
-            created_rule = rule_class.rule() # type: Rule
+            created_rule = rule_class.rule()  # type: Rule
             working_nonterm._set_to_rule(created_rule)
             created_rule._from_symbols.append(working_nonterm)
             for side in rule_class.to_rule:
-                symbol = side.fromSymbol() # type: Nonterminal
+                symbol = side.fromSymbol()  # type: Nonterminal
                 symbol._set_from_rule(created_rule)
                 created_rule._to_symbols.append(symbol)
                 to_process.append({'n': symbol, 'r': side})
         # it is rule rewritable to nonterminal
         else:
-            created_rule = rule_class() # type: Rule
+            created_rule = rule_class()  # type: Rule
             working_nonterm._set_to_rule(created_rule)
             created_rule._from_symbols.append(working_nonterm)
-            #t = grammar.term(rule_class.toSymbol)
             t = Terminal(i[index])
             index -= 1
             created_rule._to_symbols.append(t)

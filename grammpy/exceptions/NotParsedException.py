@@ -3,7 +3,7 @@
 :Author Patrik Valkovic
 :Created 27.04.2018 17:49
 :Licence GPLv3
-Part of pyparsers
+Part of grammpy
 
 """
 

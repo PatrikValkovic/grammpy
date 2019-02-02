@@ -456,7 +456,7 @@ class Grammar:
         Get set representing terminals.
         :return: Set representing terminals.
         """
-        return self._terminals
+        return self._gr.terminals
 
     @property
     def nonterminals(self):
@@ -465,7 +465,7 @@ class Grammar:
         Get set representing nonterminals.
         :return: Set representing nonterminals.
         """
-        return self._nonterminals
+        return self._gr.nonterminals
 
     @property
     def start(self):
