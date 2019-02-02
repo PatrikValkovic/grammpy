@@ -15,7 +15,7 @@ from .support._TerminalSet import _TerminalSet
 from .support._constants import EPSILON
 from ..exceptions import NonterminalDoesNotExistsException
 
-if TYPE_CHECKING:  # pragma: no-cover
+if TYPE_CHECKING:  # pragma: no cover
     from . import Rule
 
 

@@ -8,7 +8,7 @@ Part of grammpy
 """
 from typing import Iterable, TYPE_CHECKING, Any
 
-if TYPE_CHECKING:  # pragma: no-cover
+if TYPE_CHECKING:  # pragma: no cover
     from .. import Grammar
 
 

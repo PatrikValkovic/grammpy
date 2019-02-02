@@ -12,7 +12,7 @@ from typing import Iterable, TYPE_CHECKING, Type
 from ..Nonterminal import Nonterminal
 from ...exceptions import NotNonterminalException
 
-if TYPE_CHECKING:  # pragma: no-cover
+if TYPE_CHECKING:  # pragma: no cover
     from .. import Grammar
 
 

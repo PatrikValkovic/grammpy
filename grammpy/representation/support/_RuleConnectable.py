@@ -11,7 +11,7 @@ from typing import TYPE_CHECKING, Optional
 
 from ...exceptions import TreeDeletedException
 
-if TYPE_CHECKING:  # pragma: no-cover
+if TYPE_CHECKING:  # pragma: no cover
     from .. import Rule
 
 

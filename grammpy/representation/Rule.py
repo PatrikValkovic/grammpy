@@ -12,7 +12,7 @@ from typing import Any, List, TYPE_CHECKING
 from .support._MetaRule import _MetaRule
 from .support._WeakList import _WeakList
 
-if TYPE_CHECKING:  # pragma: no-cover
+if TYPE_CHECKING:  # pragma: no cover
     from .support._RuleConnectable import _RuleConnectable
 
 
