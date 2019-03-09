@@ -57,7 +57,7 @@ class SimpleTest(TestCase):
         self.assertTrue(self.g.have_nonterm([A, B, C]))
 
     def test_simpleTestWithChange(self):
-        changed = ContextFree.remove_nongenerating_nonterminals(self.g, transform_grammar=True)
+        changed = ContextFree.remove_nongenerating_nonterminals(self.g, inplace=True)
         self.assertEqual(id(changed), id(self.g))
         self.assertTrue(self.g.have_term([0, 1]))
         self.assertTrue(self.g.have_nonterm([A, B]))

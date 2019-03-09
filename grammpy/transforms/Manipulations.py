@@ -3,7 +3,7 @@
 :Author Patrik Valkovic
 :Created 24.12.2017 11:31
 :Licence GNUv3
-Part of grammpy-transforms
+Part of grammpy
 
 """
 import functools
@@ -35,6 +35,7 @@ class Manipulations:
 
     @staticmethod
     def replaceNode(oldNode: Nonterminal, newNode: Nonterminal):
+        # TODO RuleConnectable
         """
         Replace instance of Nonterminal or Terminal in AST with another one.
         :param oldNode: Old nonterminal or terminal already in AST.

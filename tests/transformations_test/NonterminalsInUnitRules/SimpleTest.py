@@ -37,15 +37,15 @@ class Rules(Rule):
  -------------------------------
  |  S  |  A  |  B  |  C  |  D  |
 --------------------------------
-S| []  | [1] | [2] |[1,3]|[2,6]|
+S|     | [1] | [2] |[1,3]|[2,6]|
 --------------------------------
-A|     | []  |     | [3] |     |
+A|     |     |     | [3] |     |
 --------------------------------
-B|     |     | []  |     | [6] |
+B|     |     |     |     | [6] |
 --------------------------------
-C|     |     |     | []  |     |
+C|     |     |     |     |     |
 --------------------------------
-D|     |     |     |     | []  |
+D|     |     |     |     |     |
 --------------------------------
 
 """
@@ -59,51 +59,47 @@ class SimpleTest(TestCase):
                     start_symbol=S)
         res = ContextFree.find_nonterminals_reachable_by_unit_rules(g)
         # From S
-        self.assertTrue(res.reach(S, S))
+        self.assertFalse(res.reach(S, S))
         self.assertTrue(res.reach(S, A))
         self.assertTrue(res.reach(S, B))
         self.assertTrue(res.reach(S, C))
         self.assertTrue(res.reach(S, D))
         # From A
         self.assertFalse(res.reach(A, S))
-        self.assertTrue(res.reach(A, A))
+        self.assertFalse(res.reach(A, A))
         self.assertFalse(res.reach(A, B))
         self.assertTrue(res.reach(A, C))
         self.assertFalse(res.reach(A, D))
         # From B
         self.assertFalse(res.reach(B, S))
         self.assertFalse(res.reach(B, A))
-        self.assertTrue(res.reach(B, B))
+        self.assertFalse(res.reach(B, B))
         self.assertFalse(res.reach(B, C))
         self.assertTrue(res.reach(B, D))
         # From C
         self.assertFalse(res.reach(C, S))
         self.assertFalse(res.reach(C, A))
         self.assertFalse(res.reach(C, B))
-        self.assertTrue(res.reach(C, C))
+        self.assertFalse(res.reach(C, C))
         self.assertFalse(res.reach(C, D))
         # From D
         self.assertFalse(res.reach(D, S))
         self.assertFalse(res.reach(D, A))
         self.assertFalse(res.reach(D, B))
         self.assertFalse(res.reach(D, C))
-        self.assertTrue(res.reach(D, D))
+        self.assertFalse(res.reach(D, D))
         # Reachables
-        self.assertEqual(len(res.reachables(S)), 5)
-        for n in [S, A, B, C, D]:
+        self.assertEqual(len(res.reachables(S)), 4)
+        for n in [A, B, C, D]:
             self.assertIn(n, res.reachables(S))
-        self.assertEqual(len(res.reachables(A)), 2)
-        for n in [A, C]:
-            self.assertIn(n, res.reachables(A))
-        self.assertEqual(len(res.reachables(B)), 2)
-        for n in [B, D]:
-            self.assertIn(n, res.reachables(B))
-        self.assertEqual(len(res.reachables(C)), 1)
+        self.assertEqual(len(res.reachables(A)), 1)
         for n in [C]:
-            self.assertIn(n, res.reachables(C))
-        self.assertEqual(len(res.reachables(D)), 1)
+            self.assertIn(n, res.reachables(A))
+        self.assertEqual(len(res.reachables(B)), 1)
         for n in [D]:
-            self.assertIn(n, res.reachables(D))
+            self.assertIn(n, res.reachables(B))
+        self.assertEqual(len(res.reachables(C)), 0)
+        self.assertEqual(len(res.reachables(D)), 0)
         # Rules S
         self.assertEqual(res.path_rules(S, S), [])
         SARules = res.path_rules(S, A)

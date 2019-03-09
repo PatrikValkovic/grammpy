@@ -3,23 +3,29 @@
 :Author Patrik Valkovic
 :Created 03.09.2017 10:46
 :Licence GNUv3
-Part of grammpy-transforms
+Part of grammpy
 
 """
 from collections import deque
+from typing import TYPE_CHECKING
 
-from ...old_api import *
 from .transform_to_chomsky_normal_form import *
 from ..Manipulations import Traversing, Manipulations
 
-def transform_from_chomsky_normal_form(root: Nonterminal):
+if TYPE_CHECKING:  # pragma: no cover
+    from ... import Nonterminal
+
+
+def transform_from_chomsky_normal_form(root):
+    # type: (Nonterminal) -> Nonterminal
     """
-    Transform rules created by Chomsky Normal Form to original rules used in grammar.
-    :param root: Root of AST
-    :return: Modified AST
+    Transform the tree created by grammar in the Chomsky Normal Form to original rules.
+    :param root: Root of parsed tree.
+    :return: Modified tree.
     """
+    # Transforms leaves
     items = Traversing.postOrder(root)
-    items = filter(lambda x: isinstance(x, (ChomskyTermRule,ChomskyTerminalReplaceRule)), items)
+    items = filter(lambda x: isinstance(x, (ChomskyTermRule, ChomskyTerminalReplaceRule)), items)
     de = deque(items)
     while de:
         rule = de.popleft()
@@ -32,6 +38,7 @@ def transform_from_chomsky_normal_form(root: Nonterminal):
             Manipulations.replaceRule(rule, created_rule)
             de.append(created_rule)
 
+    # Transform inner nodes
     items = Traversing.postOrder(root)
     items = filter(lambda x: isinstance(x, ChomskySplitRule), items)
     de = deque(items)
@@ -51,5 +58,6 @@ def transform_from_chomsky_normal_form(root: Nonterminal):
             for ch in rule.to_symbols[1].to_rule.to_symbols:  # type: Nonterminal
                 ch._set_from_rule(created_rule)
                 created_rule.to_symbols.append(ch)
-            de.append(created_rule)
+            # add back if the rules is ChomskySplitRule again
+            de.appendleft(created_rule)
     return root

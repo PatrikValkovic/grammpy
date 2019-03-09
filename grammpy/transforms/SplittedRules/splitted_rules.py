@@ -3,25 +3,31 @@
 :Author Patrik Valkovic
 :Created 23.12.2017 16:05
 :Licence GNUv3
-Part of grammpy-transforms
+Part of grammpy
 
 """
+from typing import TYPE_CHECKING
 
-from ...old_api import Nonterminal, Rule
-from ...representation.support.SplitRule import SplitRule
 from ..Manipulations import Manipulations, Traversing
+from ...representation.support.SplitRule import SplitRule
 
-def splitted_rules(root: Nonterminal):
+if TYPE_CHECKING:  # pragma: no cover
+    from ... import Nonterminal
+
+
+def splitted_rules(root):
+    # type: (Nonterminal) -> Nonterminal
     """
-    Replace SplittedRules by their original rule.
-    :param root: Root of the AST
-    :return: Modified AST
+    Replace SplittedRules in the parsed tree with the original one.
+    This method is mandatory if you insert Rule class with multiple rules into the grammar.
+    :param root: Root of the parsed tree.
+    :return: Modified tree.
     """
     items = Traversing.postOrder(root)
-    items = filter(lambda x: isinstance(x, Rule), items)
+    items = filter(lambda x: isinstance(x, SplitRule), items)
     for i in items:
-        if not isinstance(i, SplitRule):
-            continue
+        # create the original rule
         newRule = i.from_rule()
+        # replace it with the node in the tree
         Manipulations.replace(i, newRule)
     return root

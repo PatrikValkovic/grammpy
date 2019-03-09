@@ -3,14 +3,14 @@
 :Author Patrik Valkovic
 :Created 03.09.2017 10:49
 :Licence GNUv3
-Part of grammpy-transforms
+Part of grammpy
 
 """
 
-from ..old_api import *
-from .UnitRulesRemove import unit_rules_restore
-from .EpsilonRulesRemove import epsilon_rules_restore
 from .ChomskyForm import transform_from_chomsky_normal_form
+from .EpsilonRulesRemove import epsilon_rules_restore
+from .UnitRulesRemove import unit_rules_restore
+from ..old_api import *
 
 __all__ = ['InverseContextFree']
 

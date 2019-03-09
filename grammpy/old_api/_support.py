@@ -9,7 +9,7 @@ Part of grammpy
 
 from typing import TYPE_CHECKING, List, Type
 
-if TYPE_CHECKING:  # pragma: no-cover
+if TYPE_CHECKING:  # pragma: no cover
     from .Grammar import Grammar
     from .. import Rule
 

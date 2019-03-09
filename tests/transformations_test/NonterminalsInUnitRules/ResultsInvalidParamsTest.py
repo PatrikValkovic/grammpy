@@ -33,13 +33,13 @@ class Rules(Rule):
  ---------------------------------
  |   S   |   A   |   B   |   C   |
 ----------------------------------
-S|  []   |  [1]  | [1,2] |[1,2,3]|
+S|       |  [1]  | [1,2] |[1,2,3]|
 ----------------------------------
-A|       |  []   |  [2]  | [2,3] |
+A|       |       |  [2]  | [2,3] |
 ----------------------------------
-B|       | [3,4] |  []   |  [3]  |
+B|       | [3,4] |       |  [3]  |
 ----------------------------------
-C|       |  [4]  | [4,2] |  []   |
+C|       |  [4]  | [4,2] |       |
 ----------------------------------
 """
 
@@ -70,8 +70,7 @@ class ResultsInvalidParamsTest(TestCase):
                     rules=[Rules],
                     start_symbol=S)
         res = ContextFree.find_nonterminals_reachable_by_unit_rules(g)
-        self.assertIsNone(res.path_rules(A, D))
-        self.assertIsNone(res.path_rules(D, S))
-        self.assertIsNone(res.path_rules(D, S))
-        self.assertIsNone(res.path_rules(E, D))
-
+        self.assertEqual(res.path_rules(A, D), [])
+        self.assertEqual(res.path_rules(D, S), [])
+        self.assertEqual(res.path_rules(D, S), [])
+        self.assertEqual(res.path_rules(E, D), [])

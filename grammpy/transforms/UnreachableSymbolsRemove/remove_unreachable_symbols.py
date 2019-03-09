@@ -3,58 +3,58 @@
 :Author Patrik Valkovic
 :Created 17.08.207 13:29
 :Licence GNUv3
-Part of grammpy-transforms
+Part of grammpy
 
 """
-
-from ...old_api import Grammar
-from ...exceptions import NotNonterminalException
 from copy import copy
+from typing import TYPE_CHECKING
+
+from ...exceptions import StartSymbolNotSetException
+
+if TYPE_CHECKING:  # pragma: no cover
+    from ... import Grammar
 
 
-class StartSymbolNotSpecifiedException(Exception):
-    pass
-
-
-def remove_unreachable_symbols(grammar: Grammar, transform_grammar=False) -> Grammar:
+def remove_unreachable_symbols(grammar, inplace=False):
+    # type: (Grammar, bool) -> Grammar
     """
     Remove unreachable symbols from the gramar
     :param grammar: Grammar where to symbols remove
-    :param transform_grammar: True if transformation should be performed in place, false otherwise.
-    False by default.
+    :param inplace: True if transformation should be performed in place. False by default.
     :return: Grammar without unreachable symbols.
     """
-    # Copy if required
-    if transform_grammar is False: grammar = copy(grammar)
-    # Check if start symbol is set
-    if not grammar.start_isSet(): raise StartSymbolNotSpecifiedException()
-    # Create process sets
-    reachable = {grammar.start_get()}
-    rules = grammar.rules()
-    # Begin iterations
+    # copy if required
+    if inplace is False:
+        grammar = copy(grammar)
+    # check if start symbol is set
+    if grammar.start is None:
+        raise StartSymbolNotSetException()
+    # create process sets
+    reachable = {grammar.start}
+    rules = grammar.rules.copy()
+    # begin iterations
     while True:
-        # Create sets for current iteration
+        # create sets for current iteration
         active = reachable.copy()
-        processedRules = []
-        # Loop rest of rules
-        for rule in rules:
-            # If left part of rule already in reachable symbols
+        # loop the working rules
+        for rule in rules.copy():
+            # lf left part of rule already in reachable symbols
             if rule.fromSymbol in reachable:
-                # Set symbols as reachable
-                processedRules.append(rule)
-                for symbol in rule.right: active.add(symbol)
-        # End of rules loop
-        # Remove processed rules
-        for item in processedRules: rules.remove(item)
-        # If current and previous iterations are same, than end iterations
-        if active == reachable: break
+                # set symbols on the right as reachable
+                for symbol in rule.right:
+                    active.add(symbol)
+                # remove rule from the next iteration
+                rules.remove(rule)
+            # end of rules loop
+        # if current and previous iterations are same, we are done
+        if active == reachable:
+            break
+        # otherwise swap the sets
         reachable = active
-    # End of iterations
-    # Set symbols to remove
-    allSymbols = set(grammar.nonterms()).union(set(x.s for x in grammar.terms()))
-    for symbol in allSymbols.difference(reachable):
-        try:
-            grammar.remove_nonterm(symbol)
-        except NotNonterminalException:
-            grammar.remove_term(symbol)
+    # remove the symbols
+    nonterminals_to_remove = grammar.nonterminals.difference(reachable)
+    terminals_to_remove = grammar.terminals.difference(reachable)
+    grammar.nonterminals.remove(*nonterminals_to_remove)
+    grammar.terminals.remove(*terminals_to_remove)
+    # return grammar
     return grammar

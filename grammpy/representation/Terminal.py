@@ -21,8 +21,6 @@ class Terminal(_RuleConnectable):
         '''
         Create new terminal.
         :param symbol: Symbol representing terminal.
-        :param grammar: The grammar to which the terminal belongs
-        TODO remove reference to grammar.
         '''
         super().__init__()
         self.__symbol = symbol

@@ -3,24 +3,27 @@
 :Author Patrik Valkovic
 :Created 10.08.2017 20:33
 :Licence GNUv3
-Part of grammpy-transforms
+Part of grammpy
 
 """
 
-from typing import List
-from ..old_api import *
-from .NongeneratingSymbolsRemove import *
-from .UnreachableSymbolsRemove import *
-from .EpsilonRulesRemove import *
-from .UnitRulesRemove import *
+from typing import TYPE_CHECKING
+
 from .ChomskyForm import *
+from .EpsilonRulesRemove import *
+from .NongeneratingSymbolsRemove import *
+from .UnitRulesRemove import *
+from .UnreachableSymbolsRemove import *
+
+if TYPE_CHECKING:  # pragma: no cover
+    from .. import Grammar
 
 __all__ = ['ContextFree']
 
 
 class ContextFree:
     """
-    Class that associate functions transforming context-free grammars.
+    Class that aggregates functions transforming context-free grammars.
     """
 
     EpsilonRemovedRule = EpsilonRemovedRule
@@ -35,34 +38,32 @@ class ContextFree:
     ChomskyGroupNonterminal = ChomskyGroupNonterminal
     ChomskyTermNonterminal = ChomskyTermNonterminal
 
-    UnitSymbolRechablingResults = UnitSymbolRechablingResults
+    UnitSymbolRechablingResults = UnitSymbolReachability
 
     @staticmethod
-    def remove_nongenerating_nonterminals(grammar: Grammar, transform_grammar=False):
+    def remove_nongenerating_nonterminals(grammar, inplace=False):
+        # type: (Grammar, bool) -> Grammar
         """
-        Remove nongenerating symbols from the grammar
-        :param grammar: Grammar where to remove nongenerating symbols
-        :param transform_grammar: True if transformation should be performed in place, false otherwise.
-        False by default.
-        :return: Grammar without nongenerating symbols
+        Remove nongenerating symbols from the grammar.
+        Nongenerating symbols are symbols, that don't generate sequence of terminals.
+        For example never ending recursion.
+        :param grammar: Grammar where to remove nongenerating symbols.
+        :param inplace: True if transformation should be performed in place. False by default.
+        :return: Grammar without nongenerating symbols.
         """
-        return remove_nongenerating_nonterminals(grammar, transform_grammar)
+        return remove_nongenerating_nonterminals(grammar, inplace)
 
     @staticmethod
-    def is_grammar_generating(grammar: Grammar, transform_grammar=False, perform_remove=True):
+    def is_grammar_generating(grammar, remove=False):
+        # type: (Grammar, bool) -> bool
         """
         Check if is grammar generating
         :param grammar: Grammar to check
-        :param transform_grammar: True if transformation should be performed in place, false otherwise.
-        False by default.
-        :param perform_remove: True if should be removed nongenerating symbols.
-        True by default.
+        :param remove:
         :return: True if is grammar generating, false otherwise.
         """
-        g = grammar
-        if perform_remove:
-            g = ContextFree.remove_nongenerating_nonterminals(grammar, transform_grammar=transform_grammar)
-        return g.start_get() in g.nonterms()  # TODO if nil?
+        g = ContextFree.remove_nongenerating_nonterminals(grammar, remove)
+        return g.start is not None
 
     @staticmethod
     def remove_unreachable_symbols(grammar: Grammar, transform_grammar=False):
@@ -77,8 +78,8 @@ class ContextFree:
 
     @staticmethod
     def remove_useless_symbols(grammar: Grammar, transform_grammar=False, *,
-                                   perform_unreachable_alg = True,
-                                   perform_nongenerating_alg = True) -> Grammar:
+                               perform_unreachable_alg=True,
+                               perform_nongenerating_alg=True) -> Grammar:
         """
         Remove useless symbols from the grammar
         :param grammar: Grammar where to symbols remove
@@ -91,7 +92,7 @@ class ContextFree:
         :return: Grammar without useless symbols.
         """
         if perform_nongenerating_alg:
-            grammar = ContextFree.remove_nongenerating_nonterminals(grammar, transform_grammar=transform_grammar)
+            grammar = ContextFree.remove_nongenerating_nonterminals(grammar, inplace=transform_grammar)
             transform_grammar = True
         if perform_unreachable_alg:
             grammar = ContextFree.remove_unreachable_symbols(grammar, transform_grammar=transform_grammar)
@@ -106,7 +107,7 @@ class ContextFree:
         False by default.
         :return: Grammar without epsilon rules.
         """
-        return remove_rules_with_epsilon(grammar, transform_grammar=transform_grammar)
+        return remove_rules_with_epsilon(grammar, inplace=transform_grammar)
 
     @staticmethod
     def find_nonterminals_rewritable_to_epsilon(grammar: Grammar):
@@ -135,7 +136,7 @@ class ContextFree:
         False by default.
         :return: Grammar without unit rules.
         """
-        return remove_unit_rules(grammar, transform_grammar=transform_grammar)
+        return remove_unit_rules(grammar, inplace=transform_grammar)
 
     @staticmethod
     def transform_to_chomsky_normal_form(grammar: Grammar, transform_grammar=False) -> Grammar:
@@ -146,4 +147,4 @@ class ContextFree:
         False by default.
         :return: Grammar in Chomsky Normal Form.
         """
-        return transform_to_chomsky_normal_form(grammar, transform_grammar=transform_grammar)
+        return transform_to_chomsky_normal_form(grammar, inplace=transform_grammar)

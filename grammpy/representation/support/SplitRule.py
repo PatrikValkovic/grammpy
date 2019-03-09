@@ -29,7 +29,7 @@ class SplitRule(_Rule):
         :param index: Index of the rule (in original Rule class) to use for SplitRule.
         :return: Class inherited from SplitRule representing rule at index.
         """
-        name = 'SplitRule_(' + str(rule.__name__) + ')_' + str(index)
+        name = 'SplitRule[' + rule.__name__ + ';' + str(index) + ']'
         created = type(name, (SplitRule,), SplitRule.__dict__.copy())  # type: Type[SplitRule]
         created.rule = rule.rules[index]
         created.rule_index = index

@@ -3,32 +3,36 @@
 :Author Patrik Valkovic
 :Created 03.09.2017 10:48
 :Licence GNUv3
-Part of grammpy-transforms
+Part of grammpy
 
 """
+from typing import TYPE_CHECKING
 
-from ...old_api import *
 from .remove_unit_rules import ReducedUnitRule
-from ..Manipulations import Manipulations, Traversing
+from ..Manipulations import Traversing
+
+if TYPE_CHECKING:  # pragma: no cover
+    from ... import Nonterminal, Rule
 
 
-def unit_rules_restore(root: Nonterminal):
+def unit_rules_restore(root):
+    # type: (Nonterminal) -> Nonterminal
     """
-    Transform rules created by removing unit rules to original rules used in grammar.
-    :param root: Root of AST
-    :return: Modified AST
+    Transform parsed tree for grammar with removed unit rules.
+    The unit rules will be returned back to the tree.
+    :param root: Root of the parsed tree.
+    :return: Modified tree.
     """
     items = Traversing.postOrder(root)
     items = filter(lambda x: isinstance(x, ReducedUnitRule), items)
     for rule in items:
         parent_nonterm = rule.from_symbols[0]  # type: Nonterminal
-        created_rule = None
-        # restore chain
+        # restore chain of unit rules
         for r in rule.by_rules:
             created_rule = r()  # type: Rule
             parent_nonterm._set_to_rule(created_rule)
             created_rule._from_symbols.append(parent_nonterm)
-            created_nonterm = r.toSymbol() # type: Nonterminal
+            created_nonterm = r.toSymbol()  # type: Nonterminal
             created_rule._to_symbols.append(created_nonterm)
             created_nonterm._set_from_rule(created_rule)
             parent_nonterm = created_nonterm
@@ -40,4 +44,3 @@ def unit_rules_restore(root: Nonterminal):
             ch._set_from_rule(last_rule)
             last_rule._to_symbols.append(ch)
     return root
-
