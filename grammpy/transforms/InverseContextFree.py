@@ -6,43 +6,50 @@
 Part of grammpy
 
 """
+from typing import TYPE_CHECKING
 
 from .ChomskyForm import transform_from_chomsky_normal_form
 from .EpsilonRulesRemove import epsilon_rules_restore
 from .UnitRulesRemove import unit_rules_restore
-from ..old_api import *
+
+if TYPE_CHECKING:
+    from .. import Nonterminal
 
 __all__ = ['InverseContextFree']
 
 
 class InverseContextFree:
     """
-    Class that associate functions transforming Context-Free AST.
+    Class that aggregates functions transforming Context-Free parsed tree.
     """
 
     @staticmethod
-    def unit_rules_restore(root: Nonterminal) -> Nonterminal:
+    def unit_rules_restore(root):
+        # type: (Nonterminal) -> Nonterminal
         """
-        Transform rules created by removing unit rules to original rules used in grammar.
-        :param root: Root of AST
-        :return: Modified AST
+        Transform parsed tree for grammar with removed unit rules.
+        The unit rules will be returned back to the tree.
+        :param root: Root of the parsed tree.
+        :return: Modified tree.
         """
         return unit_rules_restore(root)
 
     @staticmethod
-    def epsilon_rules_restore(root: Nonterminal) -> Nonterminal:
+    def epsilon_rules_restore(root):
+        # type: (Nonterminal) -> Nonterminal
         """
-        Transform rules created by removing epsilon rules to original rules used in grammar.
-        :param root: Root of AST
-        :return: Modified AST
+        Transform parsed tree to contain epsilon rules originally removed from the grammar.
+        :param root: Root of the parsed tree.
+        :return: Modified tree including epsilon rules.
         """
         return epsilon_rules_restore(root)
 
     @staticmethod
-    def transform_from_chomsky_normal_form(root: Nonterminal) -> Nonterminal:
+    def transform_from_chomsky_normal_form(root):
+        # type: (Nonterminal) -> Nonterminal
         """
-        Transform rules created by Chomsky Normal Form to original rules used in grammar.
-        :param root: Root of AST
-        :return: Modified AST
+        Transform the tree created by grammar in the Chomsky Normal Form to original rules.
+        :param root: Root of parsed tree.
+        :return: Modified tree.
         """
         return transform_from_chomsky_normal_form(root)

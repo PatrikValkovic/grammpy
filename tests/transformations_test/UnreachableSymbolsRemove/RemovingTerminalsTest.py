@@ -55,7 +55,7 @@ class RemovingTerminalsTest(TestCase):
                     nonterminals=[A, B, C, D, E, F],
                     rules=[RuleAto0B, RuleBto1C, RuleCto2C],
                     start_symbol=A)
-        ContextFree.remove_unreachable_symbols(g, transform_grammar=True)
+        ContextFree.remove_unreachable_symbols(g, inplace=True)
         self.assertTrue(g.have_term([0, 1, 2]))
         self.assertFalse(g.have_term(3))
         self.assertTrue(g.have_nonterm([A, B, C]))

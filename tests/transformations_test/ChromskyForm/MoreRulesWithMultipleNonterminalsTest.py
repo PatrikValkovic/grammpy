@@ -57,7 +57,7 @@ class MoreRulesWithMultipleNonterminalsTest(TestCase):
     def test_transformShouldChange(self):
         g = Grammar(nonterminals=[S, A, B, C],
                     rules=[Rules])
-        ContextFree.transform_to_chomsky_normal_form(g, transform_grammar=True)
+        ContextFree.transform_to_chomsky_normal_form(g, True)
         self.assertEqual(g.rules_count(), 6)
         self.assertEqual(len(g.rules()), 6)
         fromS = list(filter(lambda r: r.fromSymbol == S, g.rules()))[0]

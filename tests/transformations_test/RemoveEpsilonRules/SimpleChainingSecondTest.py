@@ -99,7 +99,7 @@ class SimpleChainingTest(TestCase):
                     nonterminals=[S, A, B, C],
                     rules=[Rules],
                     start_symbol=S)
-        ContextFree.remove_rules_with_epsilon(g, transform_grammar=True)
+        ContextFree.remove_rules_with_epsilon(g, True)
         self.assertEqual(len(g.rules()), 11)
         class RuleNewSto0(Rule): rule=([S], [0])
         class RuleNewSto1(Rule): rule=([S], [1])

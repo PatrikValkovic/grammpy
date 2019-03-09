@@ -10,8 +10,8 @@ Part of pyparsers
 from unittest import main, TestCase
 
 from grammpy.old_api import *
-from grammpy.transforms import ContextFree, InverseContextFree
 from grammpy.parsers import cyk
+from grammpy.transforms import ContextFree, InverseContextFree
 
 
 class S(Nonterminal): pass
@@ -37,11 +37,11 @@ class CorrectSimpleTerminalsTest(TestCase):
                          nonterminals=[S],
                          rules=[R],
                          start_symbol=S)
-        ContextFree.remove_useless_symbols(self.g, transform_grammar=True)
-        ContextFree.remove_rules_with_epsilon(self.g, transform_grammar=True)
-        ContextFree.remove_unit_rules(self.g, transform_grammar=True)
-        ContextFree.remove_useless_symbols(self.g, transform_grammar=True)
-        ContextFree.transform_to_chomsky_normal_form(self.g, transform_grammar=True)
+        ContextFree.remove_useless_symbols(self.g, inplace=True)
+        ContextFree.remove_rules_with_epsilon(self.g, True)
+        ContextFree.remove_unit_rules(self.g, True)
+        ContextFree.remove_useless_symbols(self.g, inplace=True)
+        ContextFree.transform_to_chomsky_normal_form(self.g, True)
 
 
     def test_sameHashes(self):

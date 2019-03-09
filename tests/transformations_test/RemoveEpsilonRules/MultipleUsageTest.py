@@ -215,7 +215,7 @@ class MultipleUsageTest(TestCase):
                     nonterminals=[S, A, B, C, D],
                     rules=[Rules],
                     start_symbol=S)
-        ContextFree.remove_rules_with_epsilon(g, transform_grammar=True)
+        ContextFree.remove_rules_with_epsilon(g, True)
         self.assertEqual(len(g.rules()), 25)
         self.assertEqual(g.rules_count(), 25)
         class RuleNewSto0A(Rule): rule = ([S], [0, A])

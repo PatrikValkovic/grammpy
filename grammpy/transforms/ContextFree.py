@@ -7,7 +7,7 @@ Part of grammpy
 
 """
 
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, Dict
 
 from .ChomskyForm import *
 from .EpsilonRulesRemove import *
@@ -57,94 +57,95 @@ class ContextFree:
     def is_grammar_generating(grammar, remove=False):
         # type: (Grammar, bool) -> bool
         """
-        Check if is grammar generating
-        :param grammar: Grammar to check
-        :param remove:
+        Check if is grammar is generating.
+        Generating grammar generates at least one sentence.
+        :param grammar: Grammar to check.
+        :param remove: True to remove nongenerating symbols from the grammar.
         :return: True if is grammar generating, false otherwise.
         """
         g = ContextFree.remove_nongenerating_nonterminals(grammar, remove)
         return g.start is not None
 
     @staticmethod
-    def remove_unreachable_symbols(grammar: Grammar, transform_grammar=False):
+    def remove_unreachable_symbols(grammar, inplace=False):
+        # type: (Grammar, bool) -> Grammar
         """
         Remove unreachable symbols from the gramar
         :param grammar: Grammar where to symbols remove
-        :param transform_grammar: True if transformation should be performed in place, false otherwise.
-        False by default.
+        :param inplace: True if transformation should be performed in place. False by default.
         :return: Grammar without unreachable symbols.
         """
-        return remove_unreachable_symbols(grammar, transform_grammar)
+        return remove_unreachable_symbols(grammar, inplace)
 
     @staticmethod
-    def remove_useless_symbols(grammar: Grammar, transform_grammar=False, *,
-                               perform_unreachable_alg=True,
-                               perform_nongenerating_alg=True) -> Grammar:
+    def remove_useless_symbols(grammar, inplace=False):
+        # type: (Grammar, bool) -> Grammar
         """
-        Remove useless symbols from the grammar
+        Remove useless symbols from the grammar.
+        Useless symbols are unreachable or nongenerating one.
         :param grammar: Grammar where to symbols remove
-        :param transform_grammar: True if transformation should be performed in place, false otherwise.
+        :param inplace: True if transformation should be performed in place, false otherwise.
         False by default.
-        :param perform_unreachable_alg: True if should remove unreachable symbols.
-        True by default.
-        :param perform_nongenerating_alg: True if should remove nongenerating symbols.
-        True by default.
         :return: Grammar without useless symbols.
         """
-        if perform_nongenerating_alg:
-            grammar = ContextFree.remove_nongenerating_nonterminals(grammar, inplace=transform_grammar)
-            transform_grammar = True
-        if perform_unreachable_alg:
-            grammar = ContextFree.remove_unreachable_symbols(grammar, transform_grammar=transform_grammar)
+        grammar = ContextFree.remove_nongenerating_nonterminals(grammar, inplace)
+        inplace = True
+        grammar = ContextFree.remove_unreachable_symbols(grammar, inplace)
         return grammar
 
     @staticmethod
-    def remove_rules_with_epsilon(grammar: Grammar, transform_grammar=False) -> Grammar:
+    def remove_rules_with_epsilon(grammar, inplace=False):
+        # type: (Grammar, bool) -> Grammar
         """
         Remove epsilon rules.
         :param grammar: Grammar where rules remove
-        :param transform_grammar: True if transformation should be performed in place, false otherwise.
+        :param inplace: True if transformation should be performed in place, false otherwise.
         False by default.
         :return: Grammar without epsilon rules.
         """
-        return remove_rules_with_epsilon(grammar, inplace=transform_grammar)
+        return remove_rules_with_epsilon(grammar, inplace)
 
     @staticmethod
-    def find_nonterminals_rewritable_to_epsilon(grammar: Grammar):
+    def find_nonterminals_rewritable_to_epsilon(grammar):
+        # type: (Grammar) -> Dict[Type[Nonterminal], Type[Rule]]
         """
         Get nonterminals rewritable to epsilon.
         :param grammar: Grammar where to search.
-        :return: Dictionary, where key is nonterminal rewritable to epsilon and value is rule that is responsible for it.
+        :return: Dictionary, where key is nonterminal rewritable to epsilon and
+        value is rule that is responsible for it.
+        The rule doesn't need to rewrite to epsilon directly,
+        but the whole right side can be rewritable to epsilon using different rules.
         """
         return find_nonterminals_rewritable_to_epsilon(grammar)
 
     @staticmethod
-    def find_nonterminals_reachable_by_unit_rules(grammar: Grammar) -> UnitSymbolRechablingResults:
+    def find_nonterminals_reachable_by_unit_rules(grammar):
+        # type: (Grammar) -> UnitSymbolReachability
         """
         Get nonterminal for which exist unit rule
         :param grammar: Grammar where to search
-        :return: Instance of UnitSymbolRechablingResults.
+        :return: Instance of UnitSymbolReachability.
         """
         return find_nonterminals_reachable_by_unit_rules(grammar)
 
     @staticmethod
-    def remove_unit_rules(grammar: Grammar, transform_grammar=False) -> Grammar:
+    def remove_unit_rules(grammar, inplace=False):
+        # type: (Grammar, bool) -> Grammar
         """
-        Remove unit rules from the grammar
-        :param grammar: Grammar where the rules remove
-        :param transform_grammar: True if transformation should be performed in place, false otherwise.
-        False by default.
+        Remove unit rules from the grammar.
+        :param grammar: Grammar where remove the rules.
+        :param inplace: True if transformation should be performed in place. False by default.
         :return: Grammar without unit rules.
         """
-        return remove_unit_rules(grammar, inplace=transform_grammar)
+        return remove_unit_rules(grammar, inplace)
 
     @staticmethod
-    def transform_to_chomsky_normal_form(grammar: Grammar, transform_grammar=False) -> Grammar:
+    def transform_to_chomsky_normal_form(grammar, inplace=False):
+        # type: (Grammar, bool) -> Grammar
         """
-        Transform grammar to Chomsky Normal Form
-        :param grammar: Grammar to transform
-        :param transform_grammar: True if transformation should be performed in place, false otherwise.
-        False by default.
+        Transform grammar to Chomsky Normal Form.
+        :param grammar: Grammar to transform.
+        :param inplace: True if transformation should be performed in place. False by default.
         :return: Grammar in Chomsky Normal Form.
         """
-        return transform_to_chomsky_normal_form(grammar, inplace=transform_grammar)
+        return transform_to_chomsky_normal_form(grammar, inplace)

@@ -62,7 +62,7 @@ class CycleTest(TestCase):
                     rules=[Rules],
                     start_symbol=S)
         self.assertEqual(g.rules_count(), 7)
-        ContextFree.remove_useless_symbols(g, transform_grammar=True)
+        ContextFree.remove_useless_symbols(g, inplace=True)
         self.assertTrue(g.have_term('c'))
         self.assertFalse(g.have_term('a'))
         self.assertFalse(g.have_term('b'))

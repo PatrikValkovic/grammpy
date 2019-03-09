@@ -66,7 +66,7 @@ class SimpleTest(TestCase):
                     rules=[Rules],
                     start_symbol=S)
         self.assertEqual(g.rules_count(), 13)
-        ContextFree.remove_useless_symbols(g, transform_grammar=True)
+        ContextFree.remove_useless_symbols(g, inplace=True)
         self.assertTrue(g.have_term([0, 1]))
         self.assertTrue(g.have_nonterm([S, D]))
         self.assertFalse(g.have_nonterm(A))

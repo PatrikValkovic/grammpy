@@ -264,7 +264,7 @@ class SimpleTest(TestCase):
                     nonterminals=[S, A, B, C, D],
                     rules=[Rules],
                     start_symbol=S)
-        ContextFree.remove_unit_rules(g, transform_grammar=True)
+        ContextFree.remove_unit_rules(g, True)
         # Removed
         class RuleStoA(Rule): rule=([S], [A])
         self.assertFalse(g.have_rule(RuleStoA))

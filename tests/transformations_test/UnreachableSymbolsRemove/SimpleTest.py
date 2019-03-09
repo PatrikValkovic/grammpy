@@ -52,7 +52,7 @@ class SimpleTest(TestCase):
                     nonterminals=[A,B,C,D,E,F],
                     rules=[RuleAto0B, RuleBto1C, RuleCto01],
                     start_symbol=A)
-        ContextFree.remove_unreachable_symbols(g, transform_grammar=True)
+        ContextFree.remove_unreachable_symbols(g, inplace=True)
         self.assertTrue(g.have_term([0, 1]))
         self.assertTrue(g.have_nonterm([A, B, C]))
         self.assertFalse(g.have_nonterm(D))

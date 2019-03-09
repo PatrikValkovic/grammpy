@@ -85,7 +85,7 @@ class SimpleTest(TestCase):
                     nonterminals=[S, A, B, C],
                     rules=[Rules],
                     start_symbol=S)
-        ContextFree.remove_rules_with_epsilon(g, transform_grammar=True)
+        ContextFree.remove_rules_with_epsilon(g, True)
         self.assertEqual(g.rules_count(), 6)
         class RuleNewS(Rule): rule=([S], [1])
         class RuleNewA(Rule): rule=([A], [1])

@@ -11,11 +11,11 @@ from typing import Iterable, TYPE_CHECKING, Generator, Any, Dict, Set, Type
 
 from .Field import Field
 from .PlaceItem import PlaceItem
-from ...exceptions import NotParsedException
-from ...old_api import *
+from ... import *
+from ...exceptions import NotParsedException, StartSymbolNotSetException
 
 if TYPE_CHECKING:  # pragma: no cover
-    from ...representation import Grammar
+    from ... import Grammar
 
 
 def _create_mapping(grammar):
@@ -64,17 +64,21 @@ def cyk(grammar, parse_sequence):
     :param parse_sequence: Input sequence to parse.
     :return: Instance of root Nonterminal in parsed tree.
     """
-    i = list(parse_sequence)
-    l = len(i)
-    index = l - 1
-    f = Field(l)
+    # check start symbol
+    if grammar.start is None:
+        raise StartSymbolNotSetException()
+    # create variables
+    parse_sequence = list(parse_sequence)
+    input_length = len(parse_sequence)
+    index = input_length - 1
+    f = Field(input_length)
     # creating mapping for speedup rules searching
     (termmap, rulemap) = _create_mapping(grammar)
     # fill first line with rules directly rewritable to terminal
-    f.fill(termmap, i)
+    f.fill(termmap, parse_sequence)
     # fill rest of fields
-    for y in range(1, l):
-        for x in range(l - y):
+    for y in range(1, input_length):
+        for x in range(input_length - y):
             positions = f.positions(x, y)
             pairs_of_rules = [(f.rules(pos[0].x, pos[0].y),
                       f.rules(pos[1].x, pos[1].y))
@@ -88,11 +92,11 @@ def cyk(grammar, parse_sequence):
                             rules.add(PlaceItem(r, first_rule, second_rule))
             f.put(x, y, list(rules))
     # Check if is start symol on the bottom of field
-    if grammar.start_get() not in [r.fromSymbol for r in f.rules(0, l-1)]:
+    if grammar.start not in [r.fromSymbol for r in f.rules(0, input_length - 1)]:
         raise NotParsedException()
     # Find init symbol and rule
-    start = grammar.start_get()()  # type: Nonterminal
-    start_rule = [r for r in f.rules(0, l-1) if grammar.start_is(r.fromSymbol)][0]
+    start = grammar.start()  # type: Nonterminal
+    start_rule = [r for r in f.rules(0, input_length - 1) if grammar.start == r.fromSymbol][0]
     # Prepare buffer for proccess
     to_process = list()
     to_process.append({'n': start, 'r': start_rule})
@@ -116,7 +120,7 @@ def cyk(grammar, parse_sequence):
             created_rule = rule_class()  # type: Rule
             working_nonterm._set_to_rule(created_rule)
             created_rule._from_symbols.append(working_nonterm)
-            t = Terminal(i[index])
+            t = Terminal(parse_sequence[index])
             index -= 1
             created_rule._to_symbols.append(t)
             t._set_from_rule(created_rule)

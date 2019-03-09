@@ -20,6 +20,8 @@ def find_nonterminals_rewritable_to_epsilon(grammar):
     Get nonterminals rewritable to epsilon.
     :param grammar: Grammar where to search.
     :return: Dictionary, where key is nonterminal rewritable to epsilon and value is rule that is responsible for it.
+    The rule doesn't need to rewrite to epsilon directly,
+    but the whole right side can be rewritable to epsilon using different rules.
     """
     # start with empty dictionary (contains only epsilon)
     rewritable = dict()  # type: Dict[Type[Nonterminal], Optional[Type[Rule]]]

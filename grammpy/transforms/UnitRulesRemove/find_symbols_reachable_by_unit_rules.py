@@ -79,7 +79,7 @@ def find_nonterminals_reachable_by_unit_rules(grammar):
     """
     Get nonterminal for which exist unit rule
     :param grammar: Grammar where to search
-    :return: Instance of UnitSymbolRechablingResults.
+    :return: Instance of UnitSymbolReachability.
     """
     # get nonterminals
     nonterminals = list(grammar.nonterminals)  # type: List[Type[Nonterminal]]
