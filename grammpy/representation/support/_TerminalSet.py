@@ -52,7 +52,7 @@ class _TerminalSet(_BaseSet):
         :param terminals: Terminals to remove.
         :raise KeyError if the object is not in the set.
         """
-        for term in terminals:
+        for term in set(terminals):
             if term not in self:
                 raise KeyError('Terminal ' + str(term) + ' is not inside')
             self._grammar.rules.remove(*self._assign_map[term], _validate=False)

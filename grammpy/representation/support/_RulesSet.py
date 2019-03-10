@@ -110,19 +110,21 @@ class _RulesSet(_BaseSet):
         This parameter is only for internal use.
         :raise NotRuleException: If the parameter doesn't inherit from Rule.
         :raise RuleException: If the syntax of the rule is invalid.
+        :raise KeyError: If the rule is not in the grammar.
         """
+        all_rules = set()
         for rule in rules:
             if rule not in self:
                 raise KeyError('Rule ' + rule.__name__ + ' is not inside')
             if _validate:
                 self._validate_rule(rule)
             for r in self._split_rules(rule):
-                if r not in self:
-                    continue
-                for side in r.rule:
-                    for s in side:
-                        self._assign_map[s].discard(r)
-                super().remove(r)
+                all_rules.add(r)
+        for rule in all_rules:
+            for side in rule.rule:
+                for s in side:
+                    self._assign_map[s].discard(rule)
+            super().remove(rule)
 
     def __contains__(self, o):
         # type: (Type[Rule]) -> bool

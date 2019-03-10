@@ -38,9 +38,9 @@ class _BaseSet(set):
         :param other: Iterable object with elements to compare with.
         :return: Current instance with updated state.
         """
-        union = self.union(other)
-        self.remove(*union)
-        for elem in set(other).difference(union):
+        intersect = self.intersection(other)
+        self.remove(*intersect)
+        for elem in set(other).difference(intersect):
             self.add(elem)
         return self
 
@@ -67,3 +67,11 @@ class _BaseSet(set):
                 self.remove(el)
             except KeyError:
                 continue
+
+    def size(self):
+        # type: () -> int
+        """
+        Get number of elements in the container.
+        :return: Number of elements in the container.
+        """
+        return len(self)

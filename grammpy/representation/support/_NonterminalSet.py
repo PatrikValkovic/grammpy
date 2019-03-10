@@ -68,7 +68,8 @@ class _NonterminalSet(_BaseSet):
         Set start symbol to None if deleting nonterminal is start symbol at the same time.
         :param nonterminals: Nonterminals to remove.
         """
-        for nonterm in nonterminals:
+        for nonterm in set(nonterminals):
+            _NonterminalSet._control_nonterminal(nonterm)
             if nonterm not in self:
                 raise KeyError('Nonterminal ' + nonterm.__name__ + ' is not inside')
             self._grammar.rules.remove(*self._assign_map[nonterm], _validate=False)
