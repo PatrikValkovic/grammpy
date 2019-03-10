@@ -2,12 +2,13 @@
 """
 :Author Patrik Valkovic
 :Created 03.08.2017 14:08
-:Licence GNUv3
+:Licence MIT
 Part of grammpy
 
 """
 
 from unittest import main, TestCase
+
 from grammpy.old_api import Grammar, Rule as _R
 from ..grammar import *
 

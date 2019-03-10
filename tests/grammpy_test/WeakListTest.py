@@ -2,7 +2,7 @@
 """
 :Author Patrik Valkovic
 :Created 31.08.2017 12:22
-:Licence GNUv3
+:Licence MIT
 Part of grammpy
 
 """
@@ -10,8 +10,8 @@ Part of grammpy
 import weakref
 from unittest import TestCase, main
 
-from grammpy.representation.support._WeakList import _WeakList as WeakList
 from grammpy.exceptions import TreeDeletedException
+from grammpy.representation.support._WeakList import _WeakList as WeakList
 
 
 class RulesTest(TestCase):

@@ -2,7 +2,7 @@
 """
 :Author Patrik Valkovic
 :Created 24.12.2017 12:21
-:Licence GNUv3
+:Licence MIT
 Part of grammpy-transforms
 
 """
@@ -10,8 +10,8 @@ Part of grammpy-transforms
 from unittest import TestCase, main
 
 from grammpy.old_api import *
-from grammpy.transforms import *
 from grammpy.parsers import cyk
+from grammpy.transforms import *
 
 
 class A(Nonterminal): pass

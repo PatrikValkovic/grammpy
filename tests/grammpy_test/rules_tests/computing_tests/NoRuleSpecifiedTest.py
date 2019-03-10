@@ -2,15 +2,15 @@
 """
 :Author Patrik Valkovic
 :Created 02.08.2017 10:04
-:Licence GNUv3
+:Licence MIT
 Part of grammpy
 
 """
 
 from unittest import main, TestCase
 
-from grammpy.old_api import Rule
 from grammpy.exceptions import RuleNotDefinedException
+from grammpy.old_api import Rule
 
 
 class NoRuleSpecifiedTest(TestCase):

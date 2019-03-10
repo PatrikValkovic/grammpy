@@ -2,15 +2,15 @@
 """
 :Author Patrik Valkovic
 :Created 02.08.2017 18:01
-:Licence GNUv3
+:Licence MIT
 Part of grammpy
 
 """
 
 from unittest import main, TestCase
 
-from grammpy.old_api import Rule, Nonterminal as _N
 from grammpy.exceptions import TerminalDoesNotExistsException, NonterminalDoesNotExistsException
+from grammpy.old_api import Rule, Nonterminal as _N
 from ..grammar import *
 
 

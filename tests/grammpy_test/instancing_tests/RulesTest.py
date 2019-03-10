@@ -2,15 +2,16 @@
 """
 :Author Patrik Valkovic
 :Created 31.08.2017 11:55
-:Licence GNUv3
+:Licence MIT
 Part of grammpy
 
 """
 
 
 from unittest import TestCase, main
-from grammpy.old_api import Nonterminal, Rule
+
 from grammpy.exceptions import TreeDeletedException
+from grammpy.old_api import Nonterminal, Rule
 
 
 class A(Nonterminal): pass

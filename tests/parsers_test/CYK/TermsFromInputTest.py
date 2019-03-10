@@ -2,7 +2,7 @@
 """
 :Author Patrik Valkovic
 :Created 31.03.2018 11:10
-:Licence GNUv3
+:Licence MIT
 Part of pyparsers
 
 """

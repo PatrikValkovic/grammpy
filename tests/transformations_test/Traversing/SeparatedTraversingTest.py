@@ -2,7 +2,7 @@
 """
 :Author Patrik Valkovic
 :Created 24.12.2017 11:57
-:Licence GNUv3
+:Licence MIT
 Part of grammpy-transforms
 
 """
@@ -11,8 +11,8 @@ import operator
 from unittest import TestCase, main
 
 from grammpy.old_api import *
-from grammpy.transforms import *
 from grammpy.parsers import cyk
+from grammpy.transforms import *
 
 
 class A(Nonterminal): pass

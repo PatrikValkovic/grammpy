@@ -2,14 +2,16 @@
 """
 :Author Patrik Valkovic
 :Created 19.08.2017 17:25
-:Licence GNUv3
+:Licence MIT
 Part of grammpy
 
 """
 
 
 from unittest import TestCase, main
+
 from grammpy.old_api import *
+
 
 class A(Nonterminal): pass
 class B(Nonterminal): pass

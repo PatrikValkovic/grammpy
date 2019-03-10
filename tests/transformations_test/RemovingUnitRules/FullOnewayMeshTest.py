@@ -2,7 +2,7 @@
 """
 :Author Patrik Valkovic
 :Created 22.08.2017 21:14
-:Licence GNUv3
+:Licence MIT
 Part of grammpy-transforms
 
 """

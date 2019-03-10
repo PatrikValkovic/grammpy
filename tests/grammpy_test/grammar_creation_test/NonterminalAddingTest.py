@@ -2,14 +2,15 @@
 """
 :Author Patrik Valkovic
 :Created 10.08.2017 22:03
-:Licence GNUv3
+:Licence MIT
 Part of grammpy
 
 """
 
 from unittest import TestCase, main
-from grammpy.old_api import Nonterminal, Grammar
+
 from grammpy.exceptions import NotNonterminalException
+from grammpy.old_api import Nonterminal, Grammar
 
 
 class A(Nonterminal):

@@ -2,7 +2,7 @@
 """
 :Author Patrik Valkovic
 :Created 03.08.2017 12:28
-:Licence GNUv3
+:Licence MIT
 Part of grammpy
 
 """
@@ -11,6 +11,7 @@ from unittest import main, TestCase
 
 from grammpy.old_api import Rule as _R, Grammar
 from ..grammar import *
+
 
 class ValidAddTest(TestCase):
     def __init__(self, *args):

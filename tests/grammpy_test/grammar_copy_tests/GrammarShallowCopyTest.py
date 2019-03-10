@@ -2,13 +2,14 @@
 """
 :Author Patrik Valkovic
 :Created 16.08.2017 19:16
-:Licence GNUv3
+:Licence MIT
 Part of grammpy
 
 """
 
 from copy import copy
 from unittest import main, TestCase
+
 from grammpy.old_api import *
 
 
