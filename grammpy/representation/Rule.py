@@ -51,7 +51,7 @@ class Rule(metaclass=_MetaRule):
                     'rule',
                     'rules'}:
             return getattr(self.__class__, name)
-        raise AttributeError
+        raise AttributeError(self.__class__.__name__ + ' doesn\'t have attribute ' + name)
 
     @property
     def from_symbols(self):

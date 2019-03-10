@@ -9,8 +9,8 @@ Part of grammpy
 
 from unittest import main, TestCase
 
-from grammpy.old_api import Rule, EPS
-from ..grammar import *
+from grammpy import Rule, EPS
+from .grammar import *
 
 
 class ValidRulesTest(TestCase):

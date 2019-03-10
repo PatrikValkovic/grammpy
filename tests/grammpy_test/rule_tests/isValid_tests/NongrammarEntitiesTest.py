@@ -9,9 +9,9 @@ Part of grammpy
 
 from unittest import main, TestCase
 
+from grammpy import Rule, Nonterminal as _N
 from grammpy.exceptions import TerminalDoesNotExistsException, NonterminalDoesNotExistsException
-from grammpy.old_api import Rule, Nonterminal as _N
-from ..grammar import *
+from .grammar import *
 
 
 class Invalid(_N):
@@ -22,6 +22,7 @@ class NongrammarEntitiesTest(TestCase):
     def test_invalidTerminal(self):
         class tmp(Rule):
             rules = [([NFifth], [5, NFirst])]
+
         with self.assertRaises(TerminalDoesNotExistsException):
             tmp.validate(grammar)
         self.assertFalse(tmp.is_valid(grammar))
@@ -29,6 +30,7 @@ class NongrammarEntitiesTest(TestCase):
     def test_invalidTerminalFrom(self):
         class tmp(Rule):
             rules = [(['asdf', NFifth], [2, NFirst])]
+
         with self.assertRaises(TerminalDoesNotExistsException):
             tmp.validate(grammar)
         self.assertFalse(tmp.is_valid(grammar))
@@ -37,6 +39,7 @@ class NongrammarEntitiesTest(TestCase):
         class tmp(Rule):
             rules = [([TSecond, 'b', TThird], ['c', 2]),
                      ([NFifth], [5, NFirst])]
+
         with self.assertRaises(TerminalDoesNotExistsException):
             tmp.validate(grammar)
         self.assertFalse(tmp.is_valid(grammar))
@@ -45,6 +48,7 @@ class NongrammarEntitiesTest(TestCase):
         class tmp(Rule):
             rules = [([TSecond, 'b', TThird], ['c', 2]),
                      (['asdf', NFifth], [2, NFirst])]
+
         with self.assertRaises(TerminalDoesNotExistsException):
             tmp.validate(grammar)
         self.assertFalse(tmp.is_valid(grammar))
@@ -52,6 +56,7 @@ class NongrammarEntitiesTest(TestCase):
     def test_invalidNonterminal(self):
         class tmp(Rule):
             rules = [([NFifth], [2, Invalid])]
+
         with self.assertRaises(NonterminalDoesNotExistsException):
             tmp.validate(grammar)
         self.assertFalse(tmp.is_valid(grammar))
@@ -59,6 +64,7 @@ class NongrammarEntitiesTest(TestCase):
     def test_invalidNonterminalFrom(self):
         class tmp(Rule):
             rules = [(['a', Invalid], [2, NFirst])]
+
         with self.assertRaises(NonterminalDoesNotExistsException):
             tmp.validate(grammar)
         self.assertFalse(tmp.is_valid(grammar))
@@ -67,6 +73,7 @@ class NongrammarEntitiesTest(TestCase):
         class tmp(Rule):
             rules = [([TSecond, 'b', TThird], ['c', 2]),
                      ([NFifth], [2, Invalid])]
+
         with self.assertRaises(NonterminalDoesNotExistsException):
             tmp.validate(grammar)
         self.assertFalse(tmp.is_valid(grammar))
@@ -75,6 +82,7 @@ class NongrammarEntitiesTest(TestCase):
         class tmp(Rule):
             rules = [([TSecond, 'b', TThird], ['c', 2]),
                      (['a', Invalid], [2, NFirst])]
+
         with self.assertRaises(NonterminalDoesNotExistsException):
             tmp.validate(grammar)
         self.assertFalse(tmp.is_valid(grammar))

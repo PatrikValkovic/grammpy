@@ -9,9 +9,9 @@ Part of grammpy
 
 from unittest import main, TestCase
 
+from grammpy import Rule
 from grammpy.exceptions import RuleSyntaxException
-from grammpy.old_api import Rule
-from ..grammar import *
+from .grammar import *
 
 
 class InvalidSyntaxTest(TestCase):

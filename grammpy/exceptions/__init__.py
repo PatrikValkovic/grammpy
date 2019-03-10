@@ -10,6 +10,7 @@ Part of grammpy
 from .CannotConvertException import CannotConvertException
 from .CantCreateSingleRuleException import CantCreateSingleRuleException
 from .GrammpyException import GrammpyException
+from .MultipleDefinitionException import MultipleDefinitionException
 from .NonterminalDoesNotExistsException import NonterminalDoesNotExistsException
 from .NotASingleSymbolException import NotASingleSymbolException
 from .NotNonterminalException import NotNonterminalException

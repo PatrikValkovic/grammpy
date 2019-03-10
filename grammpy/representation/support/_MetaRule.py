@@ -166,7 +166,7 @@ class _MetaRule(type):
                     'rule',
                     'rules'}:
             return getattr(_MetaRule, '_get_' + name)(cls)
-        raise AttributeError
+        raise AttributeError(cls.__name__ + ' doesn\'t have attribute ' + name)
 
     @property
     def count(cls):
@@ -228,10 +228,18 @@ class _MetaRule(type):
         :raise TerminalDoesNotExistsException: If terminal does not exists in the grammar.
         :raise NonterminalDoesNotExistsException: If nonterminal does not exists in the grammar.
         """
-        right = cls.rules
-        if not isinstance(right, list):
+        # check if the rule is not defined multiple times
+        defined = set(dir(cls))
+        if 'rules' in defined and len(defined & {'rule','left','right','toSymbol','fromSymbol'}) > 0 or \
+            'rule' in defined and len(defined & {'left','right','toSymbol','fromSymbol'}) > 0 or \
+            'left' in defined and 'fromSymbol' in defined or \
+            'right' in defined and 'toSymbol' in defined:
+            raise MultipleDefinitionException(cls, 'Rule is defined multiple times')
+        # check if the rule is defined properly
+        all = cls.rules
+        if not isinstance(all, list):
             raise RuleSyntaxException(cls, 'Rules property is not enclose in list')
-        for rule in right:
+        for rule in all:
             if not isinstance(rule, tuple):
                 raise RuleSyntaxException(cls, 'One of the rules is not enclose in tuple', rule)
             if len(rule) != 2:
