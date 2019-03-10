@@ -15,7 +15,7 @@ from deprecated import deprecated
 from ._support import RulesClass
 from .. import Grammar as NewGrammar, Terminal, Rule
 
-if TYPE_CHECKING:  # pragma: no-cover
+if TYPE_CHECKING:  # pragma: no cover
     from .. import Nonterminal
     from ..representation.support._NonterminalSet import _NonterminalSet
     from ..representation.support._TerminalSet import _TerminalSet

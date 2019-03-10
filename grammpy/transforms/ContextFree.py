@@ -89,8 +89,7 @@ class ContextFree:
         :return: Grammar without useless symbols.
         """
         grammar = ContextFree.remove_nongenerating_nonterminals(grammar, inplace)
-        inplace = True
-        grammar = ContextFree.remove_unreachable_symbols(grammar, inplace)
+        grammar = ContextFree.remove_unreachable_symbols(grammar, True)
         return grammar
 
     @staticmethod
@@ -149,3 +148,25 @@ class ContextFree:
         :return: Grammar in Chomsky Normal Form.
         """
         return transform_to_chomsky_normal_form(grammar, inplace)
+
+    @staticmethod
+    def prepare_for_cyk(grammar, inplace=False):
+        # type: (Grammar, bool) -> Grammar
+        """
+        Take common context-free grammar and perform all the necessary steps to use it in the CYK algorithm.
+        Performs following steps:
+        - remove useless symbols
+        - remove rules with epsilon
+        - remove unit rules
+        - remove useless symbols once more (as previous steps could change the grammar)
+        - transform it to Chomsky Normal Form
+        :param grammar: Grammar to transform.
+        :param inplace: True if the operation should be done in place. False by default.
+        :return: Modified grammar.
+        """
+        grammar = ContextFree.remove_useless_symbols(grammar, inplace)
+        grammar = ContextFree.remove_rules_with_epsilon(grammar, True)
+        grammar = ContextFree.remove_unit_rules(grammar, True)
+        grammar = ContextFree.remove_useless_symbols(grammar, True)
+        grammar = ContextFree.transform_to_chomsky_normal_form(grammar, True)
+        return grammar
