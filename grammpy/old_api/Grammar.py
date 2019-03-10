@@ -69,8 +69,8 @@ class Grammar:
         if not isinstance(term, Iterable) or isinstance(term, str):
             term = [term]
         for t in term:
-            if t not in self._gr.terminals:
-                self._gr.terminals.add(t)
+            if t not in self.terminals:
+                self.terminals.add(t)
                 yield Terminal(t)
 
     def remove_term(self, term=None):
@@ -80,15 +80,15 @@ class Grammar:
         :param term: Object or sequence of objects representing terminals.
         :return: List of terminals removed from the grammar as sequence of Terminal instances.
         """
-        term = self._gr.terminals if term is None else term
+        term = self.terminals if term is None else term
         if not isinstance(term, Iterable) or isinstance(term, str):
             term = [term]
         tmp = []
         for t in list(term):
-            for i in self._gr.terminals:
+            for i in self.terminals:
                 if i == t:
                     tmp.append(Terminal(i))
-            self._gr.terminals.remove(t)
+            self.terminals.remove(t)
         return tmp
 
     def have_term(self, term):
@@ -102,7 +102,7 @@ class Grammar:
         if not isinstance(term, Iterable) or isinstance(term, str):
             term = [term]
         for t in term:
-            if t not in self._gr.terminals:
+            if t not in self.terminals:
                 return False
         return True
 
@@ -117,7 +117,7 @@ class Grammar:
         If the parameter is None (default), return all terminals.
         """
         if term is None:
-            return [Terminal(i) for i in self._gr.terminals]
+            return [Terminal(i) for i in self.terminals]
         is_single = False
         if not isinstance(term, Iterable) or isinstance(term, str):
             term = [term]
@@ -125,7 +125,7 @@ class Grammar:
         tmp = []
         for t in term:
             handled = False
-            for i in self._gr.terminals:
+            for i in self.terminals:
                 if t == i and is_single is not True:
                     handled = True
                     tmp.append(Terminal(i))
@@ -163,7 +163,7 @@ class Grammar:
         Get number of terminals within the grammar.
         :return: Number of terminals within the grammar.
         """
-        return len(self._gr.terminals)
+        return len(self.terminals)
 
     def terms_clear(self):
         # type: () -> List[Terminal]
@@ -194,8 +194,8 @@ class Grammar:
         if not isinstance(nonterm, Iterable):
             nonterm = [nonterm]
         for t in nonterm:
-            if t not in self._gr.nonterminals:
-                self._gr.nonterminals.add(t)
+            if t not in self.nonterminals:
+                self.nonterminals.add(t)
                 yield t
 
     def remove_nonterm(self, nonterm=None):
@@ -205,14 +205,14 @@ class Grammar:
         :param nonterm: Single or sequence of nonterminals to remove.
         :return: List of nonterminals removed from the grammar.
         """
-        nonterm = self._gr.nonterminals if nonterm is None else nonterm
+        nonterm = self.nonterminals if nonterm is None else nonterm
         if not isinstance(nonterm, Iterable):
             nonterm = [nonterm]
         tmp = []
         for t in list(nonterm):
-            if t in self._gr.nonterminals:
+            if t in self.nonterminals:
                 tmp.append(t)
-                self._gr.nonterminals.remove(t)
+                self.nonterminals.remove(t)
         return tmp
 
     def have_nonterm(self, nonterm):
@@ -227,7 +227,7 @@ class Grammar:
             nonterm = [nonterm]
         contains = True
         for t in nonterm:
-            contains = t in self._gr.nonterminals and contains
+            contains = t in self.nonterminals and contains
         return contains
 
     def get_nonterm(self, nonterm=None):
@@ -241,16 +241,16 @@ class Grammar:
         If the parameter is None (default), return all nonterminals.
         """
         if nonterm is None:
-            return list(self._gr.nonterminals)
+            return list(self.nonterminals)
         is_single = False
         if not isinstance(nonterm, Iterable):
             nonterm = [nonterm]
             is_single = True
         tmp = []
         for t in nonterm:
-            if t in self._gr.nonterminals and is_single is not True:
+            if t in self.nonterminals and is_single is not True:
                 tmp.append(t)
-            elif t in self._gr.nonterminals:
+            elif t in self.nonterminals:
                 return t
             elif is_single is not True:
                 tmp.append(None)
@@ -284,7 +284,7 @@ class Grammar:
         Get number of nonterminals in the grammar.
         :return: Number of nonterminals in the grammar.
         """
-        return len(self._gr.nonterminals)
+        return len(self.nonterminals)
 
     def nonterms_clear(self):
         # type: () -> List[Type[Nonterminal]]
@@ -305,7 +305,7 @@ class Grammar:
         rules = [] if rules is None else rules
         if not isinstance(rules, Iterable):
             rules = [rules]
-        return list(self._gr.rules.add(*rules))
+        return list(self.rules.add(*rules))
 
     def remove_rule(self, rules=None, *, _validate=True):
         # type: (Optional[Union[Iterable[Type[Rule]], Type[Rule]]], None, bool) -> List[Type[Rule]]
@@ -316,14 +316,14 @@ class Grammar:
         This parameter is only for internal use.
         :return: List of rules removed from the grammar.
         """
-        rules = self._gr.rules if rules is None else rules
+        rules = self.rules if rules is None else rules
         if not isinstance(rules, Iterable):
             rules = [rules]
         tmp = []
         for t in list(rules):
-            if t in self._gr.rules:
+            if t in self.rules:
                 tmp.append(t)
-                self._gr.rules.remove(t)
+                self.rules.remove(t)
         return tmp
 
     def have_rule(self, rules):
@@ -352,15 +352,15 @@ class Grammar:
         If the parameter is None (default), return all rules.
         """
         if rules is None:
-            return list(self._gr.rules)
+            return list(self.rules)
         is_single = False
         if not isinstance(rules, Iterable):
             rules = [rules]
             is_single = True
         result = []
         for rule in rules:
-            rule.validate(self._gr)
-            result = result + self._gr.rules.get(rule)
+            rule.validate(self)
+            result = result + self.rules.get(rule)
         return result[0] if is_single and len(result) == 1 else result
 
     def rule(self, rules=None):
@@ -406,9 +406,9 @@ class Grammar:
         Get start symbol of the grammar. Default value is None.
         :return: Start symbol of the grammar.
         """
-        return self._gr.start
+        return self.start
 
-    def start_set(self, nonterminal):
+    def start_set(self, nonterminal = None):
         # type: (Optional[Type[Nonterminal]]) -> None
         """
         Set start symbol of the grammar.
@@ -417,7 +417,7 @@ class Grammar:
         The start symbol needs to be in the nonterminals.
         :raise NonterminalDoesNotExistsException: If the start symbol is not in nonterminals.
         """
-        self._gr.start = nonterminal
+        self.start = nonterminal
 
     def start_isSet(self):
         # type: () -> bool
@@ -425,7 +425,7 @@ class Grammar:
         Check if the start symbol is set. That mean if the start symbol is not None.
         :return: True if the start symbol is set, false otherwise.
         """
-        return self._gr.start is not None
+        return self.start is not None
 
     def start_is(self, nonterminal):
         # type: (Type[Nonterminal]) -> bool
@@ -434,7 +434,7 @@ class Grammar:
         :param nonterminal: Nonterminal to check.
         :return: True if start symbol is parameter, false otherwise.
         """
-        return self._gr.start is nonterminal
+        return self.start == nonterminal
 
     # Copy
     def __copy__(self):
