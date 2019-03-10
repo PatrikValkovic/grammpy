@@ -8,14 +8,15 @@ Part of grammpy
 """
 from typing import Iterable, TYPE_CHECKING, Any
 
+from ._BaseSet import _BaseSet
+
 if TYPE_CHECKING:  # pragma: no cover
     from .. import Grammar
 
 
-class _TerminalSet(set):
+class _TerminalSet(_BaseSet):
     """
     Set that store terminals inside the grammar.
-    TODO: implement rest of modify methods.
     """
 
     def __init__(self, grammar, assign_map, iterable=None):
@@ -48,9 +49,12 @@ class _TerminalSet(set):
         """
         Remove terminals from the set.
         Removes also rules using this terminal.
-        :param terminals: Nonterminals to remove.
+        :param terminals: Terminals to remove.
+        :raise KeyError if the object is not in the set.
         """
         for term in terminals:
+            if term not in self:
+                raise KeyError('Terminal ' + str(term) + ' is not inside')
             self._grammar.rules.remove(*self._assign_map[term], _validate=False)
             del self._assign_map[term]
             super().remove(term)

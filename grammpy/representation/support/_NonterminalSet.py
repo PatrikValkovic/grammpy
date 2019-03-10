@@ -9,6 +9,7 @@ Part of grammpy
 import inspect
 from typing import Iterable, TYPE_CHECKING, Type
 
+from ._BaseSet import _BaseSet
 from ..Nonterminal import Nonterminal
 from ...exceptions import NotNonterminalException
 
@@ -16,10 +17,9 @@ if TYPE_CHECKING:  # pragma: no cover
     from .. import Grammar
 
 
-class _NonterminalSet(set):
+class _NonterminalSet(_BaseSet):
     """
     Set that store nonterminals inside the grammar.
-    TODO: implement rest of modify methods.
     """
 
     def __init__(self, grammar, assign_map, iterable=None):
@@ -70,7 +70,7 @@ class _NonterminalSet(set):
         """
         for nonterm in nonterminals:
             if nonterm not in self:
-                continue
+                raise KeyError('Nonterminal ' + nonterm.__name__ + ' is not inside')
             self._grammar.rules.remove(*self._assign_map[nonterm], _validate=False)
             del self._assign_map[nonterm]
             if self._grammar.start is nonterm:

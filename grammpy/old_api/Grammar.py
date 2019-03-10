@@ -85,9 +85,8 @@ class Grammar:
             term = [term]
         tmp = []
         for t in list(term):
-            for i in self.terminals:
-                if i == t:
-                    tmp.append(Terminal(i))
+            if t in self.terminals:
+                tmp.append(Terminal(t))
             self.terminals.remove(t)
         return tmp
 

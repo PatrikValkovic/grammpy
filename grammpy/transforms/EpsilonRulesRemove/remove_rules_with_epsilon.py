@@ -89,7 +89,7 @@ def remove_rules_with_epsilon(grammar, inplace=False):
         if right == [EPSILON]:
             # unless it rewrites from the start symbol
             if rule.fromSymbol != grammar.start:
-                grammar.rules.remove(rule)
+                grammar.rules.discard(rule)
             # continue IS executed, but due optimization line is marked as missed.
             continue  # pragma: no cover
         # iterate over the right side
@@ -98,6 +98,6 @@ def remove_rules_with_epsilon(grammar, inplace=False):
             # if symbol is rewritable, generate new rule without that symbol
             if symbol in rewritable:
                 new_rule = _create_rule(rule, rule_index, rewritable)
-                rules.put(new_rule)  # in case there are more rewritable symbols
                 grammar.rules.add(new_rule)
+                rules.put(new_rule)  # in case there are more rewritable symbols
     return grammar

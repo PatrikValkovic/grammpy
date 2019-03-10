@@ -9,7 +9,10 @@ Part of grammpy
 import inspect
 from typing import Iterable, List, TYPE_CHECKING, Type, Generator, Optional
 
+from deprecated import deprecated
+
 from .SplitRule import SplitRule
+from ._BaseSet import _BaseSet
 from .. import Rule
 from ...exceptions import NotRuleException, NonterminalDoesNotExistsException, TerminalDoesNotExistsException
 
@@ -17,10 +20,9 @@ if TYPE_CHECKING:  # pragma: no cover
     from .. import Grammar
 
 
-class _RulesSet(set):
+class _RulesSet(_BaseSet):
     """
     Set that store terminals inside the grammar.
-    TODO: implement rest of modify methods.
     """
 
     def __init__(self, grammar, assign_map, iterable=None):
@@ -111,7 +113,7 @@ class _RulesSet(set):
         """
         for rule in rules:
             if rule not in self:
-                continue
+                raise KeyError('Rule ' + rule.__name__ + ' is not inside')
             if _validate:
                 self._validate_rule(rule)
             for r in self._split_rules(rule):
@@ -140,6 +142,7 @@ class _RulesSet(set):
         except (TerminalDoesNotExistsException, NonterminalDoesNotExistsException):
             return False
 
+    @deprecated(version='2.0.0', reason='Only for purpose of old API')
     def get(self, *rules):
         # type: (Iterable[Type[Rule]]) -> List[Type[Rule]]
         """
@@ -174,7 +177,6 @@ class _RulesSet(set):
         Find rule representing parameter.
         :param rule: Rule to find.
         :return: Rule stored inside the set.
-        TODO replace with hash?
         """
         for r in self:
             if r == rule:
