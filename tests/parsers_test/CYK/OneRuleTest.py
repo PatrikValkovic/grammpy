@@ -24,9 +24,9 @@ class OneRuleTest(TestCase):
 
     def setUp(self):
         self.g = Grammar(terminals=[0],
-                    nonterminals=[S],
-                    rules=[R],
-                    start_symbol=S)
+                         nonterminals=[S],
+                         rules=[R],
+                         start_symbol=S)
 
     def test_shouldParse(self):
         parsed = cyk(self.g, [0])

@@ -29,9 +29,9 @@ class TwoNonterminalsTest(TestCase):
 
     def setUp(self):
         self.g = Grammar(terminals=[0, 1],
-                    nonterminals=[S, A, B],
-                    rules=[SAB, A0, B1],
-                    start_symbol=S)
+                         nonterminals=[S, A, B],
+                         rules=[SAB, A0, B1],
+                         start_symbol=S)
 
     def test_shouldParse(self):
         parsed = cyk(self.g, [0, 1])

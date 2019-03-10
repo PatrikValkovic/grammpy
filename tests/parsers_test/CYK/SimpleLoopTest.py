@@ -34,9 +34,9 @@ class SimpleLoopTest(TestCase):
 
     def setUp(self):
         self.g = Grammar(terminals=[0, 1, 2],
-                    nonterminals=[S, A, B, C],
-                    rules=[SAB, AAC, B1, C0, A2],
-                    start_symbol=S)
+                         nonterminals=[S, A, B, C],
+                         rules=[SAB, AAC, B1, C0, A2],
+                         start_symbol=S)
 
     def test_shouldParse(self):
         parsed = cyk(self.g, [2, 1])

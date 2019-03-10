@@ -10,6 +10,7 @@ Part of grammpy-transforms
 
 from unittest import TestCase, main
 
+from grammpy import Nonterminal, Rule
 from grammpy.transforms import *
 
 

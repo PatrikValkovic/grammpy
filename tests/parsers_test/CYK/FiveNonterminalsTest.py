@@ -33,9 +33,9 @@ class FiveNonterminalsTest(TestCase):
 
     def setUp(self):
         self.g = Grammar(terminals=[0, 1, 2],
-                    nonterminals=[S, A, B, C, D],
-                    rules=[SAB, A0, BCD, C1, D2],
-                    start_symbol=S)
+                         nonterminals=[S, A, B, C, D],
+                         rules=[SAB, A0, BCD, C1, D2],
+                         start_symbol=S)
 
     def test_shouldParse(self):
         parsed = cyk(self.g, [0, 1, 2])
