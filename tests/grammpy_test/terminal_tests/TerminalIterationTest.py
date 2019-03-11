@@ -7,7 +7,6 @@ Part of grammpy
 
 """
 from unittest import TestCase, main
-
 from grammpy import Grammar
 
 
