@@ -38,7 +38,7 @@ class _MetaRule(type):
         try:
             transformed = tuple((tuple(s for s in rule[0]), tuple(s for s in rule[1])) for rule in cls.rules)
             return hash(transformed)
-        except RuleNotDefinedException:
+        except (TypeError, RuleNotDefinedException):
             return super().__hash__()
 
     def __eq__(cls, other):
@@ -230,10 +230,10 @@ class _MetaRule(type):
         """
         # check if the rule is not defined multiple times
         defined = set(dir(cls))
-        if 'rules' in defined and len(defined & {'rule','left','right','toSymbol','fromSymbol'}) > 0 or \
-            'rule' in defined and len(defined & {'left','right','toSymbol','fromSymbol'}) > 0 or \
-            'left' in defined and 'fromSymbol' in defined or \
-            'right' in defined and 'toSymbol' in defined:
+        if 'rules' in defined and len(defined & {'rule', 'left', 'right', 'toSymbol', 'fromSymbol'}) > 0 or \
+                'rule' in defined and len(defined & {'left', 'right', 'toSymbol', 'fromSymbol'}) > 0 or \
+                'left' in defined and 'fromSymbol' in defined or \
+                'right' in defined and 'toSymbol' in defined:
             raise MultipleDefinitionException(cls, 'Rule is defined multiple times')
         # check if the rule is defined properly
         all = cls.rules

@@ -8,6 +8,7 @@ Part of grammpy
 """
 from unittest import TestCase, main
 from grammpy import Grammar, Nonterminal
+from grammpy.exceptions import NotNonterminalException
 
 
 class A(Nonterminal): pass
@@ -26,7 +27,7 @@ class AddWhenCreating(TestCase):
         self.assertIn(A, gr.nonterminals)
         self.assertIn(B, gr.nonterminals)
 
-    def test_addThreeInString(self):
+    def test_addThreeInArray(self):
         gr = Grammar(nonterminals=[A, B, C])
         self.assertIn(A, gr.nonterminals)
         self.assertIn(B, gr.nonterminals)
@@ -51,6 +52,14 @@ class AddWhenCreating(TestCase):
         self.assertNotIn(B, gr.nonterminals)
         self.assertIn(C, gr.nonterminals)
         self.assertNotIn(D, gr.nonterminals)
+
+    def test_addTerminal(self):
+        with self.assertRaises(NotNonterminalException):
+            gr = Grammar(nonterminals=[0])
+
+    def test_addTerminalBetweenValid(self):
+        with self.assertRaises(NotNonterminalException):
+            gr = Grammar(nonterminals=[A, 0, B])
 
 
 if __name__ == '__main__':

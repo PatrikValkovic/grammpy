@@ -120,7 +120,7 @@ class TerminalDiscardTest(TestCase):
         self.assertIn('asdf', gr.terminals)
         self.assertIn(TempClass, gr.terminals)
 
-    def test_removeSameElementMoreTimesSequentally(self):
+    def test_removeSameElementMoreTimesSequentially(self):
         gr = Grammar()
         gr.terminals.add(*[0, 'asdf', TempClass])
         self.assertEqual(gr.terminals.size(), 3)

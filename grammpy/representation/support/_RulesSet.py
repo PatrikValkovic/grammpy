@@ -114,11 +114,11 @@ class _RulesSet(_BaseSet):
         """
         all_rules = set()
         for rule in rules:
-            if rule not in self:
-                raise KeyError('Rule ' + rule.__name__ + ' is not inside')
             if _validate:
                 self._validate_rule(rule)
             for r in self._split_rules(rule):
+                if not self.__contains__(rule, _validate=False):
+                    raise KeyError('Rule ' + rule.__name__ + ' is not inside')
                 all_rules.add(r)
         for rule in all_rules:
             for side in rule.rule:
@@ -126,8 +126,8 @@ class _RulesSet(_BaseSet):
                     self._assign_map[s].discard(rule)
             super().remove(rule)
 
-    def __contains__(self, o):
-        # type: (Type[Rule]) -> bool
+    def __contains__(self, o, *, _validate=True):
+        # type: (Type[Rule], _, bool) -> bool
         """
         Check, if is rule in the set.
         :param o: Rule to check.
@@ -136,7 +136,8 @@ class _RulesSet(_BaseSet):
         :raise RuleException: If the syntax of the rule is invalid.
         """
         try:
-            self._validate_rule(o)
+            if _validate:
+                self._validate_rule(o)
             for r in self._split_rules(o):
                 if not super().__contains__(r):
                     return False

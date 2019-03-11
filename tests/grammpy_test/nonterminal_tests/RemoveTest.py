@@ -64,7 +64,7 @@ class RemoveTest(TestCase):
         gr.nonterminals.add(A, B, C)
         self.assertEqual(gr.nonterminals.size(), 3)
         self.assertEqual(len(gr.nonterminals), 3)
-        gr.nonterminals.remove(*[A, B])
+        gr.nonterminals.remove(A, B)
         self.assertEqual(gr.nonterminals.size(), 1)
         self.assertEqual(len(gr.nonterminals), 1)
         self.assertNotIn(A, gr.nonterminals)
@@ -116,7 +116,7 @@ class RemoveTest(TestCase):
         self.assertNotIn(B, gr.nonterminals)
         self.assertIn(C, gr.nonterminals)
 
-    def test_removeSameElementMoreTimesSequentally(self):
+    def test_removeSameElementMoreTimesSequentially(self):
         gr = Grammar()
         gr.nonterminals.add(*[A, B, C])
         self.assertEqual(gr.nonterminals.size(), 3)

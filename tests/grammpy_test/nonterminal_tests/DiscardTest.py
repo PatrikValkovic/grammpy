@@ -116,7 +116,7 @@ class DiscardTest(TestCase):
         self.assertNotIn(B, gr.nonterminals)
         self.assertIn(C, gr.nonterminals)
 
-    def test_removeSameElementMoreTimesSequentally(self):
+    def test_removeSameElementMoreTimesSequentially(self):
         gr = Grammar()
         gr.nonterminals.add(*[A, B, C])
         self.assertEqual(gr.nonterminals.size(), 3)
