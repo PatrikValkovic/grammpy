@@ -8,8 +8,7 @@ Part of grammpy-transforms
 """
 
 from unittest import TestCase, main
-
-from grammpy.old_api import *
+from grammpy import *
 from grammpy.transforms import ContextFree
 
 
@@ -21,6 +20,7 @@ class RuleStoA(Rule): rule = ([S], [A])
 class RuleAtoAB(Rule): rule = ([A], [A, B])
 class RuleBto1(Rule): rule = ([B], [1])
 
+
 class SimpleTest(TestCase):
     def test_simpleTest(self):
         g = Grammar(terminals=[0, 1],
@@ -28,11 +28,11 @@ class SimpleTest(TestCase):
                     rules=[RuleSto0, RuleStoA, RuleAtoAB, RuleBto1],
                     start_symbol=S)
         com = ContextFree.remove_useless_symbols(g)
-        self.assertTrue(com.have_term(0))
-        self.assertFalse(com.have_term(1))
-        self.assertTrue(com.have_nonterm(S))
-        self.assertFalse(com.have_nonterm(A))
-        self.assertFalse(com.have_nonterm(B))
+        self.assertIn(0, com.terminals)
+        self.assertNotIn(1, com.terminals)
+        self.assertIn(S, com.nonterminals)
+        self.assertNotIn(A, com.nonterminals)
+        self.assertNotIn(B, com.nonterminals)
 
     def test_simpleTestShouldNotChange(self):
         g = Grammar(terminals=[0, 1],
@@ -40,8 +40,11 @@ class SimpleTest(TestCase):
                     rules=[RuleSto0, RuleStoA, RuleAtoAB, RuleBto1],
                     start_symbol=S)
         ContextFree.remove_useless_symbols(g)
-        self.assertTrue(g.have_term([0, 1]))
-        self.assertTrue(g.have_nonterm([S, A, B]))
+        self.assertIn(0, g.terminals)
+        self.assertIn(1, g.terminals)
+        self.assertIn(S, g.nonterminals)
+        self.assertIn(A, g.nonterminals)
+        self.assertIn(B, g.nonterminals)
 
     def test_simpleTestShouldChange(self):
         g = Grammar(terminals=[0, 1],
@@ -49,11 +52,11 @@ class SimpleTest(TestCase):
                     rules=[RuleSto0, RuleStoA, RuleAtoAB, RuleBto1],
                     start_symbol=S)
         ContextFree.remove_useless_symbols(g, inplace=True)
-        self.assertTrue(g.have_term(0))
-        self.assertFalse(g.have_term(1))
-        self.assertTrue(g.have_nonterm(S))
-        self.assertFalse(g.have_nonterm(A))
-        self.assertFalse(g.have_nonterm(B))
+        self.assertIn(0, g.terminals)
+        self.assertNotIn(1, g.terminals)
+        self.assertIn(S, g.nonterminals)
+        self.assertNotIn(A, g.nonterminals)
+        self.assertNotIn(B, g.nonterminals)
 
 
 

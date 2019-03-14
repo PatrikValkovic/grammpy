@@ -6,10 +6,8 @@
 Part of grammpy-transforms
 
 """
-
 from unittest import TestCase
-
-from grammpy.old_api import *
+from grammpy import *
 from grammpy.transforms import *
 
 
@@ -34,40 +32,48 @@ class CycleTest(TestCase):
                     nonterminals=[S, A, B, C, D],
                     rules=[Rules],
                     start_symbol=S)
-        self.assertEqual(g.rules_count(), 7)
+        self.assertEqual(g.rules.size(), 7)
         com = ContextFree.remove_useless_symbols(g)
-        self.assertTrue(com.have_term('c'))
-        self.assertFalse(com.have_term('a'))
-        self.assertFalse(com.have_term('b'))
-        self.assertTrue(com.have_nonterm([S, C]))
-        self.assertFalse(com.have_nonterm(A))
-        self.assertFalse(com.have_nonterm(B))
-        self.assertFalse(com.have_nonterm(D))
-        self.assertEqual(com.rules_count(), 2)
+        self.assertIn('c', com.terminals)
+        self.assertNotIn('a', com.terminals)
+        self.assertNotIn('b', com.terminals)
+        self.assertIn(S, com.nonterminals)
+        self.assertIn(C, com.nonterminals)
+        self.assertNotIn(A, com.nonterminals)
+        self.assertNotIn(B, com.nonterminals)
+        self.assertNotIn(D, com.nonterminals)
+        self.assertEqual(com.rules.size(), 2)
 
     def test_cycleTestShouldNotChange(self):
         g = Grammar(terminals=['a', 'b', 'c'],
                     nonterminals=[S, A, B, C, D],
                     rules=[Rules],
                     start_symbol=S)
-        self.assertEqual(g.rules_count(), 7)
+        self.assertEqual(g.rules.size(), 7)
         ContextFree.remove_useless_symbols(g)
-        self.assertTrue(g.have_term(['a', 'b', 'c']))
-        self.assertTrue(g.have_nonterm([S, A, B, C, D]))
-        self.assertEqual(g.rules_count(), 7)
+        self.assertIn('c', g.terminals)
+        self.assertIn('a', g.terminals)
+        self.assertIn('b', g.terminals)
+        self.assertIn(S, g.nonterminals)
+        self.assertIn(C, g.nonterminals)
+        self.assertIn(A, g.nonterminals)
+        self.assertIn(B, g.nonterminals)
+        self.assertIn(D, g.nonterminals)
+        self.assertEqual(g.rules.size(), 7)
 
     def test_cycleTestShouldChange(self):
         g = Grammar(terminals=['a', 'b', 'c'],
                     nonterminals=[S, A, B, C, D],
                     rules=[Rules],
                     start_symbol=S)
-        self.assertEqual(g.rules_count(), 7)
+        self.assertEqual(g.rules.size(), 7)
         ContextFree.remove_useless_symbols(g, inplace=True)
-        self.assertTrue(g.have_term('c'))
-        self.assertFalse(g.have_term('a'))
-        self.assertFalse(g.have_term('b'))
-        self.assertTrue(g.have_nonterm([S, C]))
-        self.assertFalse(g.have_nonterm(A))
-        self.assertFalse(g.have_nonterm(B))
-        self.assertFalse(g.have_nonterm(D))
-        self.assertEqual(g.rules_count(), 2)
+        self.assertIn('c', g.terminals)
+        self.assertNotIn('a', g.terminals)
+        self.assertNotIn('b', g.terminals)
+        self.assertIn(S, g.nonterminals)
+        self.assertIn(C, g.nonterminals)
+        self.assertNotIn(A, g.nonterminals)
+        self.assertNotIn(B, g.nonterminals)
+        self.assertNotIn(D, g.nonterminals)
+        self.assertEqual(g.rules.size(), 2)

@@ -6,10 +6,8 @@
 Part of grammpy-transforms
 
 """
-
 from unittest import TestCase, main
-
-from grammpy.old_api import *
+from grammpy import *
 from grammpy.transforms import *
 
 
@@ -40,40 +38,48 @@ class SimpleTest(TestCase):
                     nonterminals=[S, A, B, C, D],
                     rules=[Rules],
                     start_symbol=S)
-        self.assertEqual(g.rules_count(), 13)
+        self.assertEqual(g.rules.size(), 13)
         com = ContextFree.remove_useless_symbols(g)
-        self.assertTrue(com.have_term([0, 1]))
-        self.assertTrue(com.have_nonterm([S, D]))
-        self.assertFalse(com.have_nonterm(A))
-        self.assertFalse(com.have_nonterm(B))
-        self.assertFalse(com.have_nonterm(C))
-        self.assertEqual(com.rules_count(), 6)
+        self.assertIn(0, com.terminals)
+        self.assertIn(1, com.terminals)
+        self.assertIn(S, com.nonterminals)
+        self.assertIn(D, com.nonterminals)
+        self.assertNotIn(A, com.nonterminals)
+        self.assertNotIn(B, com.nonterminals)
+        self.assertNotIn(C, com.nonterminals)
+        self.assertEqual(com.rules.size(), 6)
 
     def test_epsilonTestShouldNotChange(self):
         g = Grammar(terminals=[0, 1],
                     nonterminals=[S, A, B, C, D],
                     rules=[Rules],
                     start_symbol=S)
-        self.assertEqual(g.rules_count(), 13)
+        self.assertEqual(g.rules.size(), 13)
         ContextFree.remove_useless_symbols(g)
-        self.assertTrue(g.have_term([0, 1]))
-        self.assertTrue(g.have_nonterm([S, A, B, C, D]))
-        self.assertEqual(g.rules_count(), 13)
+        self.assertIn(0, g.terminals)
+        self.assertIn(1, g.terminals)
+        self.assertIn(S, g.nonterminals)
+        self.assertIn(D, g.nonterminals)
+        self.assertIn(A, g.nonterminals)
+        self.assertIn(B, g.nonterminals)
+        self.assertIn(C, g.nonterminals)
+        self.assertEqual(g.rules.size(), 13)
 
     def test_epsilonTestShouldChange(self):
         g = Grammar(terminals=[0, 1],
                     nonterminals=[S, A, B, C, D],
                     rules=[Rules],
                     start_symbol=S)
-        self.assertEqual(g.rules_count(), 13)
+        self.assertEqual(g.rules.size(), 13)
         ContextFree.remove_useless_symbols(g, inplace=True)
-        self.assertTrue(g.have_term([0, 1]))
-        self.assertTrue(g.have_nonterm([S, D]))
-        self.assertFalse(g.have_nonterm(A))
-        self.assertFalse(g.have_nonterm(B))
-        self.assertFalse(g.have_nonterm(C))
-        self.assertEqual(g.rules_count(), 6)
-
+        self.assertIn(0, g.terminals)
+        self.assertIn(1, g.terminals)
+        self.assertIn(S, g.nonterminals)
+        self.assertIn(D, g.nonterminals)
+        self.assertNotIn(A, g.nonterminals)
+        self.assertNotIn(B, g.nonterminals)
+        self.assertNotIn(C, g.nonterminals)
+        self.assertEqual(g.rules.size(), 6)
 
 
 if __name__ == '__main__':
