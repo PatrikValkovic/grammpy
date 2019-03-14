@@ -6,10 +6,8 @@
 Part of grammpy-transforms
 
 """
-
 from unittest import main, TestCase
-
-from grammpy.old_api import *
+from grammpy import *
 from grammpy.transforms import *
 
 
@@ -36,11 +34,14 @@ class NotReachableInRuleTest(TestCase):
                            RuleDto0F, RuleEto01, RuleFto01],
                     start_symbol=A)
         com = ContextFree.remove_unreachable_symbols(g)
-        self.assertTrue(com.have_term([0, 1]))
-        self.assertTrue(com.have_nonterm([A, B, C]))
-        self.assertFalse(com.have_nonterm(D))
-        self.assertFalse(com.have_nonterm(E))
-        self.assertFalse(com.have_nonterm(F))
+        self.assertIn(0, com.terminals)
+        self.assertIn(1, com.terminals)
+        self.assertIn(A, com.nonterminals)
+        self.assertIn(B, com.nonterminals)
+        self.assertIn(C, com.nonterminals)
+        self.assertNotIn(D, com.nonterminals)
+        self.assertNotIn(E, com.nonterminals)
+        self.assertNotIn(F, com.nonterminals)
 
     def test_notReachableTestShouldNotChange(self):
         g = Grammar(terminals=[0, 1],
@@ -49,8 +50,14 @@ class NotReachableInRuleTest(TestCase):
                            RuleDto0F, RuleEto01, RuleFto01],
                     start_symbol=A)
         ContextFree.remove_unreachable_symbols(g)
-        self.assertTrue(g.have_term([0, 1]))
-        self.assertTrue(g.have_nonterm([A, B, C, D, E, F]))
+        self.assertIn(0, g.terminals)
+        self.assertIn(1, g.terminals)
+        self.assertIn(A, g.nonterminals)
+        self.assertIn(B, g.nonterminals)
+        self.assertIn(C, g.nonterminals)
+        self.assertIn(D, g.nonterminals)
+        self.assertIn(E, g.nonterminals)
+        self.assertIn(F, g.nonterminals)
 
     def test_notReachableTestShouldChange(self):
         g = Grammar(terminals=[0, 1],
@@ -59,11 +66,14 @@ class NotReachableInRuleTest(TestCase):
                            RuleDto0F, RuleEto01, RuleFto01],
                     start_symbol=A)
         ContextFree.remove_unreachable_symbols(g, inplace=True)
-        self.assertTrue(g.have_term([0, 1]))
-        self.assertTrue(g.have_nonterm([A, B, C]))
-        self.assertFalse(g.have_nonterm(D))
-        self.assertFalse(g.have_nonterm(E))
-        self.assertFalse(g.have_nonterm(F))
+        self.assertIn(0, g.terminals)
+        self.assertIn(1, g.terminals)
+        self.assertIn(A, g.nonterminals)
+        self.assertIn(B, g.nonterminals)
+        self.assertIn(C, g.nonterminals)
+        self.assertNotIn(D, g.nonterminals)
+        self.assertNotIn(E, g.nonterminals)
+        self.assertNotIn(F, g.nonterminals)
 
 
 if __name__ == '__main__':

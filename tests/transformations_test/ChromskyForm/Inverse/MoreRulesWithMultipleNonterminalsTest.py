@@ -6,10 +6,8 @@
 Part of grammpy-transforms
 
 """
-
 from unittest import TestCase, main
-
-from grammpy.old_api import *
+from grammpy import *
 from grammpy.parsers import cyk
 from grammpy.transforms import ContextFree, InverseContextFree
 
@@ -98,7 +96,6 @@ class MoreRulesWithMultipleNonterminalsTest(TestCase):
         self.assertIsInstance(pars.to_rule.to_symbols[2].to_rule, RuleC3)
         self.assertIsInstance(pars.to_rule.to_symbols[2].to_rule.to_symbols[0], Terminal)
         self.assertEqual(pars.to_rule.to_symbols[2].to_rule.to_symbols[0].s, 3)
-
 
 
 if __name__ == '__main__':

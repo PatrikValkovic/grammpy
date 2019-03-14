@@ -6,16 +6,12 @@
 Part of grammpy-transforms
 
 """
-
 from unittest import TestCase, main
-
-from grammpy.old_api import *
+from grammpy import *
 from grammpy.transforms import ContextFree
 
 
 class S(Nonterminal): pass
-
-
 class Rules(Rule):
     rules = [([S], [0, 1])]
 
@@ -26,47 +22,47 @@ class MoreRulesWithMultipleNonterminalsTest(TestCase):
                     nonterminals=[S],
                     rules=[Rules])
         com = ContextFree.transform_to_chomsky_normal_form(g)
-        self.assertEqual(com.rules_count(), 3)
-        self.assertEqual(len(com.rules()), 3)
-        fromS = list(filter(lambda r: r.fromSymbol == S, com.rules()))[0]
-        to0 = fromS.right[0]
-        to1 = fromS.right[1]
+        self.assertEqual(com.rules.size(), 3)
+        self.assertEqual(len(com.rules), 3)
+        from_s = list(filter(lambda r: r.fromSymbol == S, com.rules))[0]
+        to0 = from_s.right[0]
+        to1 = from_s.right[1]
         self.assertTrue(issubclass(to0, ContextFree.ChomskyTermNonterminal))
         self.assertTrue(issubclass(to1, ContextFree.ChomskyTermNonterminal))
-        to0R = list(filter(lambda r: r.right == [0], com.rules()))[0]
-        to1R = list(filter(lambda r: r.right == [1], com.rules()))[0]
+        to0R = list(filter(lambda r: r.right == [0], com.rules))[0]
+        to1R = list(filter(lambda r: r.right == [1], com.rules))[0]
         self.assertEqual(to0R.fromSymbol, to0)
         self.assertEqual(to1R.fromSymbol, to1)
-        self.assertEqual(com.nonterms_count(), 3)
-        self.assertEqual(len(com.nonterms()), 3)
+        self.assertEqual(com.nonterminals.size(), 3)
+        self.assertEqual(len(com.nonterminals), 3)
 
     def test_transformShouldNotChange(self):
         g = Grammar(terminals=[0, 1],
                     nonterminals=[S],
                     rules=[Rules])
         ContextFree.transform_to_chomsky_normal_form(g)
-        self.assertEqual(g.rules_count(), 1)
-        self.assertEqual(len(g.rules()), 1)
-        self.assertEqual(g.rules()[0], Rules)
+        self.assertEqual(g.rules.size(), 1)
+        self.assertEqual(len(g.rules), 1)
+        self.assertIn(Rules, g.rules)
 
     def test_transformShouldChange(self):
         g = Grammar(terminals=[0, 1],
                     nonterminals=[S],
                     rules=[Rules])
         ContextFree.transform_to_chomsky_normal_form(g, True)
-        self.assertEqual(g.rules_count(), 3)
-        self.assertEqual(len(g.rules()), 3)
-        fromS = list(filter(lambda r: r.fromSymbol == S, g.rules()))[0]
-        to0 = fromS.right[0]
-        to1 = fromS.right[1]
+        self.assertEqual(g.rules.size(), 3)
+        self.assertEqual(len(g.rules), 3)
+        from_s = list(filter(lambda r: r.fromSymbol == S, g.rules))[0]
+        to0 = from_s.right[0]
+        to1 = from_s.right[1]
         self.assertTrue(issubclass(to0, ContextFree.ChomskyTermNonterminal))
         self.assertTrue(issubclass(to1, ContextFree.ChomskyTermNonterminal))
-        to0R = list(filter(lambda r: r.right == [0], g.rules()))[0]
-        to1R = list(filter(lambda r: r.right == [1], g.rules()))[0]
+        to0R = list(filter(lambda r: r.right == [0], g.rules))[0]
+        to1R = list(filter(lambda r: r.right == [1], g.rules))[0]
         self.assertEqual(to0R.fromSymbol, to0)
         self.assertEqual(to1R.fromSymbol, to1)
-        self.assertEqual(g.nonterms_count(), 3)
-        self.assertEqual(len(g.nonterms()), 3)
+        self.assertEqual(g.nonterminals.size(), 3)
+        self.assertEqual(len(g.nonterminals), 3)
 
 
 if __name__ == '__main__':

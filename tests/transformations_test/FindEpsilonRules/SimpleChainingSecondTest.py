@@ -6,11 +6,8 @@
 Part of grammpy-transforms
 
 """
-
-
 from unittest import TestCase, main
-
-from grammpy.old_api import *
+from grammpy import *
 from grammpy.transforms import ContextFree
 
 
@@ -39,8 +36,6 @@ class SimpleChainingTest(TestCase):
         self.assertEqual(len(n), 4)
         for i in [S, A, B, C]:
             self.assertIn(i, n)
-
-
 
 
 if __name__ == '__main__':

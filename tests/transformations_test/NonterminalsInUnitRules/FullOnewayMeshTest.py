@@ -6,10 +6,8 @@
 Part of grammpy-transforms
 
 """
-
 from unittest import main, TestCase
-
-from grammpy.old_api import *
+from grammpy import *
 from grammpy.transforms import ContextFree
 
 

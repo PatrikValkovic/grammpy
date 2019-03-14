@@ -6,19 +6,14 @@
 Part of grammpy-transforms
 
 """
-
 from unittest import main, TestCase
-
-from grammpy.old_api import *
+from grammpy import *
 from grammpy.transforms import ContextFree
 
 
-class A(Nonterminal):
-    pass
-class B(Nonterminal):
-    pass
-class C(Nonterminal):
-    pass
+class A(Nonterminal): pass
+class B(Nonterminal): pass
+class C(Nonterminal): pass
 class RuleAto0B(Rule):
     rule = ([A], [0, B])
 class RuleBto01(Rule):
@@ -42,21 +37,27 @@ class PartCompleteTest(TestCase):
 
     def test_partlyIncompleteTest(self):
         changed = ContextFree.remove_nongenerating_nonterminals(self.g)
-        self.assertTrue(changed.have_term([0, 1]))
-        self.assertTrue(changed.have_nonterm([A, B]))
-        self.assertFalse(changed.have_nonterm(C))
+        self.assertIn(0, changed.terminals)
+        self.assertIn(1, changed.terminals)
+        self.assertIn(A, changed.nonterminals)
+        self.assertIn(B, changed.nonterminals)
+        self.assertNotIn(C, changed.nonterminals)
 
     def test_partlyIncompleteTestWithoutChange(self):
         ContextFree.remove_nongenerating_nonterminals(self.g)
-        self.assertTrue(self.g.have_term([0, 1]))
-        self.assertTrue(self.g.have_nonterm([A, B, C]))
+        self.assertIn(0, self.g.terminals)
+        self.assertIn(1, self.g.terminals)
+        self.assertIn(A, self.g.nonterminals)
+        self.assertIn(B, self.g.nonterminals)
+        self.assertIn(C, self.g.nonterminals)
 
     def test_partlyIncompleteTestWithChange(self):
-        changed = ContextFree.remove_nongenerating_nonterminals(self.g, inplace=True)
-        self.assertEqual(id(changed), id(self.g))
-        self.assertTrue(self.g.have_term([0, 1]))
-        self.assertTrue(self.g.have_nonterm([A, B]))
-        self.assertFalse(self.g.have_nonterm(C))
+        ContextFree.remove_nongenerating_nonterminals(self.g, inplace=True)
+        self.assertIn(0, self.g.terminals)
+        self.assertIn(1, self.g.terminals)
+        self.assertIn(A, self.g.nonterminals)
+        self.assertIn(B, self.g.nonterminals)
+        self.assertNotIn(C, self.g.nonterminals)
 
 
 if __name__ == '__main__':

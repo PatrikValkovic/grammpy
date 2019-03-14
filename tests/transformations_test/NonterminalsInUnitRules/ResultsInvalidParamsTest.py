@@ -6,10 +6,8 @@
 Part of grammpy-transforms
 
 """
-
-from unittest import TestCase
-
-from grammpy.old_api import *
+from unittest import TestCase, main
+from grammpy import *
 from grammpy.transforms import ContextFree
 
 
@@ -74,3 +72,7 @@ class ResultsInvalidParamsTest(TestCase):
         self.assertEqual(res.path_rules(D, S), [])
         self.assertEqual(res.path_rules(D, S), [])
         self.assertEqual(res.path_rules(E, D), [])
+
+
+if __name__ == '__main__':
+    main()

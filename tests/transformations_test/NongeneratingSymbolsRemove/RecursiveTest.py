@@ -6,50 +6,25 @@
 Part of grammpy-transforms
 
 """
-
 from unittest import TestCase, main
-
-from grammpy.old_api import *
+from grammpy import *
 from grammpy.transforms import *
 
 
-class A(Nonterminal):
-    pass
-
-
-class B(Nonterminal):
-    pass
-
-
-class C(Nonterminal):
-    pass
-
-
-class D(Nonterminal):
-    pass
-
-
-class E(Nonterminal):
-    pass
-
-
+class A(Nonterminal): pass
+class B(Nonterminal): pass
+class C(Nonterminal): pass
+class D(Nonterminal): pass
+class E(Nonterminal): pass
 class RuleAto0B(Rule):
     rule = ([A], [0, B])
-
-
 class RuleBto1(Rule):
     fromSymbol = B
     toSymbol = 1
-
-
 class RuleCto1D(Rule):
     rule = ([C], [1, D])
-
-
 class RuleDto0E(Rule):
     rule = ([D], [0, E])
-
-
 class RuleEto0C(Rule):
     rule = ([E], [0, C])
 
@@ -68,25 +43,34 @@ class RecursiveTest(TestCase):
 
     def test_recursiveTest(self):
         changed = ContextFree.remove_nongenerating_nonterminals(self.g)
-        self.assertTrue(changed.have_term([0, 1]))
-        self.assertTrue(changed.have_nonterm([A, B]))
-        self.assertFalse(changed.have_nonterm(C))
-        self.assertFalse(changed.have_nonterm(D))
-        self.assertFalse(changed.have_nonterm(E))
+        self.assertIn(0, changed.terminals)
+        self.assertIn(1, changed.terminals)
+        self.assertIn(A, changed.nonterminals)
+        self.assertIn(B, changed.nonterminals)
+        self.assertNotIn(C, changed.nonterminals)
+        self.assertNotIn(D, changed.nonterminals)
+        self.assertNotIn(E, changed.nonterminals)
 
     def test_recursiveTestWithoutChange(self):
         ContextFree.remove_nongenerating_nonterminals(self.g)
-        self.assertTrue(self.g.have_term([0, 1]))
-        self.assertTrue(self.g.have_nonterm([A, B, C, D, E]))
+        self.assertIn(0, self.g.terminals)
+        self.assertIn(1, self.g.terminals)
+        self.assertIn(A, self.g.nonterminals)
+        self.assertIn(B, self.g.nonterminals)
+        self.assertIn(C, self.g.nonterminals)
+        self.assertIn(D, self.g.nonterminals)
+        self.assertIn(E, self.g.nonterminals)
 
     def test_recursiveTestWithChange(self):
-        changed = ContextFree.remove_nongenerating_nonterminals(self.g, inplace=True)
-        self.assertEqual(id(changed), id(self.g))
-        self.assertTrue(self.g.have_term([0, 1]))
-        self.assertTrue(self.g.have_nonterm([A, B]))
-        self.assertFalse(self.g.have_nonterm(C))
-        self.assertFalse(self.g.have_nonterm(D))
-        self.assertFalse(self.g.have_nonterm(E))
+        ContextFree.remove_nongenerating_nonterminals(self.g, inplace=True)
+        self.assertIn(0, self.g.terminals)
+        self.assertIn(1, self.g.terminals)
+        self.assertIn(A, self.g.nonterminals)
+        self.assertIn(B, self.g.nonterminals)
+        self.assertNotIn(C, self.g.nonterminals)
+        self.assertNotIn(D, self.g.nonterminals)
+        self.assertNotIn(E, self.g.nonterminals)
+
 
 if __name__ == '__main__':
     main()

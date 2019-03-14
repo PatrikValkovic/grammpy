@@ -6,10 +6,8 @@
 Part of grammpy-transforms
 
 """
-
 from unittest import TestCase, main
-
-from grammpy.old_api import *
+from grammpy import *
 from grammpy.transforms import ContextFree
 
 
@@ -24,7 +22,7 @@ class Rules(Rule):
         ([S], [0]),
         ([A], [B, C]),
         ([A], [2]),
-        ([A], [C, C, C]), # multiple here
+        ([A], [C, C, C]),  # multiple here
         ([B], [1, C]),
         ([B], [3, D]),
         ([B], [EPS]),
@@ -36,16 +34,13 @@ class Rules(Rule):
 
 class MultipleUsageTest(TestCase):
     def test_multipleUsage(self):
-        g = Grammar(terminals=[0,1,2,3],
-                    nonterminals=[S,A,B,C, D],
+        g = Grammar(terminals=[0, 1, 2, 3],
+                    nonterminals=[S, A, B, C, D],
                     rules=[Rules])
         n = ContextFree.find_nonterminals_rewritable_to_epsilon(g)
         self.assertEqual(len(n), 4)
         for i in [A, B, C, D]:
             self.assertIn(i, n)
-
-
-
 
 
 if __name__ == '__main__':

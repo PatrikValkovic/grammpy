@@ -9,8 +9,7 @@ Part of grammpy-transforms
 import functools
 import operator
 from unittest import TestCase, main
-
-from grammpy.old_api import *
+from grammpy import *
 from grammpy.parsers import cyk
 from grammpy.transforms import *
 
@@ -52,7 +51,6 @@ class SeparatedTraversingTest(TestCase):
             return [item]
         Traversing.traverseSeparated(res, travRule, travNonterminals, travTerms)
 
-
     def testRealTraversingReturnValues(self):
         g = Grammar(terminals=[0],
                     nonterminals=[A],
@@ -74,7 +72,6 @@ class SeparatedTraversingTest(TestCase):
         self.assertIsInstance(resp[1], Rules)
         self.assertIsInstance(resp[2], Terminal)
         self.assertEqual(resp[2].s, 0)
-
 
 
 if __name__ == '__main__':

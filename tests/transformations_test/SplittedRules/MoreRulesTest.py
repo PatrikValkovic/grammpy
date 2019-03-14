@@ -6,10 +6,8 @@
 Part of grammpy-transforms
 
 """
-
 from unittest import main, TestCase
-
-from grammpy.old_api import *
+from grammpy import *
 from grammpy.parsers import cyk
 from grammpy.transforms import *
 
@@ -25,6 +23,7 @@ class Rules(Rule):
         ([A], [0]),
         ([B], [1])
     ]
+
 
 class WithNonterminalsTest(TestCase):
     def test_parseWithNoIteration(self):

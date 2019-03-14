@@ -6,10 +6,8 @@
 Part of grammpy-transforms
 
 """
-
 from unittest import main, TestCase
-
-from grammpy.old_api import *
+from grammpy import *
 from grammpy.parsers import cyk
 from grammpy.transforms import *
 
@@ -20,6 +18,7 @@ class Rules(Rule):
         ([S], [1]),
         ([S], [0])
     ]
+
 
 class SimpleTest(TestCase):
     def test_rewriteSimple0(self):

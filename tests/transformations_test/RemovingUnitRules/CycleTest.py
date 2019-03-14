@@ -6,11 +6,9 @@
 Part of grammpy-transforms
 
 """
-
 from inspect import isclass
-from unittest import TestCase
-
-from grammpy.old_api import *
+from unittest import TestCase, main
+from grammpy import *
 from grammpy.transforms import ContextFree
 
 
@@ -27,6 +25,7 @@ class Rules(Rule):
         ([A], [0]),
         ([B], [1]),
         ([C], [2])]
+
 
 """
  ---------------------------------
@@ -55,6 +54,7 @@ C->A->0
 C->A->B->1
 """
 
+
 class SimpleTest(TestCase):
     def test_simpleTest(self):
         g = Grammar(terminals=[0, 1, 2],
@@ -64,32 +64,32 @@ class SimpleTest(TestCase):
         com = ContextFree.remove_unit_rules(g)
         # Removed
         class RuleStoA(Rule): rule = ([S], [A])
-        self.assertFalse(com.have_rule(RuleStoA))
+        self.assertNotIn(RuleStoA, com.rules)
         class RuleAtoB(Rule): rule = ([A], [B])
-        self.assertFalse(com.have_rule(RuleAtoB))
+        self.assertNotIn(RuleAtoB, com.rules)
         class RuleBtoC(Rule): rule = ([B], [C])
-        self.assertFalse(com.have_rule(RuleBtoC))
+        self.assertNotIn(RuleBtoC, com.rules)
         class RuleCtoA(Rule): rule = ([C], [A])
-        self.assertFalse(com.have_rule(RuleCtoA))
+        self.assertNotIn(RuleCtoA, com.rules)
         # Old rules
         class RuleNewAto0(Rule): rule = ([A], [0])
-        self.assertTrue(com.have_rule(RuleNewAto0))
+        self.assertIn(RuleNewAto0, com.rules)
         class RuleNewBto1(Rule): rule = ([B], [1])
-        self.assertTrue(com.have_rule(RuleNewBto1))
+        self.assertIn(RuleNewBto1, com.rules)
         class RuleNewCto2(Rule): rule = ([C], [2])
-        self.assertTrue(com.have_rule(RuleNewCto2))
+        self.assertIn(RuleNewCto2, com.rules)
         # New rules
         class RuleNewSto0(Rule): rule = ([S], [0])
-        self.assertTrue(com.have_rule(RuleNewSto0))
-        fromSto0 = com.get_rule(RuleNewSto0)
+        self.assertIn(RuleNewSto0, com.rules)
+        fromSto0 = list(filter(lambda x: hash(x) == hash(RuleNewSto0), com.rules))[0]
         self.assertTrue(isclass(fromSto0))
         self.assertTrue(issubclass(fromSto0, ContextFree.ReducedUnitRule))
         self.assertEqual(len(fromSto0.by_rules), 1)
         self.assertEqual(fromSto0.by_rules[0].rule, ([S], [A]))
         self.assertEqual(fromSto0.end_rule.rule, ([A], [0]))
         class RuleNewSto1(Rule): rule = ([S], [1])
-        self.assertTrue(com.have_rule(RuleNewSto1))
-        fromSto1 = com.get_rule(RuleNewSto1)
+        self.assertIn(RuleNewSto1, com.rules)
+        fromSto1 = list(filter(lambda x: hash(x) == hash(RuleNewSto1), com.rules))[0]
         self.assertTrue(isclass(fromSto1))
         self.assertTrue(issubclass(fromSto1, ContextFree.ReducedUnitRule))
         self.assertEqual(len(fromSto1.by_rules), 2)
@@ -97,8 +97,8 @@ class SimpleTest(TestCase):
         self.assertEqual(fromSto1.by_rules[1].rule, ([A], [B]))
         self.assertEqual(fromSto1.end_rule.rule, ([B], [1]))
         class RuleNewSto2(Rule): rule = ([S], [2])
-        self.assertTrue(com.have_rule(RuleNewSto2))
-        fromSto2 = com.get_rule(RuleNewSto2)
+        self.assertIn(RuleNewSto2, com.rules)
+        fromSto2 = list(filter(lambda x: hash(x) == hash(RuleNewSto2), com.rules))[0]
         self.assertTrue(isclass(fromSto2))
         self.assertTrue(issubclass(fromSto2, ContextFree.ReducedUnitRule))
         self.assertEqual(len(fromSto2.by_rules), 3)
@@ -107,16 +107,16 @@ class SimpleTest(TestCase):
         self.assertEqual(fromSto2.by_rules[2].rule, ([B], [C]))
         self.assertEqual(fromSto2.end_rule.rule, ([C], [2]))
         class RuleNewAto1(Rule): rule = ([A], [1])
-        self.assertTrue(com.have_rule(RuleNewAto1))
-        fromAto1 = com.get_rule(RuleNewAto1)
+        self.assertIn(RuleNewAto1, com.rules)
+        fromAto1 = list(filter(lambda x: hash(x) == hash(RuleNewAto1), com.rules))[0]
         self.assertTrue(isclass(fromAto1))
         self.assertTrue(issubclass(fromAto1, ContextFree.ReducedUnitRule))
         self.assertEqual(len(fromAto1.by_rules), 1)
         self.assertEqual(fromAto1.by_rules[0].rule, ([A], [B]))
         self.assertEqual(fromAto1.end_rule.rule, ([B], [1]))
         class RuleNewAto2(Rule): rule = ([A], [2])
-        self.assertTrue(com.have_rule(RuleNewAto2))
-        fromAto2 = com.get_rule(RuleNewAto2)
+        self.assertIn(RuleNewAto2, com.rules)
+        fromAto2 = list(filter(lambda x: hash(x) == hash(RuleNewAto2), com.rules))[0]
         self.assertTrue(isclass(fromAto2))
         self.assertTrue(issubclass(fromAto2, ContextFree.ReducedUnitRule))
         self.assertEqual(len(fromAto2.by_rules), 2)
@@ -124,16 +124,16 @@ class SimpleTest(TestCase):
         self.assertEqual(fromAto2.by_rules[1].rule, ([B], [C]))
         self.assertEqual(fromAto2.end_rule.rule, ([C], [2]))
         class RuleNewBto2(Rule): rule = ([B], [2])
-        self.assertTrue(com.have_rule(RuleNewBto2))
-        fromBto2 = com.get_rule(RuleNewBto2)
+        self.assertIn(RuleNewBto2, com.rules)
+        fromBto2 = list(filter(lambda x: hash(x) == hash(RuleNewBto2), com.rules))[0]
         self.assertTrue(isclass(fromBto2))
         self.assertTrue(issubclass(fromBto2, ContextFree.ReducedUnitRule))
         self.assertEqual(len(fromBto2.by_rules), 1)
         self.assertEqual(fromBto2.by_rules[0].rule, ([B], [C]))
         self.assertEqual(fromBto2.end_rule.rule, ([C], [2]))
         class RuleNewBto0(Rule): rule = ([B], [0])
-        self.assertTrue(com.have_rule(RuleNewBto0))
-        fromBto0 = com.get_rule(RuleNewBto0)
+        self.assertIn(RuleNewBto0, com.rules)
+        fromBto0 = list(filter(lambda x: hash(x) == hash(RuleNewBto0), com.rules))[0]
         self.assertTrue(isclass(fromBto0))
         self.assertTrue(issubclass(fromBto0, ContextFree.ReducedUnitRule))
         self.assertEqual(len(fromBto0.by_rules), 2)
@@ -141,16 +141,16 @@ class SimpleTest(TestCase):
         self.assertEqual(fromBto0.by_rules[1].rule, ([C], [A]))
         self.assertEqual(fromBto0.end_rule.rule, ([A], [0]))
         class RuleNewCto0(Rule): rule = ([C], [0])
-        self.assertTrue(com.have_rule(RuleNewCto0))
-        fromCto0 = com.get_rule(RuleNewCto0)
+        self.assertIn(RuleNewCto0, com.rules)
+        fromCto0 = list(filter(lambda x: hash(x) == hash(RuleNewCto0), com.rules))[0]
         self.assertTrue(isclass(fromCto0))
         self.assertTrue(issubclass(fromCto0, ContextFree.ReducedUnitRule))
         self.assertEqual(len(fromCto0.by_rules), 1)
         self.assertEqual(fromCto0.by_rules[0].rule, ([C], [A]))
         self.assertEqual(fromCto0.end_rule.rule, ([A], [0]))
         class RuleNewCto1(Rule): rule = ([C], [1])
-        self.assertTrue(com.have_rule(RuleNewCto1))
-        fromCto1 = com.get_rule(RuleNewCto1)
+        self.assertIn(RuleNewCto1, com.rules)
+        fromCto1 = list(filter(lambda x: hash(x) == hash(RuleNewCto1), com.rules))[0]
         self.assertTrue(isclass(fromCto1))
         self.assertTrue(issubclass(fromCto1, ContextFree.ReducedUnitRule))
         self.assertEqual(len(fromCto1.by_rules), 2)
@@ -166,39 +166,39 @@ class SimpleTest(TestCase):
         ContextFree.remove_unit_rules(g)
         # Removed
         class RuleStoA(Rule): rule = ([S], [A])
-        self.assertTrue(g.have_rule(RuleStoA))
+        self.assertIn(RuleStoA, g.rules)
         class RuleAtoB(Rule): rule = ([A], [B])
-        self.assertTrue(g.have_rule(RuleAtoB))
+        self.assertIn(RuleAtoB, g.rules)
         class RuleBtoC(Rule): rule = ([B], [C])
-        self.assertTrue(g.have_rule(RuleBtoC))
+        self.assertIn(RuleBtoC, g.rules)
         class RuleCtoA(Rule): rule = ([C], [A])
-        self.assertTrue(g.have_rule(RuleCtoA))
+        self.assertIn(RuleCtoA, g.rules)
         # Old rules
         class RuleNewAto0(Rule): rule = ([A], [0])
-        self.assertTrue(g.have_rule(RuleNewAto0))
+        self.assertIn(RuleNewAto0, g.rules)
         class RuleNewBto1(Rule): rule = ([B], [1])
-        self.assertTrue(g.have_rule(RuleNewBto1))
+        self.assertIn(RuleNewBto1, g.rules)
         class RuleNewCto2(Rule): rule = ([C], [2])
-        self.assertTrue(g.have_rule(RuleNewCto2))
+        self.assertIn(RuleNewCto2, g.rules)
         # New rules
         class RuleNewSto0(Rule): rule = ([S], [0])
-        self.assertFalse(g.have_rule(RuleNewSto0))
+        self.assertNotIn(RuleNewSto0, g.rules)
         class RuleNewSto1(Rule): rule = ([S], [1])
-        self.assertFalse(g.have_rule(RuleNewSto1))
+        self.assertNotIn(RuleNewSto1, g.rules)
         class RuleNewSto2(Rule): rule = ([S], [2])
-        self.assertFalse(g.have_rule(RuleNewSto2))
+        self.assertNotIn(RuleNewSto2, g.rules)
         class RuleNewAto1(Rule): rule = ([A], [1])
-        self.assertFalse(g.have_rule(RuleNewAto1))
+        self.assertNotIn(RuleNewAto1, g.rules)
         class RuleNewAto2(Rule): rule = ([A], [2])
-        self.assertFalse(g.have_rule(RuleNewAto2))
+        self.assertNotIn(RuleNewAto2, g.rules)
         class RuleNewBto2(Rule): rule = ([B], [2])
-        self.assertFalse(g.have_rule(RuleNewBto2))
+        self.assertNotIn(RuleNewBto2, g.rules)
         class RuleNewBto0(Rule): rule = ([B], [0])
-        self.assertFalse(g.have_rule(RuleNewBto0))
+        self.assertNotIn(RuleNewBto0, g.rules)
         class RuleNewCto0(Rule): rule = ([C], [0])
-        self.assertFalse(g.have_rule(RuleNewCto0))
+        self.assertNotIn(RuleNewCto0, g.rules)
         class RuleNewCto1(Rule): rule = ([C], [1])
-        self.assertFalse(g.have_rule(RuleNewCto1))
+        self.assertNotIn(RuleNewCto1, g.rules)
 
     def test_simpleTestShouldChange(self):
         g = Grammar(terminals=[0, 1, 2],
@@ -206,34 +206,35 @@ class SimpleTest(TestCase):
                     rules=[Rules],
                     start_symbol=S)
         ContextFree.remove_unit_rules(g, True)
+
         # Removed
         class RuleStoA(Rule): rule = ([S], [A])
-        self.assertFalse(g.have_rule(RuleStoA))
+        self.assertNotIn(RuleStoA, g.rules)
         class RuleAtoB(Rule): rule = ([A], [B])
-        self.assertFalse(g.have_rule(RuleAtoB))
+        self.assertNotIn(RuleAtoB, g.rules)
         class RuleBtoC(Rule): rule = ([B], [C])
-        self.assertFalse(g.have_rule(RuleBtoC))
+        self.assertNotIn(RuleBtoC, g.rules)
         class RuleCtoA(Rule): rule = ([C], [A])
-        self.assertFalse(g.have_rule(RuleCtoA))
+        self.assertNotIn(RuleCtoA, g.rules)
         # Old rules
         class RuleNewAto0(Rule): rule = ([A], [0])
-        self.assertTrue(g.have_rule(RuleNewAto0))
+        self.assertIn(RuleNewAto0, g.rules)
         class RuleNewBto1(Rule): rule = ([B], [1])
-        self.assertTrue(g.have_rule(RuleNewBto1))
+        self.assertIn(RuleNewBto1, g.rules)
         class RuleNewCto2(Rule): rule = ([C], [2])
-        self.assertTrue(g.have_rule(RuleNewCto2))
+        self.assertIn(RuleNewCto2, g.rules)
         # New rules
         class RuleNewSto0(Rule): rule = ([S], [0])
-        self.assertTrue(g.have_rule(RuleNewSto0))
-        fromSto0 = g.get_rule(RuleNewSto0)
+        self.assertIn(RuleNewSto0, g.rules)
+        fromSto0 = list(filter(lambda x: hash(x) == hash(RuleNewSto0), g.rules))[0]
         self.assertTrue(isclass(fromSto0))
         self.assertTrue(issubclass(fromSto0, ContextFree.ReducedUnitRule))
         self.assertEqual(len(fromSto0.by_rules), 1)
         self.assertEqual(fromSto0.by_rules[0].rule, ([S], [A]))
         self.assertEqual(fromSto0.end_rule.rule, ([A], [0]))
         class RuleNewSto1(Rule): rule = ([S], [1])
-        self.assertTrue(g.have_rule(RuleNewSto1))
-        fromSto1 = g.get_rule(RuleNewSto1)
+        self.assertIn(RuleNewSto1, g.rules)
+        fromSto1 = list(filter(lambda x: hash(x) == hash(RuleNewSto1), g.rules))[0]
         self.assertTrue(isclass(fromSto1))
         self.assertTrue(issubclass(fromSto1, ContextFree.ReducedUnitRule))
         self.assertEqual(len(fromSto1.by_rules), 2)
@@ -241,8 +242,8 @@ class SimpleTest(TestCase):
         self.assertEqual(fromSto1.by_rules[1].rule, ([A], [B]))
         self.assertEqual(fromSto1.end_rule.rule, ([B], [1]))
         class RuleNewSto2(Rule): rule = ([S], [2])
-        self.assertTrue(g.have_rule(RuleNewSto2))
-        fromSto2 = g.get_rule(RuleNewSto2)
+        self.assertIn(RuleNewSto2, g.rules)
+        fromSto2 = list(filter(lambda x: hash(x) == hash(RuleNewSto2), g.rules))[0]
         self.assertTrue(isclass(fromSto2))
         self.assertTrue(issubclass(fromSto2, ContextFree.ReducedUnitRule))
         self.assertEqual(len(fromSto2.by_rules), 3)
@@ -251,16 +252,16 @@ class SimpleTest(TestCase):
         self.assertEqual(fromSto2.by_rules[2].rule, ([B], [C]))
         self.assertEqual(fromSto2.end_rule.rule, ([C], [2]))
         class RuleNewAto1(Rule): rule = ([A], [1])
-        self.assertTrue(g.have_rule(RuleNewAto1))
-        fromAto1 = g.get_rule(RuleNewAto1)
+        self.assertIn(RuleNewAto1, g.rules)
+        fromAto1 = list(filter(lambda x: hash(x) == hash(RuleNewAto1), g.rules))[0]
         self.assertTrue(isclass(fromAto1))
         self.assertTrue(issubclass(fromAto1, ContextFree.ReducedUnitRule))
         self.assertEqual(len(fromAto1.by_rules), 1)
         self.assertEqual(fromAto1.by_rules[0].rule, ([A], [B]))
         self.assertEqual(fromAto1.end_rule.rule, ([B], [1]))
         class RuleNewAto2(Rule): rule = ([A], [2])
-        self.assertTrue(g.have_rule(RuleNewAto2))
-        fromAto2 = g.get_rule(RuleNewAto2)
+        self.assertIn(RuleNewAto2, g.rules)
+        fromAto2 = list(filter(lambda x: hash(x) == hash(RuleNewAto2), g.rules))[0]
         self.assertTrue(isclass(fromAto2))
         self.assertTrue(issubclass(fromAto2, ContextFree.ReducedUnitRule))
         self.assertEqual(len(fromAto2.by_rules), 2)
@@ -268,16 +269,16 @@ class SimpleTest(TestCase):
         self.assertEqual(fromAto2.by_rules[1].rule, ([B], [C]))
         self.assertEqual(fromAto2.end_rule.rule, ([C], [2]))
         class RuleNewBto2(Rule): rule = ([B], [2])
-        self.assertTrue(g.have_rule(RuleNewBto2))
-        fromBto2 = g.get_rule(RuleNewBto2)
+        self.assertIn(RuleNewBto2, g.rules)
+        fromBto2 = list(filter(lambda x: hash(x) == hash(RuleNewBto2), g.rules))[0]
         self.assertTrue(isclass(fromBto2))
         self.assertTrue(issubclass(fromBto2, ContextFree.ReducedUnitRule))
         self.assertEqual(len(fromBto2.by_rules), 1)
         self.assertEqual(fromBto2.by_rules[0].rule, ([B], [C]))
         self.assertEqual(fromBto2.end_rule.rule, ([C], [2]))
         class RuleNewBto0(Rule): rule = ([B], [0])
-        self.assertTrue(g.have_rule(RuleNewBto0))
-        fromBto0 = g.get_rule(RuleNewBto0)
+        self.assertIn(RuleNewBto0, g.rules)
+        fromBto0 = list(filter(lambda x: hash(x) == hash(RuleNewBto0), g.rules))[0]
         self.assertTrue(isclass(fromBto0))
         self.assertTrue(issubclass(fromBto0, ContextFree.ReducedUnitRule))
         self.assertEqual(len(fromBto0.by_rules), 2)
@@ -285,19 +286,23 @@ class SimpleTest(TestCase):
         self.assertEqual(fromBto0.by_rules[1].rule, ([C], [A]))
         self.assertEqual(fromBto0.end_rule.rule, ([A], [0]))
         class RuleNewCto0(Rule): rule = ([C], [0])
-        self.assertTrue(g.have_rule(RuleNewCto0))
-        fromCto0 = g.get_rule(RuleNewCto0)
+        self.assertIn(RuleNewCto0, g.rules)
+        fromCto0 = list(filter(lambda x: hash(x) == hash(RuleNewCto0), g.rules))[0]
         self.assertTrue(isclass(fromCto0))
         self.assertTrue(issubclass(fromCto0, ContextFree.ReducedUnitRule))
         self.assertEqual(len(fromCto0.by_rules), 1)
         self.assertEqual(fromCto0.by_rules[0].rule, ([C], [A]))
         self.assertEqual(fromCto0.end_rule.rule, ([A], [0]))
         class RuleNewCto1(Rule): rule = ([C], [1])
-        self.assertTrue(g.have_rule(RuleNewCto1))
-        fromCto1 = g.get_rule(RuleNewCto1)
+        self.assertIn(RuleNewCto1, g.rules)
+        fromCto1 = list(filter(lambda x: hash(x) == hash(RuleNewCto1), g.rules))[0]
         self.assertTrue(isclass(fromCto1))
         self.assertTrue(issubclass(fromCto1, ContextFree.ReducedUnitRule))
         self.assertEqual(len(fromCto1.by_rules), 2)
         self.assertEqual(fromCto1.by_rules[0].rule, ([C], [A]))
         self.assertEqual(fromCto1.by_rules[1].rule, ([A], [B]))
         self.assertEqual(fromCto1.end_rule.rule, ([B], [1]))
+        
+
+if __name__ == '__main__':
+    main()

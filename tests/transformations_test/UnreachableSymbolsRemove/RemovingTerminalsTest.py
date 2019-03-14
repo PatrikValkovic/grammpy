@@ -6,11 +6,8 @@
 Part of grammpy-transforms
 
 """
-
-
 from unittest import main, TestCase
-
-from grammpy.old_api import *
+from grammpy import *
 from grammpy.transforms import *
 
 
@@ -25,8 +22,6 @@ class RuleBto1C(Rule): rule = ([B], [1, C])
 class RuleCto2C(Rule): rule = ([C], [2, C])
 
 
-
-
 class RemovingTerminalsTest(TestCase):
     def test_removingTerminals(self):
         g = Grammar(terminals=[0, 1, 2, 3],
@@ -34,12 +29,16 @@ class RemovingTerminalsTest(TestCase):
                     rules=[RuleAto0B, RuleBto1C, RuleCto2C],
                     start_symbol=A)
         com = ContextFree.remove_unreachable_symbols(g)
-        self.assertTrue(com.have_term([0, 1, 2]))
-        self.assertFalse(com.have_term(3))
-        self.assertTrue(com.have_nonterm([A, B, C]))
-        self.assertFalse(com.have_nonterm(D))
-        self.assertFalse(com.have_nonterm(E))
-        self.assertFalse(com.have_nonterm(F))
+        self.assertIn(0, com.terminals)
+        self.assertIn(1, com.terminals)
+        self.assertIn(2, com.terminals)
+        self.assertNotIn(3, com.terminals)
+        self.assertIn(A, com.nonterminals)
+        self.assertIn(B, com.nonterminals)
+        self.assertIn(C, com.nonterminals)
+        self.assertNotIn(D, com.nonterminals)
+        self.assertNotIn(E, com.nonterminals)
+        self.assertNotIn(F, com.nonterminals)
 
     def test_removingTerminalsShouldNotChange(self):
         g = Grammar(terminals=[0, 1, 2, 3],
@@ -47,8 +46,16 @@ class RemovingTerminalsTest(TestCase):
                     rules=[RuleAto0B, RuleBto1C, RuleCto2C],
                     start_symbol=A)
         ContextFree.remove_unreachable_symbols(g)
-        self.assertTrue(g.have_term([0, 1, 2, 3]))
-        self.assertTrue(g.have_nonterm([A, B, C, D, E, F]))
+        self.assertIn(0, g.terminals)
+        self.assertIn(1, g.terminals)
+        self.assertIn(2, g.terminals)
+        self.assertIn(3, g.terminals)
+        self.assertIn(A, g.nonterminals)
+        self.assertIn(B, g.nonterminals)
+        self.assertIn(C, g.nonterminals)
+        self.assertIn(D, g.nonterminals)
+        self.assertIn(E, g.nonterminals)
+        self.assertIn(F, g.nonterminals)
 
     def test_removingTerminalsShouldChange(self):
         g = Grammar(terminals=[0, 1, 2, 3],
@@ -56,12 +63,16 @@ class RemovingTerminalsTest(TestCase):
                     rules=[RuleAto0B, RuleBto1C, RuleCto2C],
                     start_symbol=A)
         ContextFree.remove_unreachable_symbols(g, inplace=True)
-        self.assertTrue(g.have_term([0, 1, 2]))
-        self.assertFalse(g.have_term(3))
-        self.assertTrue(g.have_nonterm([A, B, C]))
-        self.assertFalse(g.have_nonterm(D))
-        self.assertFalse(g.have_nonterm(E))
-        self.assertFalse(g.have_nonterm(F))
+        self.assertIn(0, g.terminals)
+        self.assertIn(1, g.terminals)
+        self.assertIn(2, g.terminals)
+        self.assertNotIn(3, g.terminals)
+        self.assertIn(A, g.nonterminals)
+        self.assertIn(B, g.nonterminals)
+        self.assertIn(C, g.nonterminals)
+        self.assertNotIn(D, g.nonterminals)
+        self.assertNotIn(E, g.nonterminals)
+        self.assertNotIn(F, g.nonterminals)
 
 
 if __name__ == '__main__':

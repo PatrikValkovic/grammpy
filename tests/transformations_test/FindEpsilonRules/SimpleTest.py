@@ -8,8 +8,7 @@ Part of grammpy-transforms
 """
 
 from unittest import TestCase, main
-
-from grammpy.old_api import *
+from grammpy import *
 from grammpy.transforms import ContextFree
 
 
@@ -36,8 +35,6 @@ class SimpleTest(TestCase):
         self.assertEqual(len(n), 2)
         for i in [A, B]:
             self.assertIn(i, n)
-
-
 
 
 if __name__ == '__main__':

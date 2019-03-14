@@ -6,16 +6,14 @@
 Part of grammpy-transforms
 
 """
-
-
 from unittest import TestCase, main
-
 from grammpy import Nonterminal, Rule
 from grammpy.transforms import *
 
 
 class A(Nonterminal): pass
 class B(Nonterminal): pass
+
 
 class ReplacingTest(TestCase):
     def testReplaceWithoutTest(self):
@@ -70,6 +68,7 @@ class ReplacingTest(TestCase):
         self.assertEqual(b.to_rule, r2)
         self.assertEqual(r1.to_symbols[0], b)
         self.assertEqual(r2.from_symbols[0], b)
+
 
 if __name__ == '__main__':
     main()

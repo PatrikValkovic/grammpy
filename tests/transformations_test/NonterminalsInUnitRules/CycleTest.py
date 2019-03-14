@@ -6,11 +6,8 @@
 Part of grammpy-transforms
 
 """
-
-
-from unittest import TestCase
-
-from grammpy.old_api import *
+from unittest import TestCase, main
+from grammpy import *
 from grammpy.transforms import ContextFree
 
 
@@ -135,3 +132,7 @@ class SimpleTest(TestCase):
         self.assertEqual(len(CBRules), 2)
         self.assertEqual(CBRules[0].rule, ([C], [A]))
         self.assertEqual(CBRules[1].rule, ([A], [B]))
+
+
+if __name__ == '__main__':
+    main()

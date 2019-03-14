@@ -6,10 +6,8 @@
 Part of grammpy-transforms
 
 """
-
 from unittest import main, TestCase
-
-from grammpy.old_api import *
+from grammpy import *
 from grammpy.parsers import cyk
 from grammpy.transforms import ContextFree, InverseContextFree
 
@@ -31,6 +29,7 @@ class RuleC1C(Rule): rule=([C], [1, C])
 class RuleC0(Rule): rule=([C], [0])
 class RuleD3D(Rule): rule=([D], [3, D])
 class RuleD2(Rule): rule=([D], [2])
+
 
 """
  -------------------------------

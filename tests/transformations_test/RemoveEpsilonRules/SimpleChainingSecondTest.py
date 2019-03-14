@@ -6,11 +6,9 @@
 Part of grammpy-transforms
 
 """
-
 from inspect import isclass
 from unittest import TestCase, main
-
-from grammpy.old_api import *
+from grammpy import *
 from grammpy.transforms import ContextFree
 
 
@@ -28,6 +26,7 @@ class Rules(Rule):
         ([B], [EPS]),
         ([C], [A]),
         ([C], [S])]
+
 
 """
 S->0A  S->1C   S->CC  A->B    B->S   B->eps  C->A C->S
@@ -47,34 +46,37 @@ class SimpleChainingTest(TestCase):
                     rules=[Rules],
                     start_symbol=S)
         com = ContextFree.remove_rules_with_epsilon(g)
-        self.assertEqual(len(com.rules()), 11)
+        self.assertEqual(len(com.rules), 11)
         class RuleNewSto0(Rule): rule=([S], [0])
         class RuleNewSto1(Rule): rule=([S], [1])
         class RuleNewStoC(Rule): rule=([S], [C])
         class RuleNewStoEPS(Rule): rule=([S], [EPS])
-        self.assertTrue(com.have_rule([RuleNewSto0, RuleNewSto1, RuleNewStoC, RuleNewStoEPS]))
-        fromSto0 = com.get_rule(RuleNewSto0)
+        self.assertIn(RuleNewSto0, com.rules)
+        self.assertIn(RuleNewSto1, com.rules)
+        self.assertIn(RuleNewStoC, com.rules)
+        self.assertIn(RuleNewStoEPS, com.rules)
+        fromSto0 = list(filter(lambda x: hash(x) == hash(RuleNewSto0), com.rules))[0]
         self.assertTrue(isclass(fromSto0))
         self.assertTrue(issubclass(fromSto0, ContextFree.EpsilonRemovedRule))
         self.assertEqual(fromSto0.from_rule.rule, ([S], [0, A]))
         self.assertEqual(fromSto0.replace_index, 1)
-        fromSto1 = com.get_rule(RuleNewSto1)
+        fromSto1 = list(filter(lambda x: hash(x) == hash(RuleNewSto1), com.rules))[0]
         self.assertTrue(isclass(fromSto1))
         self.assertTrue(issubclass(fromSto1, ContextFree.EpsilonRemovedRule))
         self.assertEqual(fromSto1.from_rule.rule, ([S], [1, C]))
         self.assertEqual(fromSto1.replace_index, 1)
-        fromStoC = com.get_rule(RuleNewStoC)
+        fromStoC = list(filter(lambda x: hash(x) == hash(RuleNewStoC), com.rules))[0]
         self.assertTrue(isclass(fromStoC))
         self.assertTrue(issubclass(fromStoC, ContextFree.EpsilonRemovedRule))
         self.assertEqual(fromStoC.from_rule.rule, ([S], [C, C]))
         self.assertEqual(fromStoC.replace_index, 0)
-        fromStoEPS = com.get_rule(RuleNewStoEPS)
+        fromStoEPS = list(filter(lambda x: hash(x) == hash(RuleNewStoEPS), com.rules))[0]
         self.assertTrue(isclass(fromStoEPS))
         self.assertTrue(issubclass(fromStoEPS, ContextFree.EpsilonRemovedRule))
         self.assertEqual(fromStoEPS.from_rule.rule, ([S], [C]))
         self.assertEqual(fromStoEPS.replace_index, 0)
         class RuleOldBtoEps(Rule): rule=([B], [EPS])
-        self.assertFalse(com.have_rule(RuleOldBtoEps))
+        self.assertNotIn(RuleOldBtoEps, com.rules)
 
     def test_simpleChainingTestShouldNotChange(self):
         g = Grammar(terminals=[0, 1],
@@ -82,17 +84,17 @@ class SimpleChainingTest(TestCase):
                     rules=[Rules],
                     start_symbol=S)
         ContextFree.remove_rules_with_epsilon(g)
-        self.assertEqual(len(g.rules()), 8)
+        self.assertEqual(len(g.rules), 8)
         class RuleNewSto0(Rule): rule=([S], [0])
         class RuleNewSto1(Rule): rule=([S], [1])
         class RuleNewStoC(Rule): rule=([S], [C])
         class RuleNewStoEPS(Rule): rule=([S], [EPS])
-        self.assertFalse(g.have_rule(RuleNewSto0))
-        self.assertFalse(g.have_rule(RuleNewSto1))
-        self.assertFalse(g.have_rule(RuleNewStoC))
-        self.assertFalse(g.have_rule(RuleNewStoEPS))
+        self.assertNotIn(RuleNewSto0, g.rules)
+        self.assertNotIn(RuleNewSto1, g.rules)
+        self.assertNotIn(RuleNewStoC, g.rules)
+        self.assertNotIn(RuleNewStoEPS, g.rules)
         class RuleOldBtoEps(Rule): rule=([B], [EPS])
-        self.assertTrue(g.have_rule(RuleOldBtoEps))
+        self.assertIn(RuleOldBtoEps, g.rules)
 
     def test_simpleChainingTestShouldChange(self):
         g = Grammar(terminals=[0, 1],
@@ -100,36 +102,37 @@ class SimpleChainingTest(TestCase):
                     rules=[Rules],
                     start_symbol=S)
         ContextFree.remove_rules_with_epsilon(g, True)
-        self.assertEqual(len(g.rules()), 11)
-        class RuleNewSto0(Rule): rule=([S], [0])
-        class RuleNewSto1(Rule): rule=([S], [1])
-        class RuleNewStoC(Rule): rule=([S], [C])
-        class RuleNewStoEPS(Rule): rule=([S], [EPS])
-        self.assertTrue(g.have_rule([RuleNewSto0, RuleNewSto1, RuleNewStoC, RuleNewStoEPS]))
-        fromSto0 = g.get_rule(RuleNewSto0)
+        self.assertEqual(len(g.rules), 11)
+        class RuleNewSto0(Rule): rule = ([S], [0])
+        class RuleNewSto1(Rule): rule = ([S], [1])
+        class RuleNewStoC(Rule): rule = ([S], [C])
+        class RuleNewStoEPS(Rule): rule = ([S], [EPS])
+        self.assertIn(RuleNewSto0, g.rules)
+        self.assertIn(RuleNewSto1, g.rules)
+        self.assertIn(RuleNewStoC, g.rules)
+        self.assertIn(RuleNewStoEPS, g.rules)
+        fromSto0 = list(filter(lambda x: hash(x) == hash(RuleNewSto0), g.rules))[0]
         self.assertTrue(isclass(fromSto0))
         self.assertTrue(issubclass(fromSto0, ContextFree.EpsilonRemovedRule))
         self.assertEqual(fromSto0.from_rule.rule, ([S], [0, A]))
         self.assertEqual(fromSto0.replace_index, 1)
-        fromSto1 = g.get_rule(RuleNewSto1)
+        fromSto1 = list(filter(lambda x: hash(x) == hash(RuleNewSto1), g.rules))[0]
         self.assertTrue(isclass(fromSto1))
         self.assertTrue(issubclass(fromSto1, ContextFree.EpsilonRemovedRule))
         self.assertEqual(fromSto1.from_rule.rule, ([S], [1, C]))
         self.assertEqual(fromSto1.replace_index, 1)
-        fromStoC = g.get_rule(RuleNewStoC)
+        fromStoC = list(filter(lambda x: hash(x) == hash(RuleNewStoC), g.rules))[0]
         self.assertTrue(isclass(fromStoC))
         self.assertTrue(issubclass(fromStoC, ContextFree.EpsilonRemovedRule))
         self.assertEqual(fromStoC.from_rule.rule, ([S], [C, C]))
         self.assertEqual(fromStoC.replace_index, 0)
-        fromStoEPS = g.get_rule(RuleNewStoEPS)
+        fromStoEPS = list(filter(lambda x: hash(x) == hash(RuleNewStoEPS), g.rules))[0]
         self.assertTrue(isclass(fromStoEPS))
         self.assertTrue(issubclass(fromStoEPS, ContextFree.EpsilonRemovedRule))
         self.assertEqual(fromStoEPS.from_rule.rule, ([S], [C]))
         self.assertEqual(fromStoEPS.replace_index, 0)
-        class RuleOldBtoEps(Rule): rule=([B], [EPS])
-        self.assertFalse(g.have_rule(RuleOldBtoEps))
-
-
+        class RuleOldBtoEps(Rule): rule = ([B], [EPS])
+        self.assertNotIn(RuleOldBtoEps, g.rules)
 
 
 if __name__ == '__main__':

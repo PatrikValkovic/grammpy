@@ -6,10 +6,8 @@
 Part of grammpy-transforms
 
 """
-
 from unittest import TestCase, main
-
-from grammpy.old_api import *
+from grammpy import *
 from grammpy.parsers import cyk
 from grammpy.transforms import *
 
@@ -43,6 +41,7 @@ class OrderedTraversingTest(TestCase):
         self.assertIsInstance(resp[1], Rules)
         self.assertIsInstance(resp[0], Terminal)
         self.assertEqual(resp[0].s, 0)
+
 
 if __name__ == '__main__':
     main()
