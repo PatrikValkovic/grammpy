@@ -8,14 +8,14 @@ Part of pyparsers
 """
 
 from unittest import main, TestCase
-
-from grammpy.old_api import *
+from grammpy import *
 from grammpy.parsers import cyk
 from grammpy.transforms import Traversing, ContextFree
 
 
 class S(Nonterminal): pass
 class X(Nonterminal): pass
+
 
 class My:
     def __init__(self, prop):
@@ -39,18 +39,13 @@ class TermsFromInputTest(TestCase):
                          nonterminals=[S, X],
                          rules=[R],
                          start_symbol=S)
-        ContextFree.remove_useless_symbols(self.g, inplace=True)
-        ContextFree.remove_rules_with_epsilon(self.g, True)
-        ContextFree.remove_unit_rules(self.g, True)
-        ContextFree.remove_useless_symbols(self.g, inplace=True)
-        ContextFree.transform_to_chomsky_normal_form(self.g, True)
+        ContextFree.prepare_for_cyk(self.g, True)
 
     def test_oneTerminal(self):
         result = cyk(self.g, [My(1)])
         terms = filter(lambda x: isinstance(x, Terminal), Traversing.postOrder(result))
         terms = list(terms)
         self.assertEqual(terms[0].s.prop, 1)
-
 
     def test_twoTerminals(self):
         result = cyk(self.g, [My(1), My(2)])

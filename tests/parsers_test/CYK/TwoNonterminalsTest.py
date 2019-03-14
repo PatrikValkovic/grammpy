@@ -8,8 +8,7 @@ Part of pyparsers
 """
 
 from unittest import main, TestCase
-
-from grammpy.old_api import *
+from grammpy import *
 from grammpy.parsers import cyk
 
 
@@ -47,12 +46,10 @@ class TwoNonterminalsTest(TestCase):
         self.assertIsInstance(parsed.to_rule.to_symbols[0].to_rule.to_symbols[0], Terminal)
         self.assertIsInstance(parsed.to_rule.to_symbols[1].to_rule.to_symbols[0], Terminal)
 
-
     def test_shouldParseCorrectSymbols(self):
         parsed = cyk(self.g, [0, 1])
         self.assertEqual(parsed.to_rule.to_symbols[0].to_rule.to_symbols[0].s, 0)
         self.assertEqual(parsed.to_rule.to_symbols[1].to_rule.to_symbols[0].s, 1)
-
 
 
 if __name__ == '__main__':

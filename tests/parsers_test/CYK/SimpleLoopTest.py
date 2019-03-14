@@ -9,8 +9,7 @@ Part of pyparsers
 
 
 from unittest import main, TestCase
-
-from grammpy.old_api import *
+from grammpy import *
 from grammpy.parsers import cyk
 
 
@@ -140,11 +139,6 @@ class SimpleLoopTest(TestCase):
         self.assertEqual(c2.to_rule.to_symbols[0].s, 0)
         self.assertEqual(c1.to_rule.to_symbols[0].s, 0)
         self.assertEqual(b.to_rule.to_symbols[0].s, 1)
-
-
-
-
-
 
 
 if __name__ == '__main__':

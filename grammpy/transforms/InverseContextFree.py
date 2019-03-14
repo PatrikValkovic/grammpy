@@ -12,7 +12,7 @@ from .ChomskyForm import transform_from_chomsky_normal_form
 from .EpsilonRulesRemove import epsilon_rules_restore
 from .UnitRulesRemove import unit_rules_restore
 
-if TYPE_CHECKING:
+if TYPE_CHECKING:  # pragma: no cover
     from .. import Nonterminal
 
 __all__ = ['InverseContextFree']

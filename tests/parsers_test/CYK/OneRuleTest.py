@@ -8,8 +8,7 @@ Part of pyparsers
 """
 
 from unittest import main, TestCase
-
-from grammpy.old_api import *
+from grammpy import *
 from grammpy.parsers import cyk
 
 
@@ -40,7 +39,6 @@ class OneRuleTest(TestCase):
     def test_shouldParseCorrectSymbols(self):
         parsed = cyk(self.g, [0])
         self.assertEqual(parsed.to_rule.to_symbols[0].s, 0)
-
 
 
 if __name__ == '__main__':

@@ -8,13 +8,14 @@ Part of pyparsers
 """
 
 from unittest import main, TestCase
-
-from grammpy.old_api import *
+from grammpy import *
 from grammpy.parsers import cyk
 from grammpy.transforms import ContextFree, InverseContextFree
 
 
 class S(Nonterminal): pass
+
+
 class My:
     def __init__(self, prop):
         self.prop = prop
@@ -27,7 +28,6 @@ class R(Rule):
         [S],
         [My, My]
     )
-
 
 
 class CorrectSimpleTerminalsTest(TestCase):

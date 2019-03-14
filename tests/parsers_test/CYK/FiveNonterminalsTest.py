@@ -6,10 +6,8 @@
 Part of pyparsers
 
 """
-
 from unittest import main, TestCase
-
-from grammpy.old_api import *
+from grammpy import *
 from grammpy.parsers import cyk
 
 

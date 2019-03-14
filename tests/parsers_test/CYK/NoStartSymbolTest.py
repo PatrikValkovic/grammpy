@@ -8,15 +8,12 @@ Part of pyparsers
 """
 
 from unittest import main, TestCase
-
 from grammpy import *
 from grammpy.exceptions import StartSymbolNotSetException
 from grammpy.parsers import cyk
 
 
 class S(Nonterminal): pass
-
-
 class R(Rule): rule = ([S], [0])
 
 
