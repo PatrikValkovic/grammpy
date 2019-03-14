@@ -3,6 +3,6 @@
 :Author Patrik Valkovic
 :Created 23.12.2017 19:28
 :Licence MIT
-Part of grammpy-transforms
+Part of grammpy
 
 """

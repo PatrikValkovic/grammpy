@@ -3,7 +3,7 @@
 :Author Patrik Valkovic
 :Created 22.08.2017 21:28
 :Licence MIT
-Part of grammpy-transforms
+Part of grammpy
 
 """
 from inspect import isclass

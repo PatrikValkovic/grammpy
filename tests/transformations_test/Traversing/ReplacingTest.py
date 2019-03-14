@@ -3,7 +3,7 @@
 :Author Patrik Valkovic
 :Created 24.12.2017 14:52
 :Licence MIT
-Part of grammpy-transforms
+Part of grammpy
 
 """
 from unittest import TestCase, main
