@@ -53,3 +53,20 @@ class InverseContextFree:
         :return: Modified tree.
         """
         return transform_from_chomsky_normal_form(root)
+
+    @staticmethod
+    def reverse_cyk_transforms(root):
+        # type: (Nonterminal) -> Nonterminal
+        """
+        Reverse transformation made to grammar before CYK.
+        Performs following steps:
+        - transform from chomsky normal form
+        - restore unit rules
+        - restore epsilon rules
+        :param root: Root node of the parsed tree.
+        :return: Restored parsed tree.
+        """
+        root = InverseContextFree.transform_from_chomsky_normal_form(root)
+        root = InverseContextFree.unit_rules_restore(root)
+        root = InverseContextFree.epsilon_rules_restore(root)
+        return root
