@@ -42,13 +42,16 @@ class SeparatedTraversingTest(TestCase):
         res = cyk(g, [0])
         def travRule(item, callback):
             self.assertIsInstance(item, Rules)
-            return [item] + [callback(ch) for ch in item.to_symbols]
+            yield item
+            for ch in item.to_symbols:
+                yield callback(ch)
         def travNonterminals(item, callback):
             self.assertIsInstance(item, A)
-            return [item, callback(item.to_rule)]
+            yield item
+            yield callback(item.to_rule)
         def travTerms(item, callback):
             self.assertIsInstance(item, Terminal)
-            return [item]
+            yield item
         Traversing.traverseSeparated(res, travRule, travNonterminals, travTerms)
 
     def testRealTraversingReturnValues(self):
@@ -59,15 +62,17 @@ class SeparatedTraversingTest(TestCase):
         res = cyk(g, [0])
         def travRule(item, callback):
             self.assertIsInstance(item, Rules)
-            resp = [callback(ch) for ch in item.to_symbols]
-            return functools.reduce(operator.add, resp, [item])
+            yield item
+            for ch in item.to_symbols:
+                yield callback(ch)
         def travNonterminals(item, callback):
             self.assertIsInstance(item, A)
-            return [item] + callback(item.to_rule)
+            yield item
+            yield callback(item.to_rule)
         def travTerms(item, callback):
             self.assertIsInstance(item, Terminal)
-            return [item]
-        resp = Traversing.traverseSeparated(res, travRule, travNonterminals, travTerms)
+            yield item
+        resp = list(Traversing.traverseSeparated(res, travRule, travNonterminals, travTerms))
         self.assertIsInstance(resp[0], A)
         self.assertIsInstance(resp[1], Rules)
         self.assertIsInstance(resp[2], Terminal)

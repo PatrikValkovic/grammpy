@@ -6,10 +6,7 @@
 Part of grammpy
 
 """
-import functools
-import operator
-from typing import TYPE_CHECKING, Callable, Union, Any, List
-
+from typing import TYPE_CHECKING, Callable, Union, Any, List, Generator
 from .. import Nonterminal, Terminal, Rule
 
 if TYPE_CHECKING:  # pragma: no cover
@@ -78,25 +75,51 @@ class Traversing:
     """
 
     @staticmethod
-    def traverse(root, callback):
-        # type: (Nonterminal, Callable[[Any, Callable], List]) -> List
+    def traverse(root, callback, *args, **kargs):
+        # type: (Nonterminal, Callable[[Any, Callable, Any, Any], Generator], Any, Any) -> Generator
         """
         Traverse AST based on callback.
         :param root: Root element of the parsed tree.
         :param callback: Function that accepts current node and callback c_2.
-        Function must return nodes you want to traverse in the list.
-        Its possible to call callback c_2 on any node to call the recursion.
+        Function must yield individual values.
+        Its possible to yield callback c_2 call on any node to call the recursion.
+        The callback can accept parameters from the parent call.
+        The root will receive parameters from the `traverse` call.
+
+        Example:
+        def traverse_func(item, callback):
+            if isinstance(item, Rule):
+                yield item
+                for el in item.to_symbols:
+                    yield callback(el)
+            elif isinstance(item, Nonterminal):
+                yield item
+                yield callback(item.to_rule)
+            else:
+                yield item
+
         :return: Sequence of nodes to traverse.
         """
+        def innerCallback(item, *args, **kargs):
+            yield from callback(item, innerCallback, *args, **kargs)
 
-        def innerCallback(item):
-            return callback(item, innerCallback)
-
-        return callback(root, innerCallback)
+        to_call = list()
+        to_call.append(innerCallback(root, *args, **kargs))
+        while len(to_call) > 0:
+            current = to_call.pop()
+            try:
+                el = next(current)
+                to_call.append(current)
+                if isinstance(el, Generator):
+                    to_call.append(el)
+                else:
+                    yield el
+            except StopIteration:
+                continue
 
     @staticmethod
     def traverseSeparated(root, callbackRules, callbackNonterminals, callbackTerminals):
-        # type: (Nonterminal, Callable[[Rule, Callable], List], Callable[[Nonterminal, Callable], List], Callable[[Terminal, Callable], List]) -> List
+        # type: (Nonterminal, Callable[[Rule, Callable], Generator], Callable[[Nonterminal, Callable], Generator], Callable[[Terminal, Callable], Generator]) -> Generator
         """
         Same as traverse method, but have different callbacks for rules, nonterminals and terminals.
         :param root: Root node of the parsed tree.
@@ -108,17 +131,17 @@ class Traversing:
 
         def separateTraverse(item, callback):
             if isinstance(item, Rule):
-                return callbackRules(item, callback)
+                yield callbackRules(item, callback)
             if isinstance(item, Nonterminal):
-                return callbackNonterminals(item, callback)
+                yield callbackNonterminals(item, callback)
             if isinstance(item, Terminal):
-                return callbackTerminals(item, callback)
+                yield callbackTerminals(item, callback)
 
         return Traversing.traverse(root, separateTraverse)
 
     @staticmethod
     def preOrder(root):
-        # type: (Nonterminal) -> List
+        # type: (Nonterminal) -> Generator
         """
         Perform pre-order traversing. Expects tree like structure.
         :param root: Root tree of the parsed tree.
@@ -126,20 +149,22 @@ class Traversing:
         """
 
         def travRule(item, callback):
-            resp = [callback(ch) for ch in item.to_symbols]
-            return functools.reduce(operator.add, resp, [item])
+            yield item
+            for el in item.to_symbols:
+                yield callback(el)
 
         def travNonterminals(item, callback):
-            return [item] + callback(item.to_rule)
+            yield item
+            yield callback(item.to_rule)
 
         def travTerms(item, callback):
-            return [item]
+            yield item
 
         return Traversing.traverseSeparated(root, travRule, travNonterminals, travTerms)
 
     @staticmethod
     def postOrder(root):
-        # type: (Nonterminal) -> List
+        # type: (Nonterminal) -> Generator
         """
         Perform post-order traversing. Expects tree like structure.
         :param root: Root node of the parsed tree.
@@ -147,14 +172,16 @@ class Traversing:
         """
 
         def travRule(item, callback):
-            resp = [callback(ch) for ch in item.to_symbols]
-            return functools.reduce(operator.add, resp, []) + [item]
+            for el in item.to_symbols:
+                yield callback(el)
+            yield item
 
         def travNonterminals(item, callback):
-            return callback(item.to_rule) + [item]
+            yield callback(item.to_rule)
+            yield item
 
         def travTerms(item, callback):
-            return [item]
+            yield item
 
         return Traversing.traverseSeparated(root, travRule, travNonterminals, travTerms)
 

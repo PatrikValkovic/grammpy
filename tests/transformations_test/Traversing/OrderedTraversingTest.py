@@ -24,7 +24,7 @@ class OrderedTraversingTest(TestCase):
                     rules=[Rules],
                     start_symbol=A)
         res = cyk(g, [0])
-        resp = Traversing.preOrder(res)
+        resp = list(Traversing.preOrder(res))
         self.assertIsInstance(resp[0], A)
         self.assertIsInstance(resp[1], Rules)
         self.assertIsInstance(resp[2], Terminal)
@@ -36,7 +36,7 @@ class OrderedTraversingTest(TestCase):
                     rules=[Rules],
                     start_symbol=A)
         res = cyk(g, [0])
-        resp = Traversing.postOrder(res)
+        resp = list(Traversing.postOrder(res))
         self.assertIsInstance(resp[2], A)
         self.assertIsInstance(resp[1], Rules)
         self.assertIsInstance(resp[0], Terminal)
