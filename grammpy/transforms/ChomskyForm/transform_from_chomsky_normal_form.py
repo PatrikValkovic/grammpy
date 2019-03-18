@@ -10,7 +10,8 @@ from collections import deque
 from typing import TYPE_CHECKING
 
 from .transform_to_chomsky_normal_form import *
-from ..Manipulations import Traversing, Manipulations
+from ..Manipulations import Manipulations
+from ..Traversing import Traversing
 
 if TYPE_CHECKING:  # pragma: no cover
     from ... import Nonterminal
@@ -24,7 +25,7 @@ def transform_from_chomsky_normal_form(root):
     :return: Modified tree.
     """
     # Transforms leaves
-    items = Traversing.postOrder(root)
+    items = Traversing.post_order(root)
     items = filter(lambda x: isinstance(x, (ChomskyTermRule, ChomskyTerminalReplaceRule)), items)
     de = deque(items)
     while de:
@@ -39,7 +40,7 @@ def transform_from_chomsky_normal_form(root):
             de.append(created_rule)
 
     # Transform inner nodes
-    items = Traversing.postOrder(root)
+    items = Traversing.post_order(root)
     items = filter(lambda x: isinstance(x, ChomskySplitRule), items)
     de = deque(items)
     while de:

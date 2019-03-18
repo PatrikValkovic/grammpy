@@ -9,7 +9,7 @@ Part of grammpy
 from typing import TYPE_CHECKING
 
 from .remove_unit_rules import ReducedUnitRule
-from ..Manipulations import Traversing
+from ..Traversing import Traversing
 
 if TYPE_CHECKING:  # pragma: no cover
     from ... import Nonterminal, Rule
@@ -23,7 +23,7 @@ def unit_rules_restore(root):
     :param root: Root of the parsed tree.
     :return: Modified tree.
     """
-    items = Traversing.postOrder(root)
+    items = Traversing.post_order(root)
     items = filter(lambda x: isinstance(x, ReducedUnitRule), items)
     for rule in items:
         parent_nonterm = rule.from_symbols[0]  # type: Nonterminal

@@ -43,20 +43,20 @@ class TermsFromInputTest(TestCase):
 
     def test_oneTerminal(self):
         result = cyk(self.g, [My(1)])
-        terms = filter(lambda x: isinstance(x, Terminal), Traversing.postOrder(result))
+        terms = filter(lambda x: isinstance(x, Terminal), Traversing.post_order(result))
         terms = list(terms)
         self.assertEqual(terms[0].s.prop, 1)
 
     def test_twoTerminals(self):
         result = cyk(self.g, [My(1), My(2)])
-        terms = filter(lambda x: isinstance(x, Terminal), Traversing.postOrder(result))
+        terms = filter(lambda x: isinstance(x, Terminal), Traversing.post_order(result))
         terms = list(terms)
         self.assertEqual(terms[0].s.prop, 1)
         self.assertEqual(terms[1].s.prop, 2)
 
     def test_fiveTerminals(self):
         result = cyk(self.g, [My(1), My(2), My(3), My(4), My(5)])
-        terms = filter(lambda x: isinstance(x, Terminal), Traversing.postOrder(result))
+        terms = filter(lambda x: isinstance(x, Terminal), Traversing.post_order(result))
         terms = list(terms)
         self.assertEqual(terms[0].s.prop, 1)
         self.assertEqual(terms[1].s.prop, 2)

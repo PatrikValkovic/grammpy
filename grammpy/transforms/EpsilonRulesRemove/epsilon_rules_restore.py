@@ -9,7 +9,7 @@ Part of grammpy
 from typing import TYPE_CHECKING, Type, Dict, Any, Union
 
 from .remove_rules_with_epsilon import EpsilonRemovedRule
-from ..Manipulations import Traversing
+from ..Traversing import Traversing
 from ... import EPSILON, Terminal
 
 if TYPE_CHECKING:  # pragma: no cover
@@ -48,7 +48,7 @@ def epsilon_rules_restore(root):
     :param root: Root of the parsed tree.
     :return: Modified tree including epsilon rules.
     """
-    items = Traversing.postOrder(root)
+    items = Traversing.post_order(root)
     items = filter(lambda x: isinstance(x, EpsilonRemovedRule), items)
     for rule in items:
         # create original rule

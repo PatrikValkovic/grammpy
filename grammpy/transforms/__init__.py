@@ -10,4 +10,5 @@ Part of grammpy
 from .ContextFree import ContextFree
 from .InverseCommon import InverseCommon
 from .InverseContextFree import InverseContextFree
-from .Manipulations import Manipulations, Traversing
+from .Manipulations import Manipulations
+from .Traversing import Traversing

@@ -8,7 +8,8 @@ Part of grammpy
 """
 from typing import TYPE_CHECKING
 
-from ..Manipulations import Manipulations, Traversing
+from ..Manipulations import Manipulations
+from ..Traversing import Traversing
 from ...representation.support.SplitRule import SplitRule
 
 if TYPE_CHECKING:  # pragma: no cover
@@ -23,7 +24,7 @@ def splitted_rules(root):
     :param root: Root of the parsed tree.
     :return: Modified tree.
     """
-    items = Traversing.postOrder(root)
+    items = Traversing.post_order(root)
     items = filter(lambda x: isinstance(x, SplitRule), items)
     for i in items:
         # create the original rule

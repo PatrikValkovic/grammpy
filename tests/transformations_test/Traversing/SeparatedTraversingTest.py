@@ -32,7 +32,8 @@ class SeparatedTraversingTest(TestCase):
             self.assertIsInstance(item, A)
         def travTerms(item, callback):
             self.assertIsInstance(item, Terminal)
-        Traversing.traverseSeparated(res, travRule, travNonterminals, travTerms)
+
+        Traversing.traverse_separated(res, travRule, travNonterminals, travTerms)
 
     def testRealTraversing(self):
         g = Grammar(terminals=[0],
@@ -52,7 +53,8 @@ class SeparatedTraversingTest(TestCase):
         def travTerms(item, callback):
             self.assertIsInstance(item, Terminal)
             yield item
-        Traversing.traverseSeparated(res, travRule, travNonterminals, travTerms)
+
+        Traversing.traverse_separated(res, travRule, travNonterminals, travTerms)
 
     def testRealTraversingReturnValues(self):
         g = Grammar(terminals=[0],
@@ -72,7 +74,7 @@ class SeparatedTraversingTest(TestCase):
         def travTerms(item, callback):
             self.assertIsInstance(item, Terminal)
             yield item
-        resp = list(Traversing.traverseSeparated(res, travRule, travNonterminals, travTerms))
+        resp = list(Traversing.traverse_separated(res, travRule, travNonterminals, travTerms))
         self.assertIsInstance(resp[0], A)
         self.assertIsInstance(resp[1], Rules)
         self.assertIsInstance(resp[2], Terminal)
