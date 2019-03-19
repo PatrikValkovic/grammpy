@@ -72,7 +72,11 @@ assert root.value == 16
 
 ## Documentation
 
-You can read more about the library in the [doc](doc/index.md) directory.
+You can read more about the library in the [doc](doc) directory.
+
+## Examples
+
+You can view some examples in the [examples](examples) directory.
 
 -----
 

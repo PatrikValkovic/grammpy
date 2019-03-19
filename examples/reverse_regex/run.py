@@ -43,7 +43,7 @@ class IterateRewrite(Rule):
 
 
 class IterateRule(Rule):
-    MAX_ITERATIONS = 8
+    MAX_ITERATIONS = 6
     FILL_SYMBOL = ''
     rule = ([Iterate], [Symb, '*'])
     def get(self):
