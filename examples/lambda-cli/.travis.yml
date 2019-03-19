@@ -1,0 +1,19 @@
+language: python
+python:
+  - "3.3"
+  - "3.4"
+  - "3.5"
+  - "3.6"
+  - "3.6-dev"  # 3.6 development branch
+
+# command to install dependencies
+install:
+- pip install grammpy grammpy-transforms pyparsers lambda_interpreter ply
+
+# command to run tests with coverage
+script:
+- python3 -m unittest discover -s tests -p "*Test.py" -q
+
+# disable email notifications
+notifications:
+  email: false
