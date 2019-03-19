@@ -2,8 +2,8 @@
 
 Current version: 1.2.1
 
-[![Build Status](https://travis-ci.org/PatrikValkovic/grammpy.svg?branch=master)](https://travis-ci.org/PatrikValkovic/grammpy)
-[![Coverage Status](https://coveralls.io/repos/github/PatrikValkovic/grammpy/badge.svg?branch=master)](https://coveralls.io/github/PatrikValkovic/grammpy?branch=master)
+[![Build Status](https://travis-ci.org/PatrikValkovic/grammpy.svg?branch=dev)](https://travis-ci.org/PatrikValkovic/grammpy)
+[![Coverage Status](https://coveralls.io/repos/github/PatrikValkovic/grammpy/badge.svg?branch=dev)](https://coveralls.io/github/PatrikValkovic/grammpy?branch=dev)
 
 Package for representing formal grammars.
 Contains algorithms to work with a grammars and parse them.
@@ -34,31 +34,34 @@ from grammpy import *
 from grammpy.transforms import ContextFree, InverseContextFree
 from grammpy.parsers import cyk
 
+
 class Number:
     def __init__(self, value):
         self.value = value
     def __hash__(self):
         return hash(Number)
 
+
 class PlusNonterminal(Nonterminal):
     @property
     def value(self):
         return self.to_rule.get_value()
 
+
 class PlusRule(Rule):
     rule = ([PlusNonterminal], [PlusNonterminal, '+', PlusNonterminal])
-    
     def get_value(self):
         child1 = self.to_symbols[0]
         child2 = self.to_symbols[2]
         return child1.value + child2.value
 
+
 class RewriteRule(Rule):
     fromSymbol = PlusNonterminal
     toSymbol = Number
-    
     def get_value(self):
         return self.to_symbols[0].s.value
+
 
 g = Grammar(terminals=[Number, '+'],
             nonterminals=[PlusNonterminal],
