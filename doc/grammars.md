@@ -212,6 +212,23 @@ g = Grammar(terminals = [0, 1, 'a', 'b'],
             start_symbol=A)
 ```
 
+## Backward compatibility
+
+The library interface changed between version 1 and 2.
+The decision was make to make the interface more python-like.
+If you already written the application using the old interface, you can still use it with a bit of changes.
+
+The only change is to switch the `grammpy.Grammar` class implementation with the `grammpy.old_api.Grammar` one.
+There are no more changes needed.
+The library then works the same as in the version 1.
+
+To make the transition easier, the `grammpy.old_api.Grammar` implements both interfaces from version 1 as well from version 2.
+So you can start rewriting your applications gradually and then switch the Grammar classes when you need.
+
+The drawback of using the old interface is it's performance.
+The facade calls new interface under the hood, and as so the performance is worse.
+It's so highly recommended to switch to the new interface as soon as possible.
+
 ## Advanced topics
 
 Follows advanced topics how the library handles the grammars.
