@@ -1,6 +1,6 @@
 # Reverse regex generator
 
-This example contains application, that generates strings based on the regex.
+This example is application, that generates strings based on the regex.
 You type regular expression, and the application generates strings that match that expression.
 The application doesn't support standard regular expressions (although it would be easy to extend it),
 but just a basic operations.

@@ -6,9 +6,9 @@
 Part of lambda-cli
 
 """
-
+from grammpy.exceptions import NotParsedException
 from lambda_cli import steps
-from lambda_cli.exceptions import ParsingException, LexException
+from lambda_cli.exceptions import LexException
 
 
 def run():
@@ -19,7 +19,7 @@ def run():
         try:
             for r in steps(i):
                 print(r)
-        except (LexException, ParsingException):
+        except (LexException, NotParsedException):
             print('Invalid input')
 
 

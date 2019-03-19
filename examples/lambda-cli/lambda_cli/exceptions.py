@@ -7,9 +7,6 @@ Part of lambda-cli
 
 """
 
-class ParsingException(Exception):
-    pass
-
 class LexException(Exception):
     pass
 

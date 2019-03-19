@@ -2,7 +2,7 @@
 """
 :Author Patrik Valkovic
 :Created 27.03.2018 16:40
-:Licence GNUv3
+:Licence GPLv3
 Part of lambda-cli
 
 """
@@ -15,7 +15,6 @@ class LeftBracket:
     pass
 class RightBracket:
     pass
-
 
 
 class Number:
@@ -37,6 +36,7 @@ class Parameter:
         self.name = name
     def __hash__(self):
         return hash(Parameter)
+
 
 all_terms = [
     LambdaKeyword,
