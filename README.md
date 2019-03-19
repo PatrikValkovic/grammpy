@@ -1,9 +1,9 @@
 # grammpy
 
-Current version: 1.2.1
+Current version: 2.0.0
 
-[![Build Status](https://travis-ci.org/PatrikValkovic/grammpy.svg?branch=dev)](https://travis-ci.org/PatrikValkovic/grammpy)
-[![Coverage Status](https://coveralls.io/repos/github/PatrikValkovic/grammpy/badge.svg?branch=dev)](https://coveralls.io/github/PatrikValkovic/grammpy?branch=dev)
+[![Build Status](https://travis-ci.org/PatrikValkovic/grammpy.svg?branch=master)](https://travis-ci.org/PatrikValkovic/grammpy)
+[![Coverage Status](https://coveralls.io/repos/github/PatrikValkovic/grammpy/badge.svg?branch=master)](https://coveralls.io/github/PatrikValkovic/grammpy?branch=master)
 
 Package for representing formal grammars.
 Contains algorithms to work with a grammars and parse them.
@@ -83,7 +83,7 @@ You can view some examples in the [examples](examples) directory.
 
 -----
 
-Version: dev
+Version: 2.0.0
 
 Author: Patrik Valkovič
 

@@ -2,23 +2,33 @@
 This is a list of major changes in version history.
 
 ---------------------------------------------------------------------------
-dev
+2.0.0
 ---------------------------------------------------------------------------
 
+* EDIT changed interface of the grammpy
+* EDIT parsers and transformation moved into this repository
+* EDIT changed license to MIT
+* Rewriting of the library.
+* ADD documentation
+* ADD examples
 
-<<<<<<< HEAD
 ---------------------------------------------------------------------------
 1.2.1
 ---------------------------------------------------------------------------
 
 * Internal refactoring
+* FIX: missing SplittedRules module
 
 ---------------------------------------------------------------------------
 1.2.0
 ---------------------------------------------------------------------------
 
 * ADD: Add support for Nonterminal and Rule instantiating and tree building
-
+* FIX: Add grammpy as dependency into setup.py file
+* ADD: Inverse functions to grammar transformations
+* ADD: Inversion of splitting grammars
+* ADD: Traversing class for traversing the parsed tree
+* ADD: Manipulations class for changing nodes in the parsed tree
 
 ---------------------------------------------------------------------------
 1.1.11
@@ -109,34 +119,3 @@ dev
 
 * FIX: Parametres passed into Grammar constructor are validate
 * FIX: Grammar.have_rule method returns False instead of expcetion when rule with symbols out of grammar is pass
-=======
-
----------------------------------------------------------------------------
-v1.2.4
----------------------------------------------------------------------------
-
-* FIX: Epsilon is stored in Terminal object
-
----------------------------------------------------------------------------
-v1.2.3
----------------------------------------------------------------------------
-
-* FIX: Issue with restoring from Chomsky normal form
-* ADD: Printing of the AST
-
----------------------------------------------------------------------------
-v1.2.1 and v1.2.2
----------------------------------------------------------------------------
-
-* FIX: missing SplittedRules module
-
----------------------------------------------------------------------------
-v1.2.0
----------------------------------------------------------------------------
-
-* FIX: Add grammpy as dependency into setup.py file
-* ADD: Inverse functions to grammar transformations
-* ADD: Inversion of splitting grammars
-* ADD: Traversing class for traversing the parsed tree
-* ADD: Manipulations class for changing nodes in the parsed tree
->>>>>>> transforms/master
