@@ -2,7 +2,7 @@
 
 Current version: 1.2.1
 
-[![Build Status](https://travis-ci.org/PatrikValkovic/grammpy.svg?branch=dev)](https://travis-ci.org/PatrikValkovic/grammpy)
+[![Build Status](https://www.travis-ci.com/PatrikValkovic/grammpy.svg?branch=dev)](https://www.travis-ci.com/PatrikValkovic/grammpy)
 [![Coverage Status](https://coveralls.io/repos/github/PatrikValkovic/grammpy/badge.svg?branch=dev)](https://coveralls.io/github/PatrikValkovic/grammpy?branch=dev)
 
 Package for representing formal grammars.
