@@ -15,11 +15,12 @@ from grammpy.exceptions import NotNonterminalException
 
 class InvalidNonterminalTest(TestCase):
     def test_oneInvalidNonterminal(self):
-        with self.assertRaises(NotNonterminalException):
+        with self.assertRaises(NotNonterminalException) as e:
             Grammar(nonterminals=[2])
+        self.assertEqual(e.exception.object, 2)
 
     def test_threeInvalidNonterminal(self):
-        with self.assertRaises(NotNonterminalException):
+        with self.assertRaises(NotNonterminalException) as e:
             Grammar(nonterminals=[2, 'asdf', InvalidNonterminalTest])
 
     def test_oneInvalidNontermBetweenValidOnces(self):

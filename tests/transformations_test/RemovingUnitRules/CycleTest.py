@@ -62,6 +62,7 @@ class SimpleTest(TestCase):
                     rules=[Rules],
                     start_symbol=S)
         com = ContextFree.remove_unit_rules(g)
+        self.assertNotEqual(com, g)
         # Removed
         class RuleStoA(Rule): rule = ([S], [A])
         self.assertNotIn(RuleStoA, com.rules)
@@ -205,8 +206,8 @@ class SimpleTest(TestCase):
                     nonterminals=[S, A, B, C],
                     rules=[Rules],
                     start_symbol=S)
-        ContextFree.remove_unit_rules(g, True)
-
+        ret = ContextFree.remove_unit_rules(g, True)
+        self.assertIs(ret, g)
         # Removed
         class RuleStoA(Rule): rule = ([S], [A])
         self.assertNotIn(RuleStoA, g.rules)

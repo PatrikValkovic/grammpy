@@ -25,8 +25,9 @@ class NotNonterminalTest(TestCase):
     def test_shouldNotSetStartSymbol(self):
         g = Grammar(nonterminals=[A, B])
         self.assertFalse(g.start_isSet())
-        with self.assertRaises(NotNonterminalException):
+        with self.assertRaises(NotNonterminalException) as e:
             g.start_set('asdf')
+        self.assertEqual(e.exception.object, 'asdf')
         self.assertFalse(g.start_isSet())
         self.assertFalse(g.start_is('asdf'))
 

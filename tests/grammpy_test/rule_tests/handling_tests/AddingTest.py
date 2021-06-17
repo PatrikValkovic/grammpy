@@ -125,14 +125,16 @@ class AddingTest(TestCase):
     def test_addUndefined(self):
         gr = Grammar(terminals=[0, 1, 2],
                      nonterminals=[N])
-        with self.assertRaises(RuleNotDefinedException):
+        with self.assertRaises(RuleNotDefinedException) as e:
             gr.rules.add(UndefinedRule)
+        self.assertEqual(e.exception.rule, UndefinedRule)
 
     def test_addInvalid(self):
         gr = Grammar(terminals=[0, 1, 2],
                      nonterminals=[N])
-        with self.assertRaises(RuleSyntaxException):
+        with self.assertRaises(RuleSyntaxException) as e:
             gr.rules.add(InvalidRule)
+        self.assertEqual(e.exception.rule, InvalidRule)
 
     def test_addNotInside1(self):
         gr = Grammar(terminals=[0, 1, 2],
