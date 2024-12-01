@@ -29,7 +29,7 @@ class Rule(metaclass=_MetaRule):
     """
 
     def __init__(self):
-        # type: () -> Rule
+        # type: () -> None
         """
         Create new instance of rule.
         """

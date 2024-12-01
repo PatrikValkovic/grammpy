@@ -1,10 +1,10 @@
 #!/usr/bin/env python
 """
 :Author Patrik Valkovic
-:Created 31.08.2017 09:48
+:Created 01.12.2024 17:55
 :Licence MIT
 Part of grammpy
 
 """
 
-from .CYK import cyk
+from .create_first_table import create_first_table

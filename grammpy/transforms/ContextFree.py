@@ -7,13 +7,14 @@ Part of grammpy
 
 """
 
-from typing import TYPE_CHECKING, Dict
+from typing import TYPE_CHECKING, Dict, Union, Set, List
 
 from .ChomskyForm import *
 from .EpsilonRulesRemove import *
 from .NongeneratingSymbolsRemove import *
 from .UnitRulesRemove import *
 from .UnreachableSymbolsRemove import *
+from .FirstTable import *
 
 if TYPE_CHECKING:  # pragma: no cover
     from .. import Grammar
@@ -170,3 +171,14 @@ class ContextFree:
         grammar = ContextFree.remove_useless_symbols(grammar, True)
         grammar = ContextFree.transform_to_chomsky_normal_form(grammar, True)
         return grammar
+
+    @staticmethod
+    def create_first_table(grammar, look_ahead):
+        # type: (Grammar, int) -> Dict[Union[Type[Nonterminal], Terminal, Type[Terminal]], Set[List[Union[EPSILON_TYPE, Type[Terminal], Terminal]]]]
+        """
+        Given LL(n) grammar creates first table
+        :param grammar: Grammar to create first table for
+        :param look_head: Number of symbols to look ahead
+        :return: First table
+        """
+        return create_first_table(grammar, look_ahead)

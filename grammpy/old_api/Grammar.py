@@ -6,7 +6,10 @@
 Part of grammpy
 
 """
-from collections import Iterable
+try:
+    from collections.abc import Iterable
+except ImportError:  # pragma no cover
+    from collections import Iterable  # pragma no cover
 from copy import copy
 from typing import List, Union, Type, Optional, TYPE_CHECKING, Any, Generator
 
@@ -34,7 +37,7 @@ class Grammar:
                  nonterminals=None,
                  rules=None,
                  start_symbol=None):
-        # type: (Optional[Iterable[Any]], Optional[Iterable[Type[Nonterminal]]], Optional[Iterable[Type[Rule]]], Optional[Type[Nonterminal]]) -> Grammar
+        # type: (Optional[Iterable[Any]], Optional[Iterable[Type[Nonterminal]]], Optional[Iterable[Type[Rule]]], Optional[Type[Nonterminal]]) -> None
         """
         Create instance of grammar.
         :param terminals: Sequence of terminals to add, empty sequence by default.

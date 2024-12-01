@@ -7,5 +7,17 @@ Part of grammpy
 
 """
 
-EPSILON = object()
+from typing import TYPE_CHECKING
+if TYPE_CHECKING:  # pragma no cover
+    from typing import TypeAlias
+
+class _Epsilon:
+    def __repr__(self):
+        return 'EPSILON'  # pragma no cover
+    def __str__(self):
+        return 'EPSILON'  # pragma no cover
+
+EPSILON = _Epsilon()
 EPS = EPSILON
+
+EPSILON_TYPE = type(EPSILON)  # type: TypeAlias
