@@ -34,7 +34,7 @@ class LookAhead1Test(TestCase):
         self.assertIn((0,), first_table[S])
         self.assertIn((1,), first_table[S])
         self.assertIn((0,), first_table[A])
-        self.assertIn((EPSILON,), first_table[A])
+        self.assertIn(EPSILON, first_table[A])
         self.assertIn((1,), first_table[B])
 
     def test_arithmetic(self):
@@ -67,11 +67,11 @@ class LookAhead1Test(TestCase):
         self.assertIn(('id', ), first_table[E])
         self.assertIn(('(', ), first_table[E])
         self.assertIn(('+', ), first_table[Ecap])
-        self.assertIn((EPSILON, ), first_table[Ecap])
+        self.assertIn(EPSILON, first_table[Ecap])
         self.assertIn(('id', ), first_table[T])
         self.assertIn(('(', ), first_table[T])
         self.assertIn(('*', ), first_table[Tcap])
-        self.assertIn((EPSILON, ), first_table[Tcap])
+        self.assertIn(EPSILON, first_table[Tcap])
         self.assertIn(('(', ), first_table[F])
         self.assertIn(('id', ), first_table[F])
 

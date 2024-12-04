@@ -12,9 +12,13 @@ from grammpy import Nonterminal, Terminal, EPSILON
 if TYPE_CHECKING:  # pragma: no cover
     from grammpy import Grammar, EPSILON_TYPE
 
+type FirstTable = Dict[
+    Union[Type[Nonterminal]],
+    Set[Union[EPSILON_TYPE, List[Union[Type[Terminal], Terminal]]]]
+]
 
 def create_first_table(grammar, look_head):
-    # type: (Grammar, int) -> Dict[Union[Type[Nonterminal]], Set[List[Union[EPSILON_TYPE, Type[Terminal], Terminal]]]]
+    # type: (Grammar, int) -> FirstTable
     """
     Given LL(n) grammar creates first table
     :param grammar: Grammar to create first table for
@@ -26,7 +30,7 @@ def create_first_table(grammar, look_head):
     if look_head < 1:
         raise ValueError('Look ahead must be at least 1')
 
-    table = {nt: set() for nt in grammar.nonterminals}
+    table = {nt: set() for nt in grammar.nonterminals}  # type: FirstTable
 
     updated = True
     while updated:
@@ -39,7 +43,10 @@ def create_first_table(grammar, look_head):
                 nonlocal updated
                 # Add generated sequences to the FIRST set of `from_symbol`
                 original_size = len(table[from_symbol])
-                table[from_symbol].add(tuple(current_firsts[:look_head]))
+                if current_firsts == EPSILON:
+                    table[from_symbol].add(current_firsts)
+                else:
+                    table[from_symbol].add(tuple(current_firsts[:look_head]))
                 if len(table[from_symbol]) > original_size:
                     updated = True
 
@@ -59,7 +66,7 @@ def create_first_table(grammar, look_head):
                 # If there is nothing to look at, add the current FIRST set to the table
                 if len(to_look) == 0:
                     if contains_epsilon_prefix:
-                        add_to_table([EPSILON])
+                        add_to_table(EPSILON)
                     add_to_table_set(current_firsts)
                     return
                 symbol = to_look[0]
@@ -77,8 +84,8 @@ def create_first_table(grammar, look_head):
                 # Right side has nonterminal, add its FIRST table to the current symbol
                 elif issubclass(symbol, Nonterminal):
                     nonterminal_entries = table[symbol].copy()
-                    for entry in nonterminal_entries:  # type: Tuple
-                        is_eps = entry[0] == EPSILON
+                    for entry in nonterminal_entries:  # type: Tuple | EPSILON_TYPE
+                        is_eps = entry == EPSILON
                         if is_eps:
                             iterate_rule(current_firsts, to_look[1:], contains_epsilon_prefix)
                         else:
@@ -91,7 +98,6 @@ def create_first_table(grammar, look_head):
                     raise ValueError('Unknown symbol type, should never happen', symbol)  # pragma no cover
 
             iterate_rule(set(), to_symbols, True)
-
 
     return table
 
