@@ -7,4 +7,4 @@ Part of grammpy
 
 """
 
-from .create_first_table import create_first_table
+from .create_first_table import create_first_table, FirstTableType

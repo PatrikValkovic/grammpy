@@ -12,13 +12,14 @@ from grammpy import Nonterminal, Terminal, EPSILON
 if TYPE_CHECKING:  # pragma: no cover
     from grammpy import Grammar, EPSILON_TYPE
 
-type FirstTable = Dict[
+type FirstTableTypeValue = Set[Union[EPSILON_TYPE, List[Union[Type[Terminal], Terminal]]]]
+type FirstTableType = Dict[
     Union[Type[Nonterminal]],
-    Set[Union[EPSILON_TYPE, List[Union[Type[Terminal], Terminal]]]]
+    FirstTableTypeValue
 ]
 
 def create_first_table(grammar, look_head):
-    # type: (Grammar, int) -> FirstTable
+    # type: (Grammar, int) -> FirstTableType
     """
     Given LL(n) grammar creates first table
     :param grammar: Grammar to create first table for
@@ -30,7 +31,7 @@ def create_first_table(grammar, look_head):
     if look_head < 1:
         raise ValueError('Look ahead must be at least 1')
 
-    table = {nt: set() for nt in grammar.nonterminals}  # type: FirstTable
+    table = {nt: set() for nt in grammar.nonterminals}  # type: FirstTableType
 
     updated = True
     while updated:

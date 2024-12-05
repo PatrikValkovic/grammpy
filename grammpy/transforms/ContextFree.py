@@ -15,9 +15,11 @@ from .NongeneratingSymbolsRemove import *
 from .UnitRulesRemove import *
 from .UnreachableSymbolsRemove import *
 from .FirstTable import *
+from .FollowTable import *
 
 if TYPE_CHECKING:  # pragma: no cover
     from .. import Grammar
+    from .FirstTable.create_first_table import FirstTableType
 
 __all__ = ['ContextFree']
 
@@ -174,7 +176,7 @@ class ContextFree:
 
     @staticmethod
     def create_first_table(grammar, look_ahead):
-        # type: (Grammar, int) -> Dict[Union[Type[Nonterminal], Terminal, Type[Terminal]], Set[List[Union[EPSILON_TYPE, Type[Terminal], Terminal]]]]
+        # type: (Grammar, int) -> FirstTableType
         """
         Given LL(n) grammar creates first table
         :param grammar: Grammar to create first table for
@@ -182,3 +184,14 @@ class ContextFree:
         :return: First table
         """
         return create_first_table(grammar, look_ahead)
+
+    @staticmethod
+    def create_follow_table(grammar, first_table, look_ahead):
+        # type: (Grammar, FirstTableType, int) -> FollowTableType
+        """
+        Given LL(k) grammar and its corresponding first table, create follow table
+        :param grammar: Grammar for which follow table is created
+        :param next_table: First table for the grammar
+        :return: Follow table for the grammar
+        """
+        return create_follow_table(grammar, first_table, look_ahead)

@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 """
 :Author Patrik Valkovic
-:Created 01.12.2024 18:11
+:Created 04.12.2024 12:25
 :Licence MIT
 Part of grammpy
 
@@ -28,14 +28,13 @@ class LookAhead1Test(TestCase):
                     rules=[RuleS, RuleB, RuleAToZero, RuleAToEpsilon],
                     start_symbol=S)
         first_table = ContextFree.create_first_table(g, 1)
-        self.assertEqual(len(first_table[S]), 2)
-        self.assertEqual(len(first_table[A]), 2)
-        self.assertEqual(len(first_table[B]), 1)
-        self.assertIn((0,), first_table[S])
-        self.assertIn((1,), first_table[S])
-        self.assertIn((0,), first_table[A])
-        self.assertIn(EPSILON, first_table[A])
-        self.assertIn((1,), first_table[B])
+        follow_table = ContextFree.create_follow_table(g, first_table, 1)
+        self.assertEqual(len(follow_table[S]), 1)
+        self.assertEqual(len(follow_table[A]), 1)
+        self.assertEqual(len(follow_table[B]), 1)
+        self.assertIn(END_OF_INPUT, follow_table[S])
+        self.assertIn((1,), follow_table[A])
+        self.assertIn(END_OF_INPUT, follow_table[B])
 
     def test_arithmetic(self):
         class E(Nonterminal): pass
@@ -59,21 +58,26 @@ class LookAhead1Test(TestCase):
                     rules=[Rules],
                     start_symbol=E)
         first_table = ContextFree.create_first_table(g, 1)
-        self.assertEqual(len(first_table[E]), 2)
-        self.assertEqual(len(first_table[Ecap]), 2)
-        self.assertEqual(len(first_table[T]), 2)
-        self.assertEqual(len(first_table[Tcap]), 2)
-        self.assertEqual(len(first_table[F]), 2)
-        self.assertIn(('id', ), first_table[E])
-        self.assertIn(('(', ), first_table[E])
-        self.assertIn(('+', ), first_table[Ecap])
-        self.assertIn(EPSILON, first_table[Ecap])
-        self.assertIn(('id', ), first_table[T])
-        self.assertIn(('(', ), first_table[T])
-        self.assertIn(('*', ), first_table[Tcap])
-        self.assertIn(EPSILON, first_table[Tcap])
-        self.assertIn(('(', ), first_table[F])
-        self.assertIn(('id', ), first_table[F])
+        follow_table = ContextFree.create_follow_table(g, first_table, 1)
+        self.assertEqual(len(follow_table[E]), 2)
+        self.assertEqual(len(follow_table[Ecap]), 2)
+        self.assertEqual(len(follow_table[T]), 3)
+        self.assertEqual(len(follow_table[Tcap]), 3)
+        self.assertEqual(len(follow_table[F]), 4)
+        self.assertIn(END_OF_INPUT, follow_table[E])
+        self.assertIn((')',), follow_table[E])
+        self.assertIn(END_OF_INPUT, follow_table[Ecap])
+        self.assertIn((')',), follow_table[Ecap])
+        self.assertIn(END_OF_INPUT, follow_table[T])
+        self.assertIn((')',), follow_table[T])
+        self.assertIn(('+',), follow_table[T])
+        self.assertIn(END_OF_INPUT, follow_table[Tcap])
+        self.assertIn((')',), follow_table[Tcap])
+        self.assertIn(('+',), follow_table[Tcap])
+        self.assertIn(END_OF_INPUT, follow_table[F])
+        self.assertIn((')',), follow_table[F])
+        self.assertIn(('+',), follow_table[F])
+        self.assertIn(('*',), follow_table[F])
 
     def test_opendsa(self):
         # taken from: https://opendsa-server.cs.vt.edu/OpenDSA/Books/PIFLAS21/html/LLParsing.html
@@ -91,14 +95,13 @@ class LookAhead1Test(TestCase):
                     rules=[Rules],
                     start_symbol=S)
         first_table = ContextFree.create_first_table(g, 1)
-        self.assertEqual(len(first_table[S]), 3)
-        self.assertEqual(len(first_table[B]), 2)
-        self.assertIn(('a', ), first_table[S])
-        self.assertIn(('b', ), first_table[S])
-        self.assertIn(('lambda', ), first_table[S])
-        self.assertIn(('b', ), first_table[B])
-        self.assertIn(('lambda', ), first_table[B])
-
+        follow_table = ContextFree.create_follow_table(g, first_table, 1)
+        self.assertEqual(len(follow_table[S]), 2)
+        self.assertEqual(len(follow_table[B]), 2)
+        self.assertIn(END_OF_INPUT, follow_table[S])
+        self.assertIn(('c',), follow_table[S])
+        self.assertIn(END_OF_INPUT, follow_table[B])
+        self.assertIn(('c',), follow_table[B])
 
 if __name__ == '__main__':
     main()

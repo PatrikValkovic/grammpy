@@ -21,3 +21,14 @@ EPSILON = _Epsilon()
 EPS = EPSILON
 
 EPSILON_TYPE = type(EPSILON)  # type: TypeAlias
+
+class _EndOfInput:
+    def __repr__(self):
+        return 'END_OF_INPUT'  # pragma no cover
+    def __str__(self):
+        return 'END_OF_INPUT'  # pragma no cover
+
+END_OF_INPUT = _EndOfInput()
+EOI = END_OF_INPUT
+
+END_OF_INPUT_TYPE = type(END_OF_INPUT)  # type: TypeAlias
