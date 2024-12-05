@@ -33,10 +33,10 @@ class LookAhead2Test(TestCase):
         self.assertEqual(len(follow_table[S]), 1)
         self.assertEqual(len(follow_table[A]), 2)
         self.assertEqual(len(follow_table[B]), 2)
-        self.assertIn(END_OF_INPUT, follow_table[S])
+        self.assertIn((END_OF_INPUT,), follow_table[S])
         self.assertIn((2,), follow_table[A])
         self.assertIn((3, 1), follow_table[A])
-        self.assertIn(END_OF_INPUT, follow_table[B])
+        self.assertIn((END_OF_INPUT,), follow_table[B])
         self.assertIn((2,), follow_table[B])
 
 

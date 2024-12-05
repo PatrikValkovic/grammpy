@@ -6,3 +6,4 @@
 Part of grammpy
 
 """
+from .create_LL_parsing_table import create_LL_parsing_table

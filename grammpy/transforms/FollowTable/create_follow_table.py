@@ -32,7 +32,7 @@ def create_follow_table(grammar, first_table, look_ahead):
     :return: Follow table for the grammar
     """
     table = {nt: set() for nt in grammar.nonterminals}  # type: FollowTableType
-    table[grammar.start].add(END_OF_INPUT)
+    table[grammar.start].add((END_OF_INPUT,))
     updated = True
 
     def add_from_first(from_nonterminal, to_symbols_set):
