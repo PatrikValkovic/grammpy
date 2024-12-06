@@ -11,12 +11,11 @@ from typing import TYPE_CHECKING, Dict, List, Set, Union, Type, Tuple
 from grammpy import Nonterminal, Terminal, EPSILON
 if TYPE_CHECKING:  # pragma: no cover
     from grammpy import Grammar, EPSILON_TYPE
-
-type FirstTableTypeValue = Set[Union[EPSILON_TYPE, List[Union[Type[Terminal], Terminal]]]]
-type FirstTableType = Dict[
-    Union[Type[Nonterminal]],
-    FirstTableTypeValue
-]
+    FirstTableTypeValue = Set[Union[EPSILON_TYPE, List[Union[Type[Terminal], Terminal]]]]
+    FirstTableType = Dict[
+        Union[Type[Nonterminal]],
+        FirstTableTypeValue
+    ]
 
 def create_first_table(grammar, look_head):
     # type: (Grammar, int) -> FirstTableType

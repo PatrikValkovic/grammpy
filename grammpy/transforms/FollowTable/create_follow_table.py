@@ -13,15 +13,14 @@ from grammpy import END_OF_INPUT, Nonterminal, EPSILON
 if TYPE_CHECKING:   # pragma: no cover
     from grammpy import Grammar, Terminal, Rule, END_OF_INPUT_TYPE
     from ..FirstTable.create_first_table import FirstTableType, FirstTableTypeValue
-
-type FollowTableTypeValue = Set[Union[
-    END_OF_INPUT_TYPE,
-    List[Union[Type[Terminal], Terminal]]
-]]
-type FollowTableType = Dict[
-    Union[Type[Nonterminal]],
-    FollowTableTypeValue
-]
+    FollowTableTypeValue = Set[Union[
+        END_OF_INPUT_TYPE,
+        List[Union[Type[Terminal], Terminal]]
+    ]]
+    FollowTableType = Dict[
+        Union[Type[Nonterminal]],
+        FollowTableTypeValue
+    ]
 
 def create_follow_table(grammar, first_table, look_ahead):
     # type: (Grammar, FirstTableType, int) -> FollowTableType

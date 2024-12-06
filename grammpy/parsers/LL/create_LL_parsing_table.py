@@ -14,14 +14,13 @@ if TYPE_CHECKING:   # pragma: no cover
     from grammpy import Grammar, Terminal, Rule, END_OF_INPUT_TYPE
     from ...transforms.FirstTable.create_first_table import FirstTableType
     from ...transforms.FollowTable.create_follow_table import FollowTableType
-
-type LLTableType = Dict[
-    Type[Nonterminal],
-    Dict[
-        List[Union[END_OF_INPUT_TYPE, Type[Terminal], Terminal]],
-        Set[Type[Rule]]
+    LLTableType = Dict[
+        Type[Nonterminal],
+        Dict[
+            List[Union[END_OF_INPUT_TYPE, Type[Terminal], Terminal]],
+            Set[Type[Rule]]
+        ]
     ]
-]
 
 def create_LL_parsing_table(g, first, follow, look_ahead):
     # type: (Grammar, FirstTableType, FollowTableType, int) -> LLTableType

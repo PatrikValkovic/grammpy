@@ -7,4 +7,8 @@ Part of grammpy
 
 """
 
-from .create_follow_table import create_follow_table, FollowTableType
+from typing import TYPE_CHECKING
+from .create_follow_table import create_follow_table
+
+if TYPE_CHECKING:  # pragma: no cover
+    from .create_follow_table import FollowTableType, FollowTableTypeValue
