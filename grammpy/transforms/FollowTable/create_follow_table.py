@@ -31,25 +31,17 @@ def create_follow_table(grammar, first_table, look_ahead):
     :return: Follow table for the grammar
     """
     table = {nt: set() for nt in grammar.nonterminals}  # type: FollowTableType
-    table[grammar.start].add((END_OF_INPUT,))
+    eoi_tuple = tuple([END_OF_INPUT]*look_ahead)
+    table[grammar.start].add(eoi_tuple)
     updated = True
 
-    def add_from_first(from_nonterminal, to_symbols_set):
-        # type: (Type[Nonterminal], FirstTableTypeValue) -> None
-        nonlocal updated
-        original_size = len(table[from_nonterminal])
-        for symbols in to_symbols_set:
-            if symbols != EPSILON:
-                table[from_nonterminal].add(symbols)
-        if len(table[from_nonterminal]) > original_size:
-            updated = True
-
-    def add_from_follow(from_nonterminal, to_symbols_set):
+    def add_from_set(from_nonterminal, to_symbols_set):
         # type: (Type[Nonterminal], FollowTableTypeValue) -> None
         nonlocal updated
         original_size = len(table[from_nonterminal])
         for symbols in to_symbols_set:
-            table[from_nonterminal].add(symbols)
+            if len(symbols) == look_ahead:
+                table[from_nonterminal].add(symbols)
         if len(table[from_nonterminal]) > original_size:
             updated = True
 
@@ -59,16 +51,16 @@ def create_follow_table(grammar, first_table, look_ahead):
             left = rule.fromSymbol
             right = rule.right
             right_side_generates_epsilon = True
-            right_side_first = set()
+            right_side_first = table[left].copy()
             for i in range(len(right)-1, -1, -1):
-                right_side_first = {tuple(k[:look_ahead]) for k in right_side_first if k != EPSILON}
                 symbol = right[i]
                 # check if it is terminal
                 if symbol == EPSILON:
+                    add_from_set(left, right_side_first)
                     continue
                 if not isclass(symbol) or not issubclass(symbol, Nonterminal):
                     right_side_first = {
-                        tuple([symbol, *k]) for k in right_side_first
+                        tuple([symbol, *k][:look_ahead]) for k in right_side_first
                     }
                     if right_side_generates_epsilon:
                         right_side_first.add(tuple([symbol]))
@@ -76,14 +68,11 @@ def create_follow_table(grammar, first_table, look_ahead):
                     continue
                 # it is nonterminal
                 if right_side_generates_epsilon:
-                    add_from_follow(symbol, table[left])
-                add_from_first(symbol, right_side_first)
+                    add_from_set(symbol, table[left])
+                add_from_set(symbol, right_side_first)
                 right_side_first = {
-                    tuple([*c ,*e]) for c in first_table[symbol] if c != EPSILON for e in right_side_first
+                    tuple([*c ,*e][:look_ahead]) for c in first_table[symbol] if c != EPSILON for e in right_side_first
                 }
-                if right_side_generates_epsilon:
-                    for c in first_table[symbol]:
-                        right_side_first.add(c)
                 right_side_generates_epsilon = right_side_generates_epsilon and EPSILON in first_table[symbol]
 
     return table

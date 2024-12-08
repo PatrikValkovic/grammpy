@@ -7,11 +7,11 @@ Part of grammpy
 
 """
 from inspect import isclass
-from typing import TYPE_CHECKING, Dict, Union, Type, List, Set, Tuple
-from grammpy import Nonterminal, EPSILON, EPSILON_TYPE
+from typing import TYPE_CHECKING, Dict, Union, Type, List, Set
+from grammpy import Nonterminal, EPSILON, END_OF_INPUT
 
 if TYPE_CHECKING:   # pragma: no cover
-    from grammpy import Grammar, Terminal, Rule, END_OF_INPUT_TYPE
+    from grammpy import Grammar, Terminal, Rule, END_OF_INPUT_TYPE, EPSILON_TYPE
     from ...transforms.FirstTable.create_first_table import FirstTableType
     from ...transforms.FollowTable.create_follow_table import FollowTableType
     LLTableType = Dict[
@@ -44,11 +44,14 @@ def create_LL_parsing_table(g, first, follow, look_ahead):
                 can_generate_epsilon = False
             else:
                 first_without_epsilon = {f for f in first[symbol] if f != EPSILON}
+                for f in [*first_without_epsilon]:  # type: List[Union[Type[Terminal], Terminal]]
+                    if len(f) < look_ahead:
+                        first_without_epsilon.add(tuple([*f, *[END_OF_INPUT] * look_ahead][:look_ahead]))
                 first_of_right = {
                     tuple([*e, *f]) for f in first_without_epsilon for e in first_of_right
                 }
                 if can_generate_epsilon:
-                    first_of_right.update(f for f in first[symbol] if f != EPSILON)
+                    first_of_right.update(f for f in first_without_epsilon)
                 can_generate_epsilon = can_generate_epsilon and EPSILON in first[symbol]
         # shorten sequences
         first_of_right = {tuple(e[:look_ahead]) for e in first_of_right}
