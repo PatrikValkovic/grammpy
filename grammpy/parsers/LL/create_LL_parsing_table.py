@@ -24,6 +24,15 @@ if TYPE_CHECKING:   # pragma: no cover
 
 def create_LL_parsing_table(g, first, follow, look_ahead):
     # type: (Grammar, FirstTableType, FollowTableType, int) -> LLTableType
+    """
+    Create LL parser for given grammar.
+    You must provide FIRST and FOLLOW table for the grammar with the proper look ahead.
+    :param g: Grammar to create LL parser for.
+    :param first: FIRST table for the grammar.
+    :param follow: FOLLOW table for the grammar.
+    :param look_ahead: Number of symbols that the parser will look.
+    :return: LL(k) parsing table.
+    """
     parsing_table = {N: dict() for N in g.nonterminals}
 
     for rule in g.rules:
