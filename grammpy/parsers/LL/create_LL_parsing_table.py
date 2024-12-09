@@ -44,27 +44,24 @@ def create_LL_parsing_table(g, first, follow, look_ahead):
                 can_generate_epsilon = False
             else:
                 first_without_epsilon = {f for f in first[symbol] if f != EPSILON}
-                for f in [*first_without_epsilon]:  # type: List[Union[Type[Terminal], Terminal]]
-                    if len(f) < look_ahead:
-                        first_without_epsilon.add(tuple([*f, *[END_OF_INPUT] * look_ahead][:look_ahead]))
                 first_of_right = {
-                    tuple([*e, *f]) for f in first_without_epsilon for e in first_of_right
+                    tuple([*e, *([*f] if f is not EPSILON else [])]) for f in first[symbol] for e in first_of_right
                 }
                 if can_generate_epsilon:
                     first_of_right.update(f for f in first_without_epsilon)
                 can_generate_epsilon = can_generate_epsilon and EPSILON in first[symbol]
+        # add follow
+        first_of_right = {
+            tuple([*e, *f]) for f in follow[left] for e in first_of_right
+        }
+        if can_generate_epsilon:
+            first_of_right.update(follow[left])
         # shorten sequences
         first_of_right = {tuple(e[:look_ahead]) for e in first_of_right}
         # add to the parsing table
         for sequence in first_of_right:
-            sequence_to_add = tuple(sequence[:look_ahead])
-            if sequence_to_add not in parsing_table[left]:
-                parsing_table[left][sequence_to_add] = set()
-            parsing_table[left][sequence_to_add].add(rule)
-        if can_generate_epsilon:
-            for sequence_to_add in follow[left]:
-                if sequence_to_add not in parsing_table[left]:
-                    parsing_table[left][sequence_to_add] = set()
-                parsing_table[left][sequence_to_add].add(rule)
+            if sequence not in parsing_table[left]:
+                parsing_table[left][sequence] = set()
+            parsing_table[left][sequence].add(rule)
 
     return parsing_table
