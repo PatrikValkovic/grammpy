@@ -9,7 +9,7 @@ Part of grammpy
 from unittest import TestCase, main
 
 from grammpy import Nonterminal, Rule, EPSILON, Grammar, END_OF_INPUT, Terminal
-from grammpy.parsers import create_LL_parsing_table, ll
+from grammpy.parsers import create_ll_parsing_table, ll
 from grammpy.transforms import ContextFree
 from grammpy.transforms import Traversing
 
@@ -46,7 +46,7 @@ class ArithmeticGrammarTableTest(TestCase):
                     start_symbol=E)
         first_table = ContextFree.create_first_table(g, 1)
         follow_table = ContextFree.create_follow_table(g, first_table, 1)
-        parsing_table = create_LL_parsing_table(g, first_table, follow_table, 1)
+        parsing_table = create_ll_parsing_table(g, first_table, follow_table, 1)
         sequence = ['id', '+', 'id', '*', 'id']
         parsed = ll(g, sequence, parsing_table, 1)
         ast_string = Traversing.print(parsed)
@@ -118,7 +118,7 @@ class ArithmeticGrammarTableTest(TestCase):
                     start_symbol=E)
         first_table = ContextFree.create_first_table(g, 1)
         follow_table = ContextFree.create_follow_table(g, first_table, 1)
-        parsing_table = create_LL_parsing_table(g, first_table, follow_table, 1)
+        parsing_table = create_ll_parsing_table(g, first_table, follow_table, 1)
         sequence = [Num(5), '+', Num(4), '*', Num(0)]
         parsed = ll(g, sequence, parsing_table, 1)
         ast_string = Traversing.print(parsed)

@@ -13,7 +13,7 @@ from itertools import chain
 
 if TYPE_CHECKING:  # pragma: no cover
     from ... import Grammar
-    from .create_LL_parsing_table import LLTableType
+    from .create_ll_parsing_table import LLTableType
 
 class _StackTerminalWrapper:
     def __init__(self, terminal, parent_rule):

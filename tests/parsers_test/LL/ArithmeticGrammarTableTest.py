@@ -9,7 +9,7 @@ Part of grammpy
 from unittest import TestCase, main
 
 from grammpy import Nonterminal, Rule, EPSILON, Grammar, END_OF_INPUT
-from grammpy.parsers import create_LL_parsing_table
+from grammpy.parsers import create_ll_parsing_table
 from grammpy.transforms import ContextFree
 
 
@@ -44,7 +44,7 @@ class ArithmeticGrammarTableTest(TestCase):
     def test_lookAhead1(self):
         first_table = ContextFree.create_first_table(g, 1)
         follow_table = ContextFree.create_follow_table(g, first_table, 1)
-        parsing_table = create_LL_parsing_table(g, first_table, follow_table, 1)
+        parsing_table = create_ll_parsing_table(g, first_table, follow_table, 1)
 
         self.assertEqual(2, len(parsing_table[E]))
         self.assertIn(('id',), parsing_table[E])
@@ -98,7 +98,7 @@ class ArithmeticGrammarTableTest(TestCase):
     def test_lookAhead2(self):
         first_table = ContextFree.create_first_table(g, 2)
         follow_table = ContextFree.create_follow_table(g, first_table, 2)
-        parsing_table = create_LL_parsing_table(g, first_table, follow_table, 2)
+        parsing_table = create_ll_parsing_table(g, first_table, follow_table, 2)
 
         self.assertEqual(6, len(parsing_table[E]))
         E_tuples = [

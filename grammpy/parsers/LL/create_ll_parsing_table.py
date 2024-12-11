@@ -22,7 +22,7 @@ if TYPE_CHECKING:   # pragma: no cover
         ]
     ]
 
-def create_LL_parsing_table(g, first, follow, look_ahead):
+def create_ll_parsing_table(g, first, follow, look_ahead):
     # type: (Grammar, FirstTableType, FollowTableType, int) -> LLTableType
     """
     Create LL parser for given grammar.

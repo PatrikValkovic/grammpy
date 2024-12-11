@@ -8,7 +8,7 @@ Part of grammpy
 """
 from unittest import main, TestCase
 from grammpy import *
-from grammpy.parsers import create_LL_parsing_table
+from grammpy.parsers import create_ll_parsing_table
 from grammpy.transforms import *
 
 class S(Nonterminal): pass
@@ -31,7 +31,7 @@ class SimpleGrammarTest(TestCase):
     def test_lookAhead1(self):
         first_table = ContextFree.create_first_table(g, 1)
         follow_table = ContextFree.create_follow_table(g, first_table, 1)
-        parsing_table = create_LL_parsing_table(g, first_table, follow_table, 1)
+        parsing_table = create_ll_parsing_table(g, first_table, follow_table, 1)
 
         self.assertEqual(2, len(parsing_table[S]))
         self.assertIn((0,), parsing_table[S])

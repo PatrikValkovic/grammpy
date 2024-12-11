@@ -8,7 +8,7 @@ Part of grammpy
 """
 from unittest import main, TestCase
 from grammpy import *
-from grammpy.parsers import create_LL_parsing_table
+from grammpy.parsers import create_ll_parsing_table
 from grammpy.transforms import *
 
 # taken from: https://courses.cs.duke.edu/cps140/spring99/lects/sectllparseH.pdf
@@ -34,7 +34,7 @@ class DukeGrammarTest(TestCase):
     def test_lookAhead2(self):
         first_table = ContextFree.create_first_table(g, 2)
         follow_table = ContextFree.create_follow_table(g, first_table, 2)
-        parsing_table = create_LL_parsing_table(g, first_table, follow_table, 2)
+        parsing_table = create_ll_parsing_table(g, first_table, follow_table, 2)
 
         self.assertEqual(2, len(parsing_table[S]))
         self.assertIn((1, 1), parsing_table[S])

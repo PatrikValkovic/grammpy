@@ -8,7 +8,7 @@ Part of grammpy
 """
 from unittest import main, TestCase
 from grammpy import *
-from grammpy.parsers import create_LL_parsing_table
+from grammpy.parsers import create_ll_parsing_table
 from grammpy.transforms import *
 
 # taken from: https://opendsa-server.cs.vt.edu/OpenDSA/Books/PIFLAS21/html/LLParsing.html 10.2.5
@@ -31,7 +31,7 @@ class OpenDsaTest(TestCase):
     def test_lookAhead1(self):
         first_table = ContextFree.create_first_table(g, 1)
         follow_table = ContextFree.create_follow_table(g, first_table, 1)
-        parsing_table = create_LL_parsing_table(g, first_table, follow_table, 1)
+        parsing_table = create_ll_parsing_table(g, first_table, follow_table, 1)
 
         self.assertEqual(4, len(parsing_table[S]))
         self.assertIn(("a",), parsing_table[S])
