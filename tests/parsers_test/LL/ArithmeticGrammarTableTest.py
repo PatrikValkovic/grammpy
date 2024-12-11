@@ -40,7 +40,7 @@ g = Grammar(terminals=['id', '+', '*', '(', ')'],
             start_symbol=E)
 
 
-class ArithmeticGrammarTest(TestCase):
+class ArithmeticGrammarTableTest(TestCase):
     def test_lookAhead1(self):
         first_table = ContextFree.create_first_table(g, 1)
         follow_table = ContextFree.create_follow_table(g, first_table, 1)

@@ -7,7 +7,7 @@ Part of grammpy
 
 """
 
-from typing import TYPE_CHECKING, Dict, Union, Set, List
+from typing import TYPE_CHECKING, Dict
 
 from .ChomskyForm import *
 from .EpsilonRulesRemove import *

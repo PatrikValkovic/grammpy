@@ -8,4 +8,4 @@ Part of grammpy
 """
 
 from .CYK import cyk as cyk
-from .LL import create_LL_parsing_table
+from .LL import create_LL_parsing_table, ll

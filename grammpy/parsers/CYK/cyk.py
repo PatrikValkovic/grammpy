@@ -91,7 +91,7 @@ def cyk(grammar, parse_sequence):
                         for r in rulemap[h]: # list of rules
                             rules.add(PlaceItem(r, first_rule, second_rule))
             f.put(x, y, list(rules))
-    # Check if is start symol on the bottom of field
+    # Check if is start symbol on the bottom of field
     if grammar.start not in [r.fromSymbol for r in f.rules(0, input_length - 1)]:
         raise NotParsedException()
     # Find init symbol and rule
