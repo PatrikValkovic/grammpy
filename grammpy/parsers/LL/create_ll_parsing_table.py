@@ -7,8 +7,8 @@ Part of grammpy
 
 """
 from inspect import isclass
-from typing import TYPE_CHECKING, Dict, Union, Type, List, Set
-from grammpy import Nonterminal, EPSILON, END_OF_INPUT
+from typing import TYPE_CHECKING, Dict, Union, Type, Tuple, Set, Any
+from grammpy import Nonterminal, EPSILON
 
 if TYPE_CHECKING:   # pragma: no cover
     from grammpy import Grammar, Terminal, Rule, END_OF_INPUT_TYPE, EPSILON_TYPE
@@ -17,8 +17,18 @@ if TYPE_CHECKING:   # pragma: no cover
     LLTableType = Dict[
         Type[Nonterminal],
         Dict[
-            List[Union[END_OF_INPUT_TYPE, Type[Terminal], Terminal]],
-            Set[Type[Rule]]
+            Tuple[
+                Union[
+                    END_OF_INPUT_TYPE,
+                    Type[Terminal],
+                    Any
+                ],
+                ...
+            ],
+            Union[
+                Set[Type[Rule]],
+                Type[Rule]
+            ]
         ]
     ]
 

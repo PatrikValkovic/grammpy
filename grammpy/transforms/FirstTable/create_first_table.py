@@ -7,13 +7,18 @@ Part of grammpy
 
 """
 from inspect import isclass
-from typing import TYPE_CHECKING, Dict, List, Set, Union, Type, Tuple
+from typing import TYPE_CHECKING, Dict, List, Set, Union, Type, Tuple, Any
 from grammpy import Nonterminal, Terminal, EPSILON
 if TYPE_CHECKING:  # pragma: no cover
     from grammpy import Grammar, EPSILON_TYPE
-    FirstTableTypeValue = Set[Union[EPSILON_TYPE, List[Union[Type[Terminal], Terminal]]]]
+    FirstTableTypeValue = Set[
+        Union[
+            EPSILON_TYPE,
+            Tuple[Union[Type[Terminal], Any], ...]
+        ]
+    ]
     FirstTableType = Dict[
-        Union[Type[Nonterminal]],
+        Type[Nonterminal],
         FirstTableTypeValue
     ]
 

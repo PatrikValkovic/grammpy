@@ -7,20 +7,21 @@ Part of grammpy
 
 """
 from inspect import isclass
-from typing import TYPE_CHECKING, Union, Any, List, Iterable, Type, Set
-from ... import Terminal, END_OF_INPUT, Rule, Nonterminal, EPSILON
 from itertools import chain
+from typing import TYPE_CHECKING, Union, Any, List, Iterable, Type, Set, cast
+from ... import Terminal, END_OF_INPUT, Rule, Nonterminal, EPSILON
 
 if TYPE_CHECKING:  # pragma: no cover
-    from ... import Grammar
     from .create_ll_parsing_table import LLTableType
+
 
 class _StackTerminalWrapper:
     def __init__(self, symbol, parent_rule):
         self.symbol = symbol
         self.parent_rule = parent_rule
 
-def ll(start_nonterminal, sequence, parsing_table, look_ahead, *, raise_on_ambiguity = True):
+
+def ll(start_nonterminal, sequence, parsing_table, look_ahead, *, raise_on_ambiguity=True):
     # type: (Type[Nonterminal], Iterable[Union[Terminal, Any]], LLTableType, int, Any, bool) -> Nonterminal
     """
     Parse input sequence using look-ahead of LL(k) parsing.
@@ -31,13 +32,13 @@ def ll(start_nonterminal, sequence, parsing_table, look_ahead, *, raise_on_ambig
     :param raise_on_ambiguity: Raise exception if there are ambiguous rules applicable for current nonterminal and look ahead.
     :return: Root node of the parsed AST.
     """
-    stack = []  # type: List[Union[Nonterminal, _StackTerminalWrapper]]
-    ending_sequence = tuple([END_OF_INPUT]*look_ahead)
+    stack = []  # type: List[_StackTerminalWrapper]
+    ending_sequence = tuple([END_OF_INPUT] * look_ahead)
     start = start_nonterminal()
     stack.append(_StackTerminalWrapper(start, None))
 
     input_sequence = chain(sequence, ending_sequence)
-    current_lookahead = tuple([next(input_sequence) for _ in range(look_ahead)])  # type: Tuple[Nonterminal, ...]
+    current_lookahead = tuple([next(input_sequence) for _ in range(look_ahead)])
     while True:
         if current_lookahead == ending_sequence and len(stack) == 0:
             return start
@@ -72,7 +73,7 @@ def ll(start_nonterminal, sequence, parsing_table, look_ahead, *, raise_on_ambig
         table_for_nonterminal = parsing_table[nonterminal]
         if current_lookahead not in table_for_nonterminal:
             raise Exception(f"Rule for {nonterminal.__name__} with lookahead {current_lookahead} not found")
-        rule_to_use = table_for_nonterminal[current_lookahead]  # type: Union[Type[Rule], Set[Type[Rule]]]
+        rule_to_use = table_for_nonterminal[current_lookahead]
         if isinstance(rule_to_use, set) and len(rule_to_use) == 0:
             raise Exception(f"No rule to apply for {nonterminal.__name__} with lookahead {current_lookahead}")
         if isinstance(rule_to_use, set) and len(rule_to_use) > 1 and raise_on_ambiguity:
@@ -92,4 +93,3 @@ def ll(start_nonterminal, sequence, parsing_table, look_ahead, *, raise_on_ambig
                 stack.append(_StackTerminalWrapper(symbol(), rule_instance))
             else:
                 stack.append(_StackTerminalWrapper(symbol, rule_instance))
-

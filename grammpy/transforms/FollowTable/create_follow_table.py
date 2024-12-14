@@ -7,16 +7,25 @@ Part of grammpy
 
 """
 from inspect import isclass
-from typing import TYPE_CHECKING, Dict, Set, List, Union, Type
+from typing import TYPE_CHECKING, Dict, Set, Tuple, Union, Type, Any
 from grammpy import END_OF_INPUT, Nonterminal, EPSILON
 
 if TYPE_CHECKING:   # pragma: no cover
     from grammpy import Grammar, Terminal, Rule, END_OF_INPUT_TYPE
-    from ..FirstTable.create_first_table import FirstTableType, FirstTableTypeValue
-    FollowTableTypeValue = Set[Union[
-        END_OF_INPUT_TYPE,
-        List[Union[Type[Terminal], Terminal]]
-    ]]
+    from ..FirstTable.create_first_table import FirstTableType
+    FollowTableTypeValue = Set[
+        Union[
+            END_OF_INPUT_TYPE,
+            Tuple[
+                Union[
+                    Type[Terminal],
+                    Any,
+                    END_OF_INPUT_TYPE
+                ],
+                ...
+            ]
+        ]
+    ]
     FollowTableType = Dict[
         Union[Type[Nonterminal]],
         FollowTableTypeValue

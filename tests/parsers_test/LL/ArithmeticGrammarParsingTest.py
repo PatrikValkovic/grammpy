@@ -8,7 +8,7 @@ Part of grammpy
 """
 from unittest import TestCase, main
 
-from grammpy import Nonterminal, Rule, EPSILON, Grammar, END_OF_INPUT, Terminal
+from grammpy import Nonterminal, Rule, EPSILON, Grammar, Terminal
 from grammpy.parsers import create_ll_parsing_table, ll
 from grammpy.transforms import ContextFree
 from grammpy.transforms import Traversing
