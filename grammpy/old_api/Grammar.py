@@ -28,7 +28,7 @@ if TYPE_CHECKING:  # pragma: no cover
 class Grammar:
     """
     Provide base interface for manipulating with the grammar.
-    This grammar is deprecated and it's only bridge between the old and new API.
+    This grammar is deprecated, and it's only bridge between the old and new API.
     You should use new API, implementation of this class is less efficient.
     """
 
@@ -424,7 +424,7 @@ class Grammar:
     def start_isSet(self):
         # type: () -> bool
         """
-        Check if the start symbol is set. That mean if the start symbol is not None.
+        Check if the start symbol is set. That means if the start symbol is not None.
         :return: True if the start symbol is set, false otherwise.
         """
         return self.start is not None

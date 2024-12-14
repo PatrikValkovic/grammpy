@@ -26,7 +26,7 @@ class UnitSymbolReachability:
     def __init__(self, field, translation):
         # type: (MATRIX_OF_UNIT_RULES, Dict[Type[Nonterminal], int]) -> None
         """
-        Create isntance of UnitSymbolRechablingResults
+        Create instance of UnitSymbolRechablingResults
         :param field: Result of Floyd-Warshall algorithm
         :param translation: Dictionary where keys is nonterminal and value is position in the field.
         """

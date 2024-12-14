@@ -2,7 +2,7 @@
 
 Library provide classes, that helps with parsed tree manipulation and traversing.
 
-These classes contains only small subset of methods so far. 
+These classes contain only small subset of methods so far. 
 We are expecting to implement other methods soon.
 Pull requests are, of course, welcomed.
 

@@ -116,11 +116,11 @@ class FourthRule(Rule):
 
 You can choose with approach do you want to use. 
 However, you need to specify the rules exactly once.
-That mean, you can't combine `rules` with `rule` or `left`, `rule` with `fromSymbol` etc.
+That means, you can't combine `rules` with `rule` or `left`, `rule` with `fromSymbol` etc.
 You can combine `left` with `toSymbol` and `fromSymbol` with `right`.
 
 The rest of the properties are automatically computed if it is possible.
-For example you can't get `rule` from `rules` when you defined multiple rules.
+For example, you can't get `rule` from `rules` when you defined multiple rules.
 In case you try, exception is raised.
 
 ```python
@@ -138,11 +138,11 @@ When the grammar handling rules, multiple exceptions can occur.
 - `RuleSyntaxException` - rule syntax is invalid. This exception is base class for all the following exceptions.
 - `MultipleDefinitionException` - the rules is defined multiple time (for example using `rule` and `rules` property at the same time).
 - `UselessEpsilonException` - epsilon is used wrong way.
-- `TerminalDoesNotExistsException` - terminal doesn't exists in the grammar. This can occurs when you add the rule into the grammar.
-- `NonterminalDoesNotExistsException` - nonterminal doesn't exists in the grammar. This can occurs when you add the rule into the grammar.
+- `TerminalDoesNotExistsException` - terminal doesn't exist in the grammar. This can occur when you add the rule into the grammar.
+- `NonterminalDoesNotExistsException` - nonterminal doesn't exist in the grammar. This can occur when you add the rule into the grammar.
 
 The grammar handles rules with their symbols. 
-That mean when the symbol (terminal or nonterminal) is removed, all rules with that symbol are removed as well.
+That means when the symbol (terminal or nonterminal) is removed, all rules with that symbol are removed as well.
 
 ```python
 from grammpy import Nonterminal, Rule, Grammar
@@ -216,7 +216,7 @@ g = Grammar(terminals = [0, 1, 'a', 'b'],
 
 The library interface changed between version 1 and 2.
 The decision was make to make the interface more python-like.
-If you already written the application using the old interface, you can still use it with a bit of changes.
+If you have already written the application using the old interface, you can still use it with a bit of changes.
 
 The only change is to switch the `grammpy.Grammar` class implementation with the `grammpy.old_api.Grammar` one.
 There are no more changes needed.

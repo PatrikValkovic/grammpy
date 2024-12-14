@@ -57,9 +57,9 @@ class RulesTest(TestCase):
         t._to_symbols.append(c)
         del b
         del c
-        t.to_symbols[0]
-        t.to_symbols[1]
-        t.to_symbols
+        self.assertIsNotNone(t.to_symbols[0])
+        self.assertIsNotNone(t.to_symbols[1])
+        self.assertIsNotNone(t.to_symbols)
 
 
 

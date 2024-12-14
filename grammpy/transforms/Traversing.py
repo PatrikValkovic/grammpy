@@ -23,7 +23,7 @@ class Traversing:
         :param root: Root element of the parsed tree.
         :param callback: Function that accepts current node, callback `c_2` and parameters from the parent.
         Function must yield individual values.
-        Its possible to yield callback c_2 **call** on any node to call the recursion.
+        It's possible to yield callback c_2 **call** on any node to call the recursion.
         The callback can accept parameters from the parent call.
         The root will receive parameters from the `traverse` call.
 
@@ -71,7 +71,7 @@ class Traversing:
         Same as traverse method, but have different callbacks for rules, nonterminals and terminals.
         Functions accepts current node, callback `c_2` and parameters from the parent.
         Functions must yield individual values.
-        Its possible to yield callback c_2 **call** on any node to call the recursion.
+        It's possible to yield callback c_2 **call** on any node to call the recursion.
         The callback can accept parameters from the parent call.
         The root will receive parameters from the `traverse_separated` call.
         :param root: Root node of the parsed tree.
@@ -198,7 +198,7 @@ class Traversing:
             # register new column
             defined = defined or set()
             defined.add(previous)
-            # print all childs except the last one
+            # print all children except the last one
             for i in range(len(rule.to_symbols) - 1):
                 yield callback(rule.to_symbols[i], previous + 1, defined, False)
             # unregister the column as last child print it automatically

@@ -18,8 +18,8 @@ if TYPE_CHECKING:  # pragma: no cover
 def remove_unreachable_symbols(grammar, inplace=False):
     # type: (Grammar, bool) -> Grammar
     """
-    Remove unreachable symbols from the gramar
-    :param grammar: Grammar where to symbols remove
+    Remove unreachable symbols from the grammar.
+    :param grammar: Grammar where to remove symbols.
     :param inplace: True if transformation should be performed in place. False by default.
     :return: Grammar without unreachable symbols.
     """

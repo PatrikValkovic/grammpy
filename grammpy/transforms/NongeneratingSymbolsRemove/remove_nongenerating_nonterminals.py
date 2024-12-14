@@ -52,7 +52,7 @@ def remove_nongenerating_nonterminals(grammar, inplace=False):
             additional.add(rule.fromSymbol)
             rules.remove(rule)
             # end of rules iterations
-        # ff current and previous iterations are same, than end iterations
+        # ff current and previous iterations are same, then end iterations
         if additional == generates:
             break
         # swap sets from previous and current iterations

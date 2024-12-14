@@ -25,9 +25,10 @@ if TYPE_CHECKING:   # pragma: no cover
 def create_follow_table(grammar, first_table, look_ahead):
     # type: (Grammar, FirstTableType, int) -> FollowTableType
     """
-    Given LL(k) grammar and its corresponding first table, create follow table
-    :param grammar: Grammar for which follow table is created
-    :param next_table: First table for the grammar
+    Given LL(k) grammar and its corresponding first table, create follow table.
+    :param grammar: Grammar for which follow table is created.
+    :param first_table: First table for the grammar.
+    :param look_ahead: Look ahead of the parser, must be same or lower as the first table.
     :return: Follow table for the grammar
     """
     table = {nt: set() for nt in grammar.nonterminals}  # type: FollowTableType

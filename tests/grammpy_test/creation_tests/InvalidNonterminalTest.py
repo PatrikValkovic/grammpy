@@ -22,7 +22,7 @@ class InvalidNonterminalTest(TestCase):
         with self.assertRaises(NotNonterminalException):
             Grammar(nonterminals=[2, 'asdf', InvalidNonterminalTest])
 
-    def test_oneInvalidNontermBetweenValidOnces(self):
+    def test_oneInvalidNontermBetweenValidOnes(self):
         class A(Nonterminal): pass
         class B(Nonterminal): pass
         class C(Nonterminal): pass
@@ -33,7 +33,7 @@ class InvalidNonterminalTest(TestCase):
         with self.assertRaises(NotNonterminalException):
             Grammar(nonterminals=[A, B, C, 5])
 
-    def test_moreInvalidNontermBetweenValidOnces(self):
+    def test_moreInvalidNontermBetweenValidOnes(self):
         class A(Nonterminal): pass
         class B(Nonterminal): pass
         class C(Nonterminal): pass

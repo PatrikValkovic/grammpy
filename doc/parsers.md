@@ -54,7 +54,7 @@ class PlusRule(Rule):
 ```
 
 Then, you can use one of the traversing methods (see [traversing](helpers.md)) or run the algorithm on your own to compute values of all the nodes.
-You can as well redefine the ValueNonterminal as follow and call recursion.
+You can as well redefine the ValueNonterminal as follows and call recursion.
 
 ```python
 class ValueNonterminal(Nonterminal):
@@ -79,8 +79,8 @@ The library helps you with the syntax check and parsing, but the whole semantic 
 Only exposed method is `cyk`.
 The method accepts grammar and input sequence as an input.
 
-It raise `NotParsedException` if input sequence was syntactically invalid and CYK was unable to parse it.
-It raise `StartSymbolNotSetException` if the grammar doesn't have start symbol set up.
+It raises `NotParsedException` if input sequence was syntactically invalid and CYK was unable to parse it.
+It raises `StartSymbolNotSetException` if the grammar doesn't have start symbol set up.
 
 ```python
 from pyparsers import cyk

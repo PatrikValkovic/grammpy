@@ -25,7 +25,7 @@ python setup.py install
 ## Usage
 
 Defining a grammar doesn't require special tools anymore.
-All what you need is just a IDE and you have the full support.
+All what you need is just an IDE and you have the full support.
 
 Let's define grammar using standard Python objects instead.
 

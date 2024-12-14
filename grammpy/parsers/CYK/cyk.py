@@ -27,22 +27,22 @@ def _create_mapping(grammar):
     First dictionary maps rule to terminal hash.
     Second dictionary maps rule to nonterminals hash.
     """
-    termmap = dict()
-    rulemap = dict()
+    term_map = dict()
+    rule_map = dict()
     for r in grammar.rules:
         if len(r.right) == 1:
             # rule to terminal
             h = hash(r.toSymbol)
-            if h not in termmap:
-                termmap[h] = set()
-            termmap[h].add(r)
+            if h not in term_map:
+                term_map[h] = set()
+            term_map[h].add(r)
         else:
-            # rule to two nonterms
+            # rule to two nonterminals
             key = hash(tuple(r.right))
-            if key not in rulemap:
-                rulemap[key] = set()
-            rulemap[key].add(r)
-    return (termmap, rulemap)
+            if key not in rule_map:
+                rule_map[key] = set()
+            rule_map[key].add(r)
+    return (term_map, rule_map)
 
 def _all_combinations(tpl):
     # type: ((Iterable, Iterable)) -> Generator[tuple]
@@ -73,9 +73,9 @@ def cyk(grammar, parse_sequence):
     index = input_length - 1
     f = Field(input_length)
     # creating mapping for speedup rules searching
-    (termmap, rulemap) = _create_mapping(grammar)
+    (term_map, rule_map) = _create_mapping(grammar)
     # fill first line with rules directly rewritable to terminal
-    f.fill(termmap, parse_sequence)
+    f.fill(term_map, parse_sequence)
     # fill rest of fields
     for y in range(1, input_length):
         for x in range(input_length - y):
@@ -87,8 +87,8 @@ def cyk(grammar, parse_sequence):
             for pair_of_rule in pairs_of_rules:
                 for (first_rule, second_rule) in _all_combinations(pair_of_rule):
                     h = hash((first_rule.fromSymbol, second_rule.fromSymbol))
-                    if h in rulemap:
-                        for r in rulemap[h]: # list of rules
+                    if h in rule_map:
+                        for r in rule_map[h]: # list of rules
                             rules.add(PlaceItem(r, first_rule, second_rule))
             f.put(x, y, list(rules))
     # Check if is start symbol on the bottom of field
@@ -97,7 +97,7 @@ def cyk(grammar, parse_sequence):
     # Find init symbol and rule
     start = grammar.start()  # type: Nonterminal
     start_rule = [r for r in f.rules(0, input_length - 1) if grammar.start == r.fromSymbol][0]
-    # Prepare buffer for proccess
+    # Prepare buffer for process
     to_process = list()
     to_process.append({'n': start, 'r': start_rule})
     # Prepare tree

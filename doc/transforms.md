@@ -42,7 +42,7 @@ root = cyk(new_g, input_data)
 
 ### Removing of useless symbols
 
-Including removing of unreachable and nongenerating symbols.
+Including removing of unreachable and non-generating symbols.
 You can call `remove_useless_symbols` directly
 or split it to `remove_unreachable_symbols` and `remove_useless_symbols`.
 You can as well check, if the grammar is generating (have at least one output sentence)
@@ -122,9 +122,9 @@ assert NewRules in new_g.rules
 
 Method transfer grammar into Chomsky normal form.
 
-This operations create a lot of own types to allow easy backtracking.
+These operations create a lot of own types to allow easy backtracking.
 
-Base classes are `ContextFree.ChomskyNonterminal` and `ContextFree.ChomskyRule`, that are base classes for other.
+Base classes are `ContextFree.ChomskyNonterminal` and `ContextFree.ChomskyRule`, that are base classes for others.
 
 As nonterminals method use `ContextFree.ChomskyTermNonterminal` that represent nonterminal rewritable to terminal (A->a). Nonterminal have property `for_term`, where it stores terminal (as Terminal class).
 Second class is `ContextFree.ChomskyGroupNonterminal`, that represent group of symbols (for example in rule A->BCD will this nonterminal represent CD). This nonterminal have property `group`, where it stores list of symbols, that represent.
@@ -133,11 +133,11 @@ For rules method create list of classes, where each class have different meaning
 - `ContextFree.ChomskySplitRule`: Represent rule, that was split to contain only two symbols. In property `from_rule` is stored original rule.
 - `ContextFree.ChomskyRestRule`: Represent right part after splitting of rule. As previous, in `from_rule` property is stored original rule. 
 When splitting, ChomskySplitRule and ChomskyRestRule represent original whole rule: `A->BCDE ==> A->BX and X->CDE`.
-- `ContextFree.ChomskyTerminalReplaceRule`: This class is used in situations, where rule contains nonterminal with terminal. Rule is transformed into state, where terminal is replace with nonterminal rewritable to that terminal.
+- `ContextFree.ChomskyTerminalReplaceRule`: This class is used in situations, where rule contains nonterminal with terminal. Rule is transformed into state, where terminal is replaced with nonterminal rewritable to that terminal.
 Class have `from_rule` property that stores original rule and `replace_index` property, that indicate which terminal were replace.
 - `ContextFree.ChomskyTermRule`: It is class for rule, that directly rewrite nonterminal to terminal.
 
-You don't need to care about this types, as `InverseContextFree` class implements the backtracking automatically.
+You don't need to care about these types, as `InverseContextFree` class implements the backtracking automatically.
 
 
 ## Inverse context free operations

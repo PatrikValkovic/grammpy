@@ -73,8 +73,8 @@ class ContextFree:
     def remove_unreachable_symbols(grammar, inplace=False):
         # type: (Grammar, bool) -> Grammar
         """
-        Remove unreachable symbols from the gramar
-        :param grammar: Grammar where to symbols remove
+        Remove unreachable symbols from the grammar.
+        :param grammar: Grammar where to remove symbols
         :param inplace: True if transformation should be performed in place. False by default.
         :return: Grammar without unreachable symbols.
         """
@@ -86,7 +86,7 @@ class ContextFree:
         """
         Remove useless symbols from the grammar.
         Useless symbols are unreachable or nongenerating one.
-        :param grammar: Grammar where to symbols remove
+        :param grammar: Grammar where to remove symbols.
         :param inplace: True if transformation should be performed in place, false otherwise.
         False by default.
         :return: Grammar without useless symbols.
@@ -180,7 +180,7 @@ class ContextFree:
         """
         Given LL(n) grammar creates first table
         :param grammar: Grammar to create first table for
-        :param look_head: Number of symbols to look ahead
+        :param look_ahead: Number of symbols to look ahead
         :return: First table
         """
         return create_first_table(grammar, look_ahead)
@@ -189,9 +189,10 @@ class ContextFree:
     def create_follow_table(grammar, first_table, look_ahead):
         # type: (Grammar, FirstTableType, int) -> FollowTableType
         """
-        Given LL(k) grammar and its corresponding first table, create follow table
-        :param grammar: Grammar for which follow table is created
-        :param next_table: First table for the grammar
+        Given LL(k) grammar and its corresponding first table, create follow table.
+        :param grammar: Grammar for which follow table is created.
+        :param first_table: First table for the grammar.
+        :param look_ahead: Look ahead of the parser, must be same or lower as the first table.
         :return: Follow table for the grammar
         """
         return create_follow_table(grammar, first_table, look_ahead)
