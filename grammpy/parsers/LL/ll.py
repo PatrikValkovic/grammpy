@@ -59,7 +59,7 @@ def ll(grammar, sequence, parsing_table, look_ahead, *, raise_on_ambiguity = Tru
         nonterminal_instance = top_stack.symbol
         nonterminal = type(nonterminal_instance)
         if nonterminal not in parsing_table:
-            raise Exception(f"Rule for nontermianl {nonterminal.__name__} not found")
+            raise Exception(f"There is no rules for nonterminal {nonterminal.__name__}")
         table_for_nonterminal = parsing_table[nonterminal]
         if current_lookahead not in table_for_nonterminal:
             raise Exception(f"Rule for {nonterminal.__name__} with lookahead {current_lookahead} not found")
@@ -70,7 +70,7 @@ def ll(grammar, sequence, parsing_table, look_ahead, *, raise_on_ambiguity = Tru
             raise Exception(f"Ambiguity found for {nonterminal.__name__} with lookahead {current_lookahead}")
         if isinstance(rule_to_use, set):
             rule_to_use = next(iter(rule_to_use))
-        if not issubclass(rule_to_use, Rule):
+        if not isclass(rule_to_use) or not issubclass(rule_to_use, Rule):
             raise Exception(f"Rule is not subclass of Rule")
         # Apply the rule
         rule_instance = rule_to_use()

@@ -10,5 +10,5 @@ Part of grammpy
 from typing import TYPE_CHECKING
 from .create_first_table import create_first_table
 
-if TYPE_CHECKING:
+if TYPE_CHECKING:  # pragma: no cover
     from .create_first_table import FirstTableType, FirstTableTypeValue
