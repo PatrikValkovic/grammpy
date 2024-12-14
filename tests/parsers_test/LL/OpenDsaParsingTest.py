@@ -32,7 +32,7 @@ class OpenDsaTableTest(TestCase):
         first_table = ContextFree.create_first_table(g, 1)
         follow_table = ContextFree.create_follow_table(g, first_table, 1)
         parsing_table = create_ll_parsing_table(g, first_table, follow_table, 1)
-        parsed = ll(g, ['a', 'a', 'a', 'c', 'c', 'c'], parsing_table, 1)
+        parsed = ll(g.start, ['a', 'a', 'a', 'c', 'c', 'c'], parsing_table, 1)
         ast_string = Traversing.print(parsed)
         self.assertEqual(
             ast_string,
@@ -61,7 +61,7 @@ class OpenDsaTableTest(TestCase):
         first_table = ContextFree.create_first_table(g, 1)
         follow_table = ContextFree.create_follow_table(g, first_table, 1)
         parsing_table = create_ll_parsing_table(g, first_table, follow_table, 1)
-        parsed = ll(g, ['a', 'a', 'a', 'b', 'c', 'c', 'c'], parsing_table, 1)
+        parsed = ll(g.start, ['a', 'a', 'a', 'b', 'c', 'c', 'c'], parsing_table, 1)
         ast_string = Traversing.print(parsed)
         self.assertEqual(
             ast_string,
@@ -90,7 +90,7 @@ class OpenDsaTableTest(TestCase):
         first_table = ContextFree.create_first_table(g, 3)
         follow_table = ContextFree.create_follow_table(g, first_table, 3)
         parsing_table = create_ll_parsing_table(g, first_table, follow_table, 3)
-        parsed = ll(g, ['a', 'a', 'a', 'b', 'c', 'c', 'c'], parsing_table, 3)
+        parsed = ll(g.start, ['a', 'a', 'a', 'b', 'c', 'c', 'c'], parsing_table, 3)
         ast_string = Traversing.print(parsed)
         self.assertEqual(
             ast_string,

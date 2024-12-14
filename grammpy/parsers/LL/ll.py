@@ -20,11 +20,20 @@ class _StackTerminalWrapper:
         self.symbol = symbol
         self.parent_rule = parent_rule
 
-def ll(grammar, sequence, parsing_table, look_ahead, *, raise_on_ambiguity = True):
-    # type: (Grammar, Iterable[Union[Terminal, Any]], LLTableType, int, Any, bool) -> Nonterminal
+def ll(start_nonterminal, sequence, parsing_table, look_ahead, *, raise_on_ambiguity = True):
+    # type: (Type[Nonterminal], Iterable[Union[Terminal, Any]], LLTableType, int, Any, bool) -> Nonterminal
+    """
+    Parse input sequence using look-ahead of LL(k) parsing.
+    :param start_nonterminal: Starting nonterminal of grammar, also the type of root node of the parsed AST.
+    :param sequence: Sequence to parse. Must be iterator and support next() method.
+    :param parsing_table: Parsing table to use for parsing. Look ahead for the table must be the same as look_ahead parameter.
+    :param look_ahead: Look-ahead to use for parsing.
+    :param raise_on_ambiguity: Raise exception if there are ambiguous rules applicable for current nonterminal and look ahead.
+    :return: Root node of the parsed AST.
+    """
     stack = []  # type: List[Union[Nonterminal, _StackTerminalWrapper]]
     ending_sequence = tuple([END_OF_INPUT]*look_ahead)
-    start = grammar.start()
+    start = start_nonterminal()
     stack.append(_StackTerminalWrapper(start, None))
 
     input_sequence = chain(sequence, ending_sequence)

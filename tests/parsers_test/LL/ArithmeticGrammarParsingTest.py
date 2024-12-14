@@ -44,7 +44,7 @@ class ArithmeticGrammarParsingTest(TestCase):
         follow_table = ContextFree.create_follow_table(g, first_table, 1)
         parsing_table = create_ll_parsing_table(g, first_table, follow_table, 1)
         sequence = ['id', '+', 'id', '*', 'id']
-        parsed = ll(g, sequence, parsing_table, 1)
+        parsed = ll(g.start, sequence, parsing_table, 1)
         ast_string = Traversing.print(parsed)
         self.assertEqual(
             ast_string,
@@ -117,7 +117,7 @@ class ArithmeticGrammarParsingTest(TestCase):
         follow_table = ContextFree.create_follow_table(g, first_table, 1)
         parsing_table = create_ll_parsing_table(g, first_table, follow_table, 1)
         sequence = [Num(5), '+', Num(4), '*', Num(0)]
-        parsed = ll(g, sequence, parsing_table, 1)
+        parsed = ll(g.start, sequence, parsing_table, 1)
         ast_string = Traversing.print(parsed)
         self.assertEqual(
             ast_string,
@@ -185,7 +185,7 @@ class ArithmeticGrammarParsingTest(TestCase):
         follow_table = ContextFree.create_follow_table(g, first_table, 2)
         parsing_table = create_ll_parsing_table(g, first_table, follow_table, 2)
         sequence = ['id', '+', 'id', '*', 'id']
-        parsed = ll(g, sequence, parsing_table, 2)
+        parsed = ll(g.start, sequence, parsing_table, 2)
         ast_string = Traversing.print(parsed)
         self.assertEqual(
             ast_string,
@@ -258,7 +258,7 @@ class ArithmeticGrammarParsingTest(TestCase):
         follow_table = ContextFree.create_follow_table(g, first_table, 2)
         parsing_table = create_ll_parsing_table(g, first_table, follow_table, 2)
         sequence = [Num(5), '+', Num(4), '*', Num(0)]
-        parsed = ll(g, sequence, parsing_table, 2)
+        parsed = ll(g.start, sequence, parsing_table, 2)
         ast_string = Traversing.print(parsed)
         self.assertEqual(
             ast_string,

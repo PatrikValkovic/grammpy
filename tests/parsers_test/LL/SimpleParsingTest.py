@@ -32,7 +32,7 @@ class SimpleTableTest(TestCase):
         first_table = ContextFree.create_first_table(g, 1)
         follow_table = ContextFree.create_follow_table(g, first_table, 1)
         parsing_table = create_ll_parsing_table(g, first_table, follow_table, 1)
-        parsed = ll(g, [0, 1], parsing_table, 1)
+        parsed = ll(g.start, [0, 1], parsing_table, 1)
         ast_string = Traversing.print(parsed)
         self.assertEqual(
             ast_string,
@@ -52,7 +52,7 @@ class SimpleTableTest(TestCase):
         first_table = ContextFree.create_first_table(g, 1)
         follow_table = ContextFree.create_follow_table(g, first_table, 1)
         parsing_table = create_ll_parsing_table(g, first_table, follow_table, 1)
-        parsed = ll(g, [1], parsing_table, 1)
+        parsed = ll(g.start, [1], parsing_table, 1)
         ast_string = Traversing.print(parsed)
         self.assertEqual(
             ast_string,
