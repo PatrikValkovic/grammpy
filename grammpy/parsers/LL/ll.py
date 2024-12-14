@@ -16,8 +16,8 @@ if TYPE_CHECKING:  # pragma: no cover
     from .create_ll_parsing_table import LLTableType
 
 class _StackTerminalWrapper:
-    def __init__(self, terminal, parent_rule):
-        self.terminal = terminal
+    def __init__(self, symbol, parent_rule):
+        self.symbol = symbol
         self.parent_rule = parent_rule
 
 def ll(grammar, sequence, parsing_table, look_ahead, *, raise_on_ambiguity = True):
@@ -25,7 +25,7 @@ def ll(grammar, sequence, parsing_table, look_ahead, *, raise_on_ambiguity = Tru
     stack = []  # type: List[Union[Nonterminal, _StackTerminalWrapper]]
     ending_sequence = tuple([END_OF_INPUT]*look_ahead)
     start = grammar.start()
-    stack.append(start)
+    stack.append(_StackTerminalWrapper(start, None))
 
     input_sequence = chain(sequence, ending_sequence)
     current_lookahead = tuple([next(input_sequence) for _ in range(look_ahead)])  # type: Tuple[Nonterminal, ...]
@@ -35,17 +35,15 @@ def ll(grammar, sequence, parsing_table, look_ahead, *, raise_on_ambiguity = Tru
         if len(current_lookahead) < look_ahead:
             current_lookahead = tuple([*current_lookahead, next(input_sequence)])
             continue
-        top_stack = stack[-1]
-        if isinstance(top_stack, _StackTerminalWrapper) and top_stack.terminal == EPSILON:
-            stack.pop()
+        top_stack = stack.pop()
+        if top_stack.symbol is EPSILON:
             eps_terminal = Terminal(EPSILON)
             top_stack.parent_rule._to_symbols.append(eps_terminal)
             eps_terminal._set_from_rule(top_stack.parent_rule)
             continue
-        if isinstance(top_stack, _StackTerminalWrapper):
-            if hash(top_stack.terminal) != hash(current_lookahead[0]):
-                raise Exception(f"Expected terminal {top_stack.terminal}, but found {current_lookahead[0]}")
-            stack.pop()
+        if not isinstance(top_stack.symbol, Nonterminal):
+            if hash(top_stack.symbol) != hash(current_lookahead[0]):
+                raise Exception(f"Expected terminal {top_stack.symbol}, but found {current_lookahead[0]}")
             term_symbol = current_lookahead[0]
             if not isinstance(term_symbol, Terminal):
                 term_symbol = Terminal(term_symbol)
@@ -53,8 +51,12 @@ def ll(grammar, sequence, parsing_table, look_ahead, *, raise_on_ambiguity = Tru
             top_stack.parent_rule._to_symbols.append(term_symbol)
             term_symbol._set_from_rule(top_stack.parent_rule)
             continue
+        # Connect the nonterminal
+        if top_stack.parent_rule is not None:
+            top_stack.parent_rule._to_symbols.append(top_stack.symbol)
+            top_stack.symbol._set_from_rule(top_stack.parent_rule)
         # Find rule to use
-        nonterminal_instance = stack.pop()
+        nonterminal_instance = top_stack.symbol
         nonterminal = type(nonterminal_instance)
         if nonterminal not in parsing_table:
             raise Exception(f"Rule for nontermianl {nonterminal.__name__} not found")
@@ -78,10 +80,7 @@ def ll(grammar, sequence, parsing_table, look_ahead, *, raise_on_ambiguity = Tru
             if symbol == EPSILON:
                 stack.append(_StackTerminalWrapper(EPSILON, rule_instance))
             elif isclass(symbol) and issubclass(symbol, Nonterminal):
-                follow_instance = symbol()
-                rule_instance._to_symbols.append(follow_instance)
-                follow_instance._set_from_rule(rule_instance)
-                stack.append(follow_instance)
+                stack.append(_StackTerminalWrapper(symbol(), rule_instance))
             else:
                 stack.append(_StackTerminalWrapper(symbol, rule_instance))
 

@@ -30,7 +30,7 @@ g = Grammar(terminals=[1, 2, 3],
             rules=[RuleS, RuleA1, RuleA2, RuleB1, RuleB2],
             start_symbol=S)
 
-class DukeGrammarTest(TestCase):
+class DukeGrammarTableTest(TestCase):
     def test_lookAhead2(self):
         first_table = ContextFree.create_first_table(g, 2)
         follow_table = ContextFree.create_follow_table(g, first_table, 2)
