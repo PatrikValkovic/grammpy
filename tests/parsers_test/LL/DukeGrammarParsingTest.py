@@ -39,7 +39,8 @@ class DukeGrammarParsingTest(TestCase):
         ast_string = Traversing.print(parsed)
         self.assertEqual(
             ast_string,
-"""(N)S
+"""
+(N)S
 `--(R)RuleS
    |--(N)A
    |  `--(R)RuleA1
@@ -55,9 +56,16 @@ class DukeGrammarParsingTest(TestCase):
          |--(T)1
          |--(T)3
          `--(T)2
-"""
+""".lstrip()
         )
 
+    def test_lookAhead1(self):
+        first_table = ContextFree.create_first_table(g, 1)
+        follow_table = ContextFree.create_follow_table(g, first_table, 1)
+        parsing_table = create_ll_parsing_table(g, first_table, follow_table, 1)
+        with self.assertRaises(Exception) as catched:
+            ll(g, [1, 1, 2, 2, 3, 1, 3, 2], parsing_table, 1)
+        self.assertEqual(catched.exception.args[0], 'Ambiguity found for A with lookahead (1,)')
 
 if __name__ == '__main__':
     main()

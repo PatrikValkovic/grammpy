@@ -27,7 +27,7 @@ g = Grammar(terminals=['a', 'b', 'c'],
             rules=[RuleSSpread, RuleSRewrite, RuleBRewrite, RuleBEps],
             start_symbol=S)
 
-class OpenDsaTest(TestCase):
+class OpenDsaTableTest(TestCase):
     def test_lookAhead1(self):
         first_table = ContextFree.create_first_table(g, 1)
         follow_table = ContextFree.create_follow_table(g, first_table, 1)

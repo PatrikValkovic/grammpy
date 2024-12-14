@@ -27,7 +27,7 @@ g = Grammar(terminals=[0, 1],
             rules=[RuleS, RuleB, RuleAToZero, RuleAToEpsilon],
             start_symbol=S)
 
-class SimpleGrammarTest(TestCase):
+class SimpleTableTest(TestCase):
     def test_lookAhead1(self):
         first_table = ContextFree.create_first_table(g, 1)
         follow_table = ContextFree.create_follow_table(g, first_table, 1)
@@ -57,4 +57,3 @@ class SimpleGrammarTest(TestCase):
 
 if __name__ == '__main__':
     main()
-

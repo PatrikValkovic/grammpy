@@ -48,7 +48,8 @@ class ArithmeticGrammarParsingTest(TestCase):
         ast_string = Traversing.print(parsed)
         self.assertEqual(
             ast_string,
-"""(N)E
+"""
+(N)E
 `--(R)RuleE
    |--(N)T
    |  `--(R)RuleT
@@ -78,7 +79,7 @@ class ArithmeticGrammarParsingTest(TestCase):
          `--(N)Ecap
             `--(R)RuleEcapEps
                `--(T)EPSILON
-"""
+""".lstrip()
         )
 
     def test_plusMultiplyWithInstancesLookAhead1(self):
@@ -120,7 +121,8 @@ class ArithmeticGrammarParsingTest(TestCase):
         ast_string = Traversing.print(parsed)
         self.assertEqual(
             ast_string,
-"""(N)E
+"""
+(N)E
 `--(R)RuleE
    |--(N)T
    |  `--(R)RuleT
@@ -150,7 +152,7 @@ class ArithmeticGrammarParsingTest(TestCase):
          `--(N)Ecap
             `--(R)RuleEcapEps
                `--(T)EPSILON
-"""
+""".lstrip()
         )
 
     def test_plusMultiplyLookAhead2(self):
@@ -187,7 +189,8 @@ class ArithmeticGrammarParsingTest(TestCase):
         ast_string = Traversing.print(parsed)
         self.assertEqual(
             ast_string,
-"""(N)E
+"""
+(N)E
 `--(R)RuleE
    |--(N)T
    |  `--(R)RuleT
@@ -217,7 +220,7 @@ class ArithmeticGrammarParsingTest(TestCase):
          `--(N)Ecap
             `--(R)RuleEcapEps
                `--(T)EPSILON
-"""
+""".lstrip()
         )
 
     def test_plusMultiplyWithInstancesLookAhead2(self):
@@ -259,7 +262,8 @@ class ArithmeticGrammarParsingTest(TestCase):
         ast_string = Traversing.print(parsed)
         self.assertEqual(
             ast_string,
-"""(N)E
+"""
+(N)E
 `--(R)RuleE
    |--(N)T
    |  `--(R)RuleT
@@ -289,7 +293,7 @@ class ArithmeticGrammarParsingTest(TestCase):
          `--(N)Ecap
             `--(R)RuleEcapEps
                `--(T)EPSILON
-"""
+""".lstrip()
         )
 
 if __name__ == '__main__':
