@@ -15,7 +15,6 @@ if TYPE_CHECKING:   # pragma: no cover
     from ..FirstTable.create_first_table import FirstTableType
     FollowTableTypeValue = Set[
         Union[
-            END_OF_INPUT_TYPE,
             Tuple[
                 Union[
                     Type[Terminal],
