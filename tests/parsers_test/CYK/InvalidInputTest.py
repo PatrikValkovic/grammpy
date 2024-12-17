@@ -38,7 +38,7 @@ class FiveNonterminalsTest(TestCase):
                          rules=[SAB, A0, BCD, C1, D2],
                          start_symbol=S)
 
-    def test_shouldntParse(self):
+    def test_shouldNotParse(self):
         with self.assertRaises(Exception):
             cyk(self.g, [1, 1, 2])
 

@@ -104,7 +104,7 @@ class RulesTest(TestCase):
         for rule in r:
             self.assertIn(rule.rule, Tmp1.rules)
 
-    def test_unidefinedRules(self):
+    def test_undefinedRules(self):
         class Tmp1(Rule): pass
         class Tmp2(Rule): pass
         h1 = hash(Tmp1)

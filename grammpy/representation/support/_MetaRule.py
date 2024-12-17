@@ -54,9 +54,9 @@ class _MetaRule(type):
     def _get_toSymbol(cls):
         # type: (_MetaRule) -> object
         """
-        Get symbol from which the rule is rewrote.
+        Get symbol from which the rule is rewritten.
         :param cls: Rule for which return the symbol.
-        :return: Symbol from which the rule is rewrote.
+        :return: Symbol from which the rule is rewritten.
         :raise RuleNotDefinedException: If the rule is not defined.
         :raise CantCreateSingleRuleException: If the rule consists of more rules.
         :raise NotASingleSymbolException: If number of symbols on the left is more.
@@ -74,9 +74,9 @@ class _MetaRule(type):
     def _get_fromSymbol(cls):
         # type: (_MetaRule) -> object
         """
-        Get symbol to which the rule is rewrote.
+        Get symbol to which the rule is rewritten.
         :param cls: Rule for which return the symbol.
-        :return: Symbol to which the rule is rewrote.
+        :return: Symbol to which the rule is rewritten.
         :raise RuleNotDefinedException: If the rule is not defined.
         :raise CantCreateSingleRuleException: If the rule consists of more rules.
         :raise NotASingleSymbolException: If number of symbols on the right is more.
@@ -200,8 +200,8 @@ class _MetaRule(type):
         :param grammar: Grammar on which to validate.
         :raise RuleSyntaxException: If invalid syntax is use.
         :raise UselessEpsilonException: If useless epsilon is used.
-        :raise TerminalDoesNotExistsException: If terminal does not exists in the grammar.
-        :raise NonterminalDoesNotExistsException: If nonterminal does not exists in the grammar.
+        :raise TerminalDoesNotExistsException: If terminal does not exist in the grammar.
+        :raise NonterminalDoesNotExistsException: If nonterminal does not exist in the grammar.
         """
         if not isinstance(side, list):
             raise RuleSyntaxException(cls, 'One side of rule is not enclose by list', side)
@@ -209,14 +209,14 @@ class _MetaRule(type):
             raise RuleSyntaxException(cls, 'One side of rule is not define', side)
         if EPS in side and len(side) > 1:
             raise UselessEpsilonException(cls)
-        for symb in side:
-            if isclass(symb) and issubclass(symb, Nonterminal):
-                if symb not in grammar.nonterminals:
-                    raise NonterminalDoesNotExistsException(cls, symb, grammar)
-            elif symb is EPS:
+        for symbol in side:
+            if isclass(symbol) and issubclass(symbol, Nonterminal):
+                if symbol not in grammar.nonterminals:
+                    raise NonterminalDoesNotExistsException(cls, symbol, grammar)
+            elif symbol is EPS:
                 continue
-            elif symb not in grammar.terminals:
-                raise TerminalDoesNotExistsException(cls, symb, grammar)
+            elif symbol not in grammar.terminals:
+                raise TerminalDoesNotExistsException(cls, symbol, grammar)
 
     def validate(cls, grammar):
         # type: (_MetaRule, Grammar) -> None
@@ -225,8 +225,8 @@ class _MetaRule(type):
         :param grammar: Grammar on which to validate.
         :raise RuleSyntaxException: If invalid syntax is used.
         :raise UselessEpsilonException: If epsilon used in rules in useless.
-        :raise TerminalDoesNotExistsException: If terminal does not exists in the grammar.
-        :raise NonterminalDoesNotExistsException: If nonterminal does not exists in the grammar.
+        :raise TerminalDoesNotExistsException: If terminal does not exist in the grammar.
+        :raise NonterminalDoesNotExistsException: If nonterminal does not exist in the grammar.
         """
         # check if the rule is not defined multiple times
         defined = set(dir(cls))
@@ -236,10 +236,10 @@ class _MetaRule(type):
                 'right' in defined and 'toSymbol' in defined:
             raise MultipleDefinitionException(cls, 'Rule is defined multiple times')
         # check if the rule is defined properly
-        all = cls.rules
-        if not isinstance(all, list):
+        all_rules = cls.rules
+        if not isinstance(all_rules, list):
             raise RuleSyntaxException(cls, 'Rules property is not enclose in list')
-        for rule in all:
+        for rule in all_rules:
             if not isinstance(rule, tuple):
                 raise RuleSyntaxException(cls, 'One of the rules is not enclose in tuple', rule)
             if len(rule) != 2:
@@ -256,7 +256,7 @@ class _MetaRule(type):
         """
         Check if the rule is correctly defined.
         :param grammar: Grammar on which to validate.
-        :return: True if have class correct rules, false otherwise.
+        :return: True if the grammar have correct rules, false otherwise.
         """
         try:
             cls.validate(grammar)

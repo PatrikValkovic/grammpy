@@ -32,7 +32,7 @@ S->1B   A->1B   A->eps  B->eps  B->1C   C->11   S->1    A->1
 """
 
 
-class SimpleTestoverUnitRule(TestCase):
+class SimpleTestOverUnitRule(TestCase):
     def test_simpleTestOverUnitRule(self):
         g = Grammar(terminals=[0, 1, 2, 3],
                     nonterminals=[S, A, B, C],

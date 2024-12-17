@@ -22,7 +22,7 @@ class ChomskyNonterminal(Nonterminal):
 
 class ChomskyGroupNonterminal(ChomskyNonterminal):
     """
-    Class representing nonterminal that represents nonterminal tail when rule is splitted.
+    Class representing nonterminal that represents nonterminal tail when rule is split.
     """
     group = []
 
@@ -61,7 +61,7 @@ class ChomskyRestRule(ChomskyRule):
 
 class ChomskyTerminalReplaceRule(ChomskyRule):
     """
-    Replacement of rule, that have two symbol on the right side, but one of it is terminal.
+    Replacement of rule, that have two symbols on the right side, but one of it is terminal.
     """
     from_rule = None
     replaced_index = None
@@ -179,19 +179,19 @@ def transform_to_chomsky_normal_form(grammar, inplace=False):
             grammar.rules.add(created_left_rule, created_right_rule)
             to_process.put(created_left_rule)
             to_process.put(created_right_rule)
-        # check, if must replace terminal
+        # check if we must replace terminal
         elif len(rule.right) == 2:
             if rule.right[0] in grammar.terminals:
                 # first symbol is terminal
                 # remove rule from grammar
                 grammar.rules.remove(rule)
                 # get nonterminal rewritable to the terminal and add that rules into the grammar implicitly
-                symb = fill.get(rule.right[0])
+                symbol = fill.get(rule.right[0])
                 # create rule replacing the original one
                 created = type("ChomskyLeft[" + rule.__name__ + "]",
                                (ChomskyTerminalReplaceRule,),
                                ChomskyTerminalReplaceRule.__dict__.copy())  # type: Type[ChomskyTerminalReplaceRule]
-                created.rule = ([rule.fromSymbol], [symb, rule.right[1]])
+                created.rule = ([rule.fromSymbol], [symbol, rule.right[1]])
                 created.from_rule = rule
                 created.replaced_index = 0
                 # add it into the grammar
@@ -202,12 +202,12 @@ def transform_to_chomsky_normal_form(grammar, inplace=False):
                 # remove rule from grammar
                 grammar.rules.remove(rule)
                 # get nonterminal rewritable to the terminal and add that rules into the grammar implicitly
-                symb = fill.get(rule.right[1])
+                symbol = fill.get(rule.right[1])
                 # create rule replacing the original one
                 created = type("ChomskyRight[" + rule.__name__ + "]",
                                (ChomskyTerminalReplaceRule,),
                                ChomskyTerminalReplaceRule.__dict__.copy())
-                created.rule = ([rule.fromSymbol], [rule.right[0], symb])
+                created.rule = ([rule.fromSymbol], [rule.right[0], symbol])
                 created.from_rule = rule
                 created.replaced_index = 1
                 # add it into the grammar

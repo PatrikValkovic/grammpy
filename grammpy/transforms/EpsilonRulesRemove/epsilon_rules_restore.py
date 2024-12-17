@@ -53,7 +53,7 @@ def epsilon_rules_restore(root):
     for rule in items:
         # create original rule
         created_rule = rule.from_rule()  # type: Rule
-        # attach parrents parents
+        # attach parents
         for s in rule.from_symbols:  # type: Nonterminal
             s._set_to_rule(created_rule)
             created_rule._from_symbols.append(s)
@@ -63,9 +63,9 @@ def epsilon_rules_restore(root):
             ch._set_from_rule(created_rule)
             created_rule._to_symbols.append(ch)
         # add symbols originally rewrote to epsilon
-        symb = _restore_tree_for(created_rule.right[rule.replace_index], rule.backtrack)  # type: Nonterminal
-        created_rule._to_symbols.append(symb)
-        symb._set_from_rule(created_rule)
+        symbol = _restore_tree_for(created_rule.right[rule.replace_index], rule.backtrack)  # type: Nonterminal
+        created_rule._to_symbols.append(symbol)
+        symbol._set_from_rule(created_rule)
         # attach rest of children
         for i in range(rule.replace_index, len(rule.to_symbols)):
             ch = rule.to_symbols[i]  # type: Nonterminal

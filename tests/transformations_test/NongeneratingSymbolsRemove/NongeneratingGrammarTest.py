@@ -39,7 +39,7 @@ class SimpleTest(TestCase):
         self.assertNotIn(D, com.nonterminals)
         self.assertEqual(com.rules.size(), 0)
 
-    def test_shouldntModifyOriginalGrammar(self):
+    def test_shouldNotModifyOriginalGrammar(self):
         g = Grammar(terminals=[0, 1],
                     nonterminals=[A, B, C, D],
                     rules=[Rules],

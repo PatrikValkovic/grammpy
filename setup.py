@@ -14,7 +14,7 @@ this_directory = path.abspath(path.dirname(__file__))
 with open(path.join(this_directory, 'README.md'), encoding='utf-8') as f:
     long_description = f.read()
 
-v = '2.0.0'
+v = '2.1.0'
 
 setup(
     name='grammpy',
@@ -25,6 +25,7 @@ setup(
         'grammpy.old_api',
         'grammpy.parsers',
         'grammpy.parsers.CYK',
+        'grammpy.parsers.LL',
         'grammpy.representation',
         'grammpy.representation.support',
         'grammpy.transforms',
@@ -34,13 +35,15 @@ setup(
         'grammpy.transforms.SplittedRules',
         'grammpy.transforms.UnitRulesRemove',
         'grammpy.transforms.UnreachableSymbolsRemove',
+        'grammpy.transforms.FirstTable',
+        'grammpy.transforms.FollowTable',
     ],
     url='https://github.com/PatrikValkovic/grammpy',
     download_url='https://github.com/PatrikValkovic/grammpy/archive/v' + v + '.tar.gz',
     license='The MIT License',
     author='Patrik Valkovic',
     author_email='patrik.valkovic@hotmail.cz',
-    description='CYK library with all required tools to parse context-free grammars.',
+    description='Parsing library with all required tools to parse context-free grammars.',
     long_description=long_description,
     long_description_content_type='text/markdown',
     install_requires=[

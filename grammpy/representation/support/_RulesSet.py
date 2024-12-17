@@ -55,7 +55,7 @@ class _RulesSet(_BaseSet):
         """
         Splits Rule class with multiple rules into separate classes, each with only one rule defined.
         The created rules inherits from SplitRule.
-        If parameter define only one rule, its not split.
+        If parameter define only one rule, it's not split.
         :param original_rule: Rule to split.
         :return: Iterable of rules derived from the parameter.
         """

@@ -27,13 +27,14 @@ class OrderedTraversingTest(TestCase):
                     rules=[Rule1],
                     start_symbol=A)
         root = cyk(g, [0])
-        repre = Traversing.print(root)
+        representaton = Traversing.print(root)
         expect = \
-"""(N)A
+"""
+(N)A
 `--(R)Rule1
    `--(T)0
-"""
-        self.assertEqual(repre, expect)
+""".lstrip()
+        self.assertEqual(representaton, expect)
 
     def test_splitTest(self):
         class Rule1(Rule): rule=([A], [B, C])
@@ -44,9 +45,10 @@ class OrderedTraversingTest(TestCase):
                     rules=[Rule1, Rule2, Rule3],
                     start_symbol=A)
         root = cyk(g, [0, 1])
-        repre = Traversing.print(root)
+        representation = Traversing.print(root)
         expect = \
-"""(N)A
+"""
+(N)A
 `--(R)Rule1
    |--(N)B
    |  `--(R)Rule2
@@ -54,8 +56,8 @@ class OrderedTraversingTest(TestCase):
    `--(N)C
       `--(R)Rule3
          `--(T)1
-"""
-        self.assertEqual(repre, expect)
+""".lstrip()
+        self.assertEqual(representation, expect)
 
     def test_recursiveTest(self):
         class Rule0(Rule): rule=([A], [A, 2])
@@ -69,9 +71,10 @@ class OrderedTraversingTest(TestCase):
         ContextFree.prepare_for_cyk(g, True)
         root = cyk(g, [0, 1, 2, 2])
         root = InverseContextFree.reverse_cyk_transforms(root)
-        repre = Traversing.print(root)
+        representation = Traversing.print(root)
         expect = \
-"""(N)A
+"""
+(N)A
 `--(R)Rule0
    |--(N)A
    |  `--(R)Rule0
@@ -85,8 +88,8 @@ class OrderedTraversingTest(TestCase):
    |     |           `--(T)1
    |     `--(T)2
    `--(T)2
-"""
-        self.assertEqual(repre, expect)
+""".lstrip()
+        self.assertEqual(representation, expect)
 
 
 if __name__ == '__main__':
