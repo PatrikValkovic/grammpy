@@ -10,6 +10,8 @@ from unittest import main, TestCase
 from grammpy import *
 from grammpy.parsers import create_ll_parsing_table, ll
 from grammpy.transforms import *
+from grammpy.exceptions import ParsingTableDiscrepancyException, NonterminalIsMissingException, \
+    NoRuleForLookAheadException, ParsingAmbiguityException, NotRuleException
 
 
 class SimpleTableTest(TestCase):
@@ -28,9 +30,11 @@ class SimpleTableTest(TestCase):
                 (1,): {SRule}
             }
         }
-        with self.assertRaises(Exception) as caught:
+        with self.assertRaisesRegex(ParsingTableDiscrepancyException, "Expected terminal 0, but found 1") as caught:
             ll(g.start, [1], parsing_table, 1)
-        self.assertEqual(caught.exception.args[0], 'Expected terminal 0, but found 1')
+        error = caught.exception
+        self.assertEqual(str(error), "LL parsing error on symbol at 0: Expected terminal 0, but found 1")
+        self.assertEqual(error.position, 0)
 
     def test_invalidInput(self):
         class S(Nonterminal): pass
@@ -47,9 +51,11 @@ class SimpleTableTest(TestCase):
         first = ContextFree.create_first_table(g, 1)
         follow = ContextFree.create_follow_table(g, first, 1)
         table = create_ll_parsing_table(g, first, follow, 1)
-        with self.assertRaises(Exception) as caught:
+        with self.assertRaisesRegex(NoRuleForLookAheadException, "No rule for S with lookahead \\(1,\\) found") as caught:
             ll(g.start, [0, 0, 0, 1,0], table, 1)
-        self.assertEqual(caught.exception.args[0], 'Rule for S with lookahead (1,) not found')
+        error = caught.exception
+        self.assertEqual(error.position, 3)
+        self.assertEqual(str(error), 'LL parsing error on symbol at 3: No rule for S with lookahead (1,) found')
 
     def test_missingNonterminalInParsingTable(self):
         class S(Nonterminal): pass
@@ -69,9 +75,12 @@ class SimpleTableTest(TestCase):
                 (0,): {SRule}
             }
         }
-        with self.assertRaises(Exception) as caught:
+        with self.assertRaisesRegex(NonterminalIsMissingException, 'There are no rules for nonterminal A') as caught:
             ll(g.start, [0, 1], parsing_table, 1)
-        self.assertEqual(caught.exception.args[0], 'There is no rules for nonterminal A')
+        error = caught.exception
+        self.assertEqual(error.position, 1)
+        self.assertEqual(error.nonterminal, A)
+        self.assertEqual(str(error), 'LL parsing error on symbol at 1: There are no rules for nonterminal A')
 
     def test_missingLookAhead(self):
         class S(Nonterminal): pass
@@ -92,9 +101,11 @@ class SimpleTableTest(TestCase):
             },
             A: {}
         }
-        with self.assertRaises(Exception) as caught:
+        with self.assertRaisesRegex(NoRuleForLookAheadException, 'No rule for A with lookahead \\(1,\\) found') as caught:
             ll(g.start, [0, 1], parsing_table, 1)
-        self.assertEqual(caught.exception.args[0], 'Rule for A with lookahead (1,) not found')
+        error = caught.exception
+        self.assertEqual(error.position, 1)
+        self.assertEqual(str(error), 'LL parsing error on symbol at 1: No rule for A with lookahead (1,) found')
 
     def test_emptyRuleSet(self):
         class S(Nonterminal): pass
@@ -117,9 +128,11 @@ class SimpleTableTest(TestCase):
                 (1,): set()
             }
         }
-        with self.assertRaises(Exception) as caught:
+        with self.assertRaisesRegex(NoRuleForLookAheadException, 'No rule for A with lookahead \\(1,\\) found') as caught:
             ll(g.start, [0, 1], parsing_table, 1)
-        self.assertEqual(caught.exception.args[0], 'No rule to apply for A with lookahead (1,)')
+        error = caught.exception
+        self.assertEqual(error.position, 1)
+        self.assertEqual(str(error), 'LL parsing error on symbol at 1: No rule for A with lookahead (1,) found')
 
     def test_tableWithAmbiguity(self):
         class S(Nonterminal): pass
@@ -142,9 +155,14 @@ class SimpleTableTest(TestCase):
         first = ContextFree.create_first_table(g, 1)
         follow = ContextFree.create_follow_table(g, first, 1)
         table = create_ll_parsing_table(g, first, follow, 1)
-        with self.assertRaises(Exception) as caught:
+        with self.assertRaisesRegex(ParsingAmbiguityException, 'Ambiguity found for S and lookahead \\(0,\\)') as caught:
             ll(g.start, [0, 1], table, 1)
-        self.assertEqual(caught.exception.args[0], 'Ambiguity found for S with lookahead (0,)')
+        error = caught.exception
+        self.assertEqual(error.position, 0)
+        self.assertEqual(len(error.rules), 2)
+        self.assertIn(SRule, error.rules)
+        self.assertIn(SRule2, error.rules)
+        self.assertEqual(str(error), 'LL parsing error on symbol at 0: Ambiguity found for S and lookahead (0,)')
 
     def test_tableWithIgnoredAmbiguity(self):
         class S(Nonterminal): pass
@@ -185,9 +203,10 @@ class SimpleTableTest(TestCase):
                 (0,): {'not a rule'}
             }
         }
-        with self.assertRaises(Exception) as caught:
+        with self.assertRaises(NotRuleException) as caught:
             ll(g.start, [0], parsing_table, 1)
-        self.assertEqual(caught.exception.args[0], 'Rule is not subclass of Rule')
+        error = caught.exception
+        self.assertEqual(error.object, 'not a rule')
 
 if __name__ == '__main__':
     main()

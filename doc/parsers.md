@@ -50,7 +50,7 @@ class PlusRule(Rule):
 
 Then, you can use one of the traversing methods (see [traversing](helpers.md)) or run the algorithm on your own to compute values for all the nodes.
 
-> ⚠️ It is recommended to use the traversing code provided instead using recursion. The traversing implementation has special recursion syntactically similar to recursion while avoiding it directly, allowing you to traverse even very deep trees without causing the stack overflow error.
+> ⚠️ It is recommended to use the traversing code provided instead of using recursion. The traversing implementation has special recursion syntactically similar to recursion while avoiding it directly, allowing you to traverse even very deep trees without causing the stack overflow error.
 
 You can as well redefine the ValueNonterminal as follows and call recursion.
 
@@ -201,7 +201,14 @@ root =  ll(g.start, [1, '+', 3], parsing_table, look_ahead=1, raise_on_ambiguity
 
 ### Errors
 
-TODO
+All the error for look-ahead parser inherit from `grammpy.exceptions.LLParsingException`. This class has additional attribute `position` specifying at which index of the input sequence the error occurred.
+
+The parsing can also raise following exceptions:
+- `grammpy.exceptions.NonterminalIsMissingException`: Exception that occurs when there is nonterminal on top of the stack that has no entry in the parsing table.
+- `grammpy.exceptions.NoRuleForLookAhheadException`: There is no rule to apply for the nonterminal and look ahead.
+- `grammpy.exceptions.ParsingAmbiguityException`: There are multiple rules to apply for the nonterminal and look ahead.
+- `grammpy.TableDisrepancyException`: Exception raised when the nonterminal on the stack doesn't match the nonterminal in the input sequence. In general points to discrepancy between the parsing table and the rule within it.
+- `grammpy.exception.NotRuleException`: Exception raised when the rule in the parsing table is not instance of Rule class. Doesn't inherit from the `LLParsingException` class but directly from `GrammpyException`.
 
 ### Custom parsing table
 
