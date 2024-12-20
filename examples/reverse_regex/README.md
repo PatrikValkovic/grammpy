@@ -35,7 +35,7 @@ For example `a+b` will output "a" ad "b".
 Note that epsilon (empty value) is situation, where the repetition is made 0 time. 
 For example `a*` will output "", "a", "aa", "aaa" and so on.
 Because there can be infinity number of repetition, the repetition is controlled by `IterateRule.MAX_ITERATIONS` constant.
-By default maximum of 6 iteration is generated.
+By default, maximum of 6 iteration is generated.
 - Brackets to prioritize the regular expression.
 For example `(a+b)(c+d)` will generate "ac", "ad", "bc", "bd".
 
@@ -44,7 +44,7 @@ Please note, that some entries can be in the output multiple time, if there are 
 ## More complicated example
 
 Let's look at more complicated example.
-For example the regular expression `ab*(def+xy*z)` will have following output
+For example the regular expression `ab*(def+xy*z)` will have the following output
 (when number of iterations is set to 4).
 
 ```text

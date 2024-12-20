@@ -6,14 +6,14 @@
 Part of grammpy
 
 """
-
+from typing import Any
 from .GrammpyException import GrammpyException
-
 
 class NotRuleException(GrammpyException, TypeError):
     """
     Passed something else than Rule class
     """
-    def __init__(self, rule):
-        super().__init__()
+    def __init__(self, rule, *args):
+        # type: (Any, Any) -> None
+        super().__init__(*args)
         self.object = rule

@@ -14,9 +14,12 @@ from .EpsilonRulesRemove import *
 from .NongeneratingSymbolsRemove import *
 from .UnitRulesRemove import *
 from .UnreachableSymbolsRemove import *
+from .FirstTable import *
+from .FollowTable import *
 
 if TYPE_CHECKING:  # pragma: no cover
     from .. import Grammar
+    from .FirstTable.create_first_table import FirstTableType
 
 __all__ = ['ContextFree']
 
@@ -70,8 +73,8 @@ class ContextFree:
     def remove_unreachable_symbols(grammar, inplace=False):
         # type: (Grammar, bool) -> Grammar
         """
-        Remove unreachable symbols from the gramar
-        :param grammar: Grammar where to symbols remove
+        Remove unreachable symbols from the grammar.
+        :param grammar: Grammar where to remove symbols
         :param inplace: True if transformation should be performed in place. False by default.
         :return: Grammar without unreachable symbols.
         """
@@ -83,7 +86,7 @@ class ContextFree:
         """
         Remove useless symbols from the grammar.
         Useless symbols are unreachable or nongenerating one.
-        :param grammar: Grammar where to symbols remove
+        :param grammar: Grammar where to remove symbols.
         :param inplace: True if transformation should be performed in place, false otherwise.
         False by default.
         :return: Grammar without useless symbols.
@@ -170,3 +173,26 @@ class ContextFree:
         grammar = ContextFree.remove_useless_symbols(grammar, True)
         grammar = ContextFree.transform_to_chomsky_normal_form(grammar, True)
         return grammar
+
+    @staticmethod
+    def create_first_table(grammar, look_ahead):
+        # type: (Grammar, int) -> FirstTableType
+        """
+        Given LL(n) grammar creates first table
+        :param grammar: Grammar to create first table for
+        :param look_ahead: Number of symbols to look ahead
+        :return: First table
+        """
+        return create_first_table(grammar, look_ahead)
+
+    @staticmethod
+    def create_follow_table(grammar, first_table, look_ahead):
+        # type: (Grammar, FirstTableType, int) -> FollowTableType
+        """
+        Given LL(k) grammar and its corresponding first table, create follow table.
+        :param grammar: Grammar for which follow table is created.
+        :param first_table: First table for the grammar.
+        :param look_ahead: Look ahead of the parser, must be same or lower as the first table.
+        :return: Follow table for the grammar
+        """
+        return create_follow_table(grammar, first_table, look_ahead)

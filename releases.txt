@@ -2,6 +2,12 @@
 This is a list of major changes in version history.
 
 ---------------------------------------------------------------------------
+2.1.0
+---------------------------------------------------------------------------
+
+* ADD functionality for look-ahead or LL(k) parsing
+
+---------------------------------------------------------------------------
 2.0.0
 ---------------------------------------------------------------------------
 
@@ -79,7 +85,7 @@ This is a list of major changes in version history.
 1.1.4
 ---------------------------------------------------------------------------
 
-* FIX: Correct link to archive with source codes in settup.py file
+* FIX: Correct link to archive with source codes in setup.py file
 
 
 ---------------------------------------------------------------------------
@@ -117,5 +123,5 @@ This is a list of major changes in version history.
 1.0.1
 ---------------------------------------------------------------------------
 
-* FIX: Parametres passed into Grammar constructor are validate
-* FIX: Grammar.have_rule method returns False instead of expcetion when rule with symbols out of grammar is pass
+* FIX: Parameters passed into Grammar constructor are validate
+* FIX: Grammar.have_rule method returns False instead of exception when rule with symbols out of grammar is pass

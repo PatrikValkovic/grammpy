@@ -32,8 +32,8 @@ class _RuleConnectable:
     def from_rule(self):
         # type: (_RuleConnectable) -> Optional[Rule]
         """
-        Rule that the symbol is rewrote from.
-        :return: Instance of Rule that the symbol is rewrited from.
+        Rule that the symbol is rewritten from.
+        :return: Instance of Rule that the symbol is rewritten from.
         :raise TreeDeletedException: If the tree was already deleted (pointer to the painter get lost).
         This can occur because weak reference to the parent is used.
         """
@@ -47,15 +47,15 @@ class _RuleConnectable:
     def to_rule(self):
         # type: (_RuleConnectable) -> Optional[Rule]
         """
-        Rule that the symbol is rewrote to.
-        :return: Instance of Rule that the symbols is rewrited to.
+        Rule that the symbol is rewritten to.
+        :return: Instance of Rule that the symbols is rewritten to.
         """
         return self._to_rule
 
     def _set_from_rule(self, r):
         # type: (_RuleConnectable, Rule) -> None
         """
-        Set the rule that the symbol is rewrote from.
+        Set the rule that the symbol is rewritten from.
         :param r: Instance of Rule that the symbol should rewrite from.
         """
         self._from_rule = weakref.ref(r)
@@ -63,7 +63,7 @@ class _RuleConnectable:
     def _set_to_rule(self, r):
         # type: (_RuleConnectable, Rule) -> None
         """
-        Set the rule that the symbol is rewrote to.
+        Set the rule that the symbol is rewritten to.
         :param r: Instance of Rule that the symbol should rewrite to.
         """
         self._to_rule = r

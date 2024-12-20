@@ -13,7 +13,7 @@ from grammpy import Rule, EPS
 
 
 class CountTest(TestCase):
-    def test_osneRule(self):
+    def test_oneRule(self):
         class tmp(Rule):
             rule = ([0, 1], [2, 3])
         self.assertEqual(tmp.count, 1)
