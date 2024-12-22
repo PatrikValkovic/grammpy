@@ -6,7 +6,10 @@
 Part of grammpy
 
 """
-from collections import Iterable
+try:
+    from collections.abc import Iterable
+except ImportError:  # pragma no cover
+    from collections import Iterable  # pragma no cover
 from copy import copy
 from typing import List, Union, Type, Optional, TYPE_CHECKING, Any, Generator
 
@@ -25,7 +28,7 @@ if TYPE_CHECKING:  # pragma: no cover
 class Grammar:
     """
     Provide base interface for manipulating with the grammar.
-    This grammar is deprecated and it's only bridge between the old and new API.
+    This grammar is deprecated, and it's only bridge between the old and new API.
     You should use new API, implementation of this class is less efficient.
     """
 
@@ -34,7 +37,7 @@ class Grammar:
                  nonterminals=None,
                  rules=None,
                  start_symbol=None):
-        # type: (Optional[Iterable[Any]], Optional[Iterable[Type[Nonterminal]]], Optional[Iterable[Type[Rule]]], Optional[Type[Nonterminal]]) -> Grammar
+        # type: (Optional[Iterable[Any]], Optional[Iterable[Type[Nonterminal]]], Optional[Iterable[Type[Rule]]], Optional[Type[Nonterminal]]) -> None
         """
         Create instance of grammar.
         :param terminals: Sequence of terminals to add, empty sequence by default.
@@ -421,7 +424,7 @@ class Grammar:
     def start_isSet(self):
         # type: () -> bool
         """
-        Check if the start symbol is set. That mean if the start symbol is not None.
+        Check if the start symbol is set. That means if the start symbol is not None.
         :return: True if the start symbol is set, false otherwise.
         """
         return self.start is not None

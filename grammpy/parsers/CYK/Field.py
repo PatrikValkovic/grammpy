@@ -48,7 +48,7 @@ class Field:
         """
         Fill first row of the structure witch nonterminal directly rewritable to terminal.
         :param term_dict: Dictionary of rules directly rewritable to terminal.
-        Key is hash of terminal, value is set of rules with key terminal at the right side.
+        Key is hash of terminal, value is set of rules with key terminal on the right side.
         :param terms: Input sequence of terminal.
         """
         for i in range(len(terms)):

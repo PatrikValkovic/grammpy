@@ -2,11 +2,10 @@
 
 Welcome to the Grammpy library documentation.
 
-To know how to handle the grammar, look at [grammar documentation](grammars.md).
+To know how to handle the grammar, look at [grammar documentation](grammars.md). This document describes how to define grammar and how to manipulate with it.
 
-To know more about the transformations, see [transformation documentation](transforms.md).
+Transformations are operations that in most cases transform rules into different forms. In this sub-packages you can find transformations to prepare grammar for CYK or LL grammars. See [transformation documentation](transforms.md) for more info.
 
-Finally, to know more about parsers see [parsers documentation](parsers.md).
+Finally, to know more about parsers itself, see [parsers documentation](parsers.md). This sub-package contains operations related to CYK, LL(k), and more.
 
-The library defined helper methods to traverse and manipulate the grammar or the tree.
-You can see [helper documentation](helpers.md) to see more.
+Finally, there is set of helper methods to traverse and manipulate the grammar or the resulting abstract syntactic tree. Visit [helper documentation](helpers.md) to see more.

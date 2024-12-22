@@ -19,7 +19,8 @@ class ReplacingTest(TestCase):
     def testReplaceWithoutTest(self):
         a = A()
         b = B()
-        Manipulations.replace(a, b)
+        result = Manipulations.replace(a, b)
+        self.assertEqual(result, b)
 
     def testReplaceBottom(self):
         class S(Nonterminal): pass

@@ -295,7 +295,7 @@ class RulesTest(TestCase):
         with self.assertRaises(IndexError):
             given = self.wr_list.pop()
 
-    def test_pop_on_unexisting_index_raises_IndexError(self):
+    def test_pop_on_non_existing_index_raises_IndexError(self):
         fake_obj0 = self.objectFake()
         fake_obj1 = self.objectFake()
         self.wr_list.extend([fake_obj0, fake_obj1])

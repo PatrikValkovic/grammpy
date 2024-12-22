@@ -55,7 +55,7 @@ def transform_from_chomsky_normal_form(root):
             left_child = rule.to_symbols[0]  # type: Nonterminal
             left_child._set_from_rule(created_rule)
             created_rule._to_symbols.append(left_child)
-            # right childs
+            # right children
             for ch in rule.to_symbols[1].to_rule.to_symbols:  # type: Nonterminal
                 ch._set_from_rule(created_rule)
                 created_rule.to_symbols.append(ch)

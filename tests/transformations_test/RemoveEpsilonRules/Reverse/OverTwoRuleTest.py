@@ -22,7 +22,7 @@ class RuleBC(Rule): rule = ([B], [C])
 class RuleCEps(Rule): rule = ([C], [EPS])
 
 
-class SimpleTestoverUnitRule(TestCase):
+class SimpleTestOverUnitRule(TestCase):
     def test_simpleTestOverUnitRule(self):
         g = Grammar(terminals=[0, 1, 2, 3],
                     nonterminals=[S, A, B, C],

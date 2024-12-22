@@ -12,7 +12,7 @@ from unittest import main, TestCase
 from grammpy import Rule
 
 
-class AttributAccessTest(TestCase):
+class AttributeAccessTest(TestCase):
     def test_accessExistingAttribute(self):
         class R(Rule): rule=([1, 2], [3])
         self.assertEqual(R.rules, [([1, 2], [3])])

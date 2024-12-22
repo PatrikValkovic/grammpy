@@ -74,7 +74,7 @@ class FromRulesComputeTest(TestCase):
         with self.assertRaises(NotASingleSymbolException):
             x = TwoLeftRule.fromSymbol
 
-    def test_ruleFromOne(self):
+    def test_ruleFromOneRaise(self):
         with self.assertRaises(CantCreateSingleRuleException):
             r = TwoRules.rule
 
@@ -84,7 +84,7 @@ class FromRulesComputeTest(TestCase):
         with self.assertRaises(CantCreateSingleRuleException):
             x = TwoRules.right
 
-    def test_leftRightSymbolFromOne(self):
+    def test_leftRightSymbolFromOneRaise(self):
         with self.assertRaises(CantCreateSingleRuleException):
             x = TwoRules.fromSymbol
         with self.assertRaises(CantCreateSingleRuleException):

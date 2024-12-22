@@ -28,7 +28,7 @@ class OneRuleTest(TestCase):
                          rules=[R],
                          start_symbol=None)
 
-    def test_shouldntParse(self):
+    def test_shouldNotParse(self):
         with self.assertRaises(Exception):
             cyk(self.g, [0])
 

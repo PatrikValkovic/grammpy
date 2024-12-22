@@ -33,7 +33,7 @@ class Multiple(Rule):
     right = [3, 4]
 
 
-class FromLeftRIghtToRulesTest(TestCase):
+class FromLeftRightToRulesTest(TestCase):
     def test_rules_simple(self):
         r = Simple.rules
         self.assertIsInstance(r, list)

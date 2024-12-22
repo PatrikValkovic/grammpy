@@ -1,8 +1,8 @@
 # Simple calculator
 
-This example is application that performs basic mathematical calculation.
-The input is hard coded into the application, if you want to change it just rewrite the *run.py* file.
+This example is application that performs basic mathematical calculation. The input is hard coded into the application, if you want to change it just rewrite the *run.py* file.
 
+This example uses Cocke-Younger-Kasami algorithm. There is also [calculator example](../calculator_ll) that uses look-ahead parsing algorithm.
 
 ## Usage
 

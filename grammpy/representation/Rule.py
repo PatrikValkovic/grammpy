@@ -29,7 +29,7 @@ class Rule(metaclass=_MetaRule):
     """
 
     def __init__(self):
-        # type: () -> Rule
+        # type: () -> None
         """
         Create new instance of rule.
         """
@@ -42,7 +42,8 @@ class Rule(metaclass=_MetaRule):
         Handle special attributes: toSymbol fromSymbol left right rule rules.
         For the rest throws AttributeError.
         :param name: Name of the attribute to find.
-        :throw AttributeError:
+        :throw AttributeError: If attribute is not special.
+        :return: Value of the attribute.
         """
         if name in {'toSymbol',
                     'fromSymbol',

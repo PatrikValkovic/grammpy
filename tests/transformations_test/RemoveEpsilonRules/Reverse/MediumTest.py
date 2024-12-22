@@ -24,7 +24,7 @@ class RuleCD(Rule): rule=([C], [D])
 class RuleDEps(Rule): rule=([D], [EPS])
 
 
-class SimpleTestoverUnitRule(TestCase):
+class SimpleTestOverUnitRule(TestCase):
     def test_simpleTestOverUnitRule(self):
         g = Grammar(terminals=[0, 1],
                     nonterminals=[S, A, B, C, D],

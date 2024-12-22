@@ -2,20 +2,20 @@
 
 In this directory, you can find multiple examples of applications build on top of grammpy library.
 
-## [Simple calculator](calculator)
+## [CYK - Simple calculator](calculator_cyk)
 
 This example is application that performs basic mathematical calculation.
 The input is hard coded into the application, however you can change it in the source code.
 
 
-## [Reverse regex](reverse_regex)
+## [CYK - Reverse regex](reverse_regex)
 
 This example contains application, that generates strings based on the regex.
 You type regular expression, and the application generates strings that match that expression.
 The application doesn't support standard regular expressions (although it would be easy to extend it),
 but just a basic operations. You can see more in the description. 
 
-## [Lambda CLI](lambda-cli)
+## [CYK - Lambda CLI](lambda-cli)
 
 This example is application, that can evaluate lambda expressions.
 For more about lambda calculus, see [wikipedia](https://en.wikipedia.org/wiki/Lambda_calculus).

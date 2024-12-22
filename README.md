@@ -25,7 +25,7 @@ python setup.py install
 ## Usage
 
 Defining a grammar doesn't require special tools anymore.
-All what you need is just a IDE and you have the full support.
+All what you need is just an IDE and you have the full support.
 
 Let's define grammar using standard Python objects instead.
 
@@ -83,7 +83,7 @@ You can view some examples in the [examples](examples) directory.
 
 -----
 
-Version: 2.0.0
+Version: 2.1.0
 
 Author: Patrik Valkovič
 

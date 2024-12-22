@@ -38,7 +38,7 @@ def find_nonterminals_rewritable_to_epsilon(grammar):
             for symbol in rule.right:
                 if symbol not in rewritable:
                     right_side_rewrite = False
-            # the whole right side can be reduce to epsilon, add left side to dictionary
+            # the whole right side can be reduced to epsilon, add left side to dictionary
             if right_side_rewrite:
                 working[rule.fromSymbol] = rule
         # Working set didn't change, we are done
