@@ -26,7 +26,7 @@ class ConstantsTest(TestCase):
 
     @staticmethod
     def serialize_and_deserialize(value):
-        with tempfile.NamedTemporaryFile("wb", delete_on_close=False) as f:
+        with tempfile.NamedTemporaryFile("wb", delete=False) as f:
             pickle.dump(value, f)
             f.close()
             with open(f.name, "rb") as f:

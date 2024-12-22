@@ -54,7 +54,7 @@ class ParsingTableSerializationTest(TestCase):
         follow_table = ContextFree.create_follow_table(g, first_table, 2)
         parsing_table = create_ll_parsing_table(g, first_table, follow_table, 2)
 
-        with tempfile.NamedTemporaryFile("wb", delete_on_close=False) as f:
+        with tempfile.NamedTemporaryFile("wb", delete=False) as f:
             pickle.dump(parsing_table, f)
             f.close()
             with open(f.name, 'rb') as f:
