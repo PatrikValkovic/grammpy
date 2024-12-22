@@ -7,7 +7,6 @@ Part of grammpy
 
 """
 from unittest import TestCase, main
-
 from grammpy import Nonterminal, Rule, EPSILON, Grammar, Terminal
 from grammpy.parsers import create_ll_parsing_table, ll
 from grammpy.transforms import ContextFree
@@ -295,6 +294,7 @@ class ArithmeticGrammarParsingTest(TestCase):
                `--(T)EPSILON
 """.lstrip()
         )
+
 
 if __name__ == '__main__':
     main()
