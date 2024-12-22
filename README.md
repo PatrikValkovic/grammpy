@@ -1,9 +1,8 @@
 # grammpy
 
-Current version: 2.0.0
-
-[![Build Status](https://www.travis-ci.com/PatrikValkovic/grammpy.svg?branch=master)](https://www.travis-ci.com/PatrikValkovic/grammpy)
+[![Build status](https://github.com/PatrikValkovic/grammpy/actions/workflows/pipeline.yml/badge.svg)](https://github.com/PatrikValkovic/grammpy/actions/workflows/pipeline.yml)
 [![Coverage Status](https://coveralls.io/repos/github/PatrikValkovic/grammpy/badge.svg?branch=master)](https://coveralls.io/github/PatrikValkovic/grammpy?branch=master)
+[![PyPI Downloads](https://static.pepy.tech/badge/grammpy/month)](https://pepy.tech/projects/grammpy)
 
 Package for representing formal grammars.
 Contains algorithms to work with a grammars and parse them.
@@ -82,8 +81,6 @@ You can read more about the library in the [doc](doc) directory.
 You can view some examples in the [examples](examples) directory.
 
 -----
-
-Version: 2.1.0
 
 Author: Patrik Valkovič
 
